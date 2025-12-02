@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AniTrack</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="loginButton">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="do_not_have_an_account_yet">Do not have an account yet?</string>
 </resources>
