@@ -9,10 +9,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AniTrack" >
+        android:theme="@style/Theme.AniTrack">
         <activity
-            android:name=".ui.MainActivity"
-            android:exported="true" >
+            android:name=".ui.SingUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

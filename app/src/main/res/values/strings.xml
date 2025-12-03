@@ -5,4 +5,9 @@
     <string name="loginButton">Login</string>
     <string name="forgot_password"><u>Forgot password?</u></string>
     <string name="do_not_have_an_account_yet"><u>Do not have an account yet?</u></string>
+    <string name="username">username</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="resend_verification_email">Resend verification email</string>
+    <string name="sing_up">Sing up</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>
