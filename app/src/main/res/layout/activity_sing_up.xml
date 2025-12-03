@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".ui.LoginActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/layoutHorizontalPadding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/layoutHorizontalPadding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/app_name"
+        android:textColor="@color/pearl"
+        android:textSize="@dimen/AppNameFontSize"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="@id/topGuide" />
+
+    <EditText
+        android:id="@+id/singUpEmailEditText"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginBig"
+        android:autofillHints="emailAddress"
+        android:background="@drawable/custom_edit_text"
+        android:fontFamily="@font/comfortaa"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/darkGrey"
+        android:textColorHint="@color/darkGrey"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@+id/appName" />
+
+    <EditText
+        android:id="@+id/singUpUsernameEditText"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:autofillHints="emailAddress"
+        android:background="@drawable/custom_edit_text"
+        android:fontFamily="@font/comfortaa"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:textColor="@color/darkGrey"
+        android:textColorHint="@color/darkGrey"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@+id/singUpEmailEditText" />
+
+    <EditText
+        android:id="@+id/singUpPasswordEditText"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:background="@drawable/custom_edit_text"
+        android:fontFamily="@font/comfortaa"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColor="@color/darkGrey"
+        android:textColorHint="@color/darkGrey"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@+id/singUpUsernameEditText" />
+
+    <EditText
+        android:id="@+id/singUpConfirmPasswordEditText"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:background="@drawable/custom_edit_text"
+        android:fontFamily="@font/comfortaa"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:textColor="@color/darkGrey"
+        android:textColorHint="@color/darkGrey"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@+id/singUpPasswordEditText" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/singUpButton"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginBig"
+        android:minHeight="@dimen/zero"
+        app:cornerRadius="@dimen/zero"
+        android:background="@drawable/custom_auth_button"
+        app:backgroundTint="@null"
+        android:text="@string/sing_up"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/buttonTextFontSize"
+        android:fontFamily="@font/comfortaa"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/singUpConfirmPasswordEditText" />
+
+    <TextView
+        android:id="@+id/resendVerificationEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pearl"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/resend_verification_email"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@+id/singUpButton" />
+
+    <TextView
+        android:id="@+id/AlreadyHaveAnAccountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/already_have_an_account"
+        android:textColor="@color/pearl"
+        app:layout_constraintBottom_toTopOf="@+id/bottomGuide"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottomGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
