@@ -8,8 +8,8 @@
     <dimen name="buttonTextFontSize">14sp</dimen>
 
     <!-- paddings -->
-    <dimen name="textFieldVerticalPadding">7sp</dimen>
-    <dimen name="textFieldHorizontalPadding">10sp</dimen>
+    <dimen name="textFieldVerticalPadding">7dp</dimen>
+    <dimen name="textFieldHorizontalPadding">15dp</dimen>
 
     <!-- margins -->
     <dimen name="marginNormal">20dp</dimen>
