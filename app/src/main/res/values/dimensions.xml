@@ -3,9 +3,6 @@
     <!-- Common -->
     <dimen name="zero">0dp</dimen>
 
-    <!-- Ems -->
-    <dimen name="standardEms">10</dimen>
-
     <!-- Font sizes -->
     <dimen name="AppNameFontSize">32sp</dimen>
     <dimen name="buttonTextFontSize">14sp</dimen>
@@ -18,4 +15,5 @@
     <dimen name="marginNormal">20dp</dimen>
     <dimen name="marginBig">70sp</dimen>
     <dimen name="marginAppName">250dp</dimen>
+    <dimen name="layoutHorizontalPadding">25dp</dimen>
 </resources>

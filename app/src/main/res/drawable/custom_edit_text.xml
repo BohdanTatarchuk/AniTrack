@@ -4,12 +4,11 @@
 
   <solid android:color="@color/pearl" />
 
-  <corners android:radius="13sp" />
+  <corners android:radius="10dp" />
 
   <padding
-      android:left="15sp"
-      android:top="10sp"
-      android:right="12sp"
-      android:bottom="10sp" />
-
+      android:left="@dimen/textFieldHorizontalPadding"
+      android:top="@dimen/textFieldVerticalPadding"
+      android:right="@dimen/textFieldHorizontalPadding"
+      android:bottom="@dimen/textFieldVerticalPadding" />
 </shape>
