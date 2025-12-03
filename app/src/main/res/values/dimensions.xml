@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Common -->
+    <dimen name="zero">0dp</dimen>
 
+    <!-- Ems -->
+    <dimen name="standardEms">10</dimen>
+
+    <!-- Font sizes -->
     <dimen name="AppNameFontSize">32sp</dimen>
-    <dimen name="textFieldPadding">7sp</dimen>
+    <dimen name="buttonTextFontSize">14sp</dimen>
+
+    <!-- paddings -->
+    <dimen name="textFieldVerticalPadding">7sp</dimen>
+    <dimen name="textFieldHorizontalPadding">10sp</dimen>
+
+    <!-- margins -->
     <dimen name="marginNormal">20dp</dimen>
     <dimen name="marginBig">70sp</dimen>
-    <dimen name="marginAppName">265dp</dimen>
+    <dimen name="marginAppName">250dp</dimen>
 </resources>
