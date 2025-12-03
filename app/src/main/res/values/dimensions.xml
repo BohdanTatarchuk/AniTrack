@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="AppNameFontSize">32sp</dimen>
-    <dimen name="textFieldPadding">7sp</dimen>
-    <dimen name="marginNormal">20dp</dimen>
-    <dimen name="marginBig">70sp</dimen>
-    <dimen name="marginAppName">265dp</dimen>
-</resources>
