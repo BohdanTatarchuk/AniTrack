@@ -7,7 +7,8 @@
     <string name="do_not_have_an_account_yet"><u>Do not have an account yet?</u></string>
     <string name="username">username</string>
     <string name="confirm_password">confirm password</string>
-    <string name="resend_verification_email">Resend verification email</string>
+    <string name="resend_verification_email"><u>Resend verification email</u></string>
     <string name="sing_up">Sing up</string>
-    <string name="already_have_an_account">Already have an account?</string>
+    <string name="already_have_an_account"><u>Already have an account?</u></string>
+    <string name="terms_of_service">You agree to our <a href="https://anilist.co/terms">terms of service</a></string>
 </resources>

@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AniTrack">
         <activity
+            android:name=".ui.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SingUpActivity"
             android:exported="false" />
         <activity

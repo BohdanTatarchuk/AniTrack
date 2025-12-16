@@ -105,22 +105,49 @@
         app:layout_constraintStart_toStartOf="@id/guideStart"
         app:layout_constraintTop_toBottomOf="@+id/singUpPasswordEditText" />
 
+    <CheckBox
+        android:id="@+id/termsOfServiceCheckbox"
+        style="@style/customCheckbox"
+        android:layout_width="@dimen/checkbox_dimen"
+        android:layout_height="@dimen/checkbox_dimen"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintEnd_toStartOf="@id/termsOfServiceText"
+        app:layout_constraintTop_toBottomOf="@id/singUpConfirmPasswordEditText"
+        app:layout_constraintBaseline_toBaselineOf="@id/termsOfServiceText"
+        app:layout_constraintHorizontal_chainStyle="packed"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/marginNormal"
+        android:id="@+id/termsOfServiceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginTiny"
+        android:text="@string/terms_of_service"
+        android:textColor="@color/pearl"
+        android:fontFamily="@font/comfortaa"
+        android:linksClickable="true"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toEndOf="@id/termsOfServiceCheckbox"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintTop_toBottomOf="@id/singUpConfirmPasswordEditText"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/singUpButton"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginBig"
-        android:minHeight="@dimen/zero"
-        app:cornerRadius="@dimen/zero"
+        android:layout_marginTop="@dimen/marginNormal"
         android:background="@drawable/custom_auth_button"
-        app:backgroundTint="@null"
+        android:fontFamily="@font/comfortaa"
+        android:minHeight="@dimen/zero"
         android:text="@string/sing_up"
         android:textColor="@color/darkBlue"
         android:textSize="@dimen/buttonTextFontSize"
-        android:fontFamily="@font/comfortaa"
+        app:backgroundTint="@null"
+        app:cornerRadius="@dimen/zero"
         app:layout_constraintEnd_toEndOf="@id/guideEnd"
         app:layout_constraintStart_toStartOf="@id/guideStart"
-        app:layout_constraintTop_toBottomOf="@id/singUpConfirmPasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/termsOfServiceText" />
 
     <TextView
         android:id="@+id/resendVerificationEmailTextView"
@@ -135,7 +162,7 @@
         app:layout_constraintTop_toBottomOf="@+id/singUpButton" />
 
     <TextView
-        android:id="@+id/AlreadyHaveAnAccountTextView"
+        android:id="@+id/alreadyHaveAnAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"

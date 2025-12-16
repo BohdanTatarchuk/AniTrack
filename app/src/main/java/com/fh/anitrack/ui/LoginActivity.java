@@ -1,6 +1,9 @@
 package com.fh.anitrack.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private TextView forgotPasswordTextView;
     private MaterialButton loginButton;
-    private TextView singUpTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,11 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.loginPasswordEditText);
         forgotPasswordTextView = findViewById(R.id.loginForgotPassword);
         loginButton = findViewById(R.id.loginButton);
-        singUpTextView = findViewById(R.id.doNotHaveAnAccountText);
+        TextView singUpTextView = findViewById(R.id.doNotHaveAnAccountText);
+
+        singUpTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SingUpActivity.class);
+            startActivity(intent);
+        });
     }
 }
