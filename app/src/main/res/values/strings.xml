@@ -11,4 +11,6 @@
     <string name="sing_up">Sing up</string>
     <string name="already_have_an_account"><u>Already have an account?</u></string>
     <string name="terms_of_service">You agree to our <a href="https://anilist.co/terms">terms of service</a></string>
+    <string name="reset_password">Reset password</string>
+    <string name="back_to_login"><u>Back to login</u></string>
 </resources>

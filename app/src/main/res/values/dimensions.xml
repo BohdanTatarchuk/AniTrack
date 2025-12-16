@@ -15,6 +15,6 @@
     <!-- margins -->
     <dimen name="marginNormal">20dp</dimen>
     <dimen name="marginBig">70sp</dimen>
-    <dimen name="layoutHorizontalPadding">25dp</dimen>
+    <dimen name="layoutHorizontalPadding">30dp</dimen>
     <dimen name="marginTiny">8dp</dimen>
 </resources>
