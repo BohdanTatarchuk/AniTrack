@@ -17,10 +17,6 @@ import com.fh.anitrack.R;
 import com.google.android.material.button.MaterialButton;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private TextView forgotPasswordTextView;
-    private MaterialButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +29,28 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        emailEditText = findViewById(R.id.loginEmailEditText);
-        passwordEditText = findViewById(R.id.loginPasswordEditText);
-        forgotPasswordTextView = findViewById(R.id.loginForgotPassword);
-        loginButton = findViewById(R.id.loginButton);
+        EditText emailEditText = findViewById(R.id.loginEmailEditText);
+        EditText passwordEditText = findViewById(R.id.loginPasswordEditText);
+        TextView forgotPasswordTextView = findViewById(R.id.loginForgotPassword);
+        MaterialButton loginButton = findViewById(R.id.loginButton);
         TextView singUpTextView = findViewById(R.id.doNotHaveAnAccountText);
 
         singUpTextView.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SingUpActivity.class);
             startActivity(intent);
         });
+
+        forgotPasswordTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
+
+        loginButton.setOnClickListener(v -> {
+            handleLogin();
+        });
+    }
+
+    private void handleLogin() {
+        //Todo call an auth service
     }
 }

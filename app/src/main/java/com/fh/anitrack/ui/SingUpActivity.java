@@ -56,5 +56,13 @@ public class SingUpActivity extends AppCompatActivity {
         });
 
         termsOfServiceText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        singUpButton.setOnClickListener(v -> {
+            handleSingUp();
+        });
+    }
+
+    private void handleSingUp() {
+        //TODO call an auth service here
     }
 }
