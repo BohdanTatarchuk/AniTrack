@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pearl"
+    tools:context=".ui.MediaDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thumbnailExpandedHeight"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextColor="@color/pearl"
+            app:contentScrim="@color/darkBlue"
+            app:expandedTitleGravity="bottom|start"
+            app:expandedTitleMarginBottom="@dimen/marginNormal"
+            app:expandedTitleMarginStart="@dimen/layoutHorizontalPadding"
+            app:expandedTitleTextColor="@color/pearl"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleCollapseMode="scale">
+
+            <!-- Header with thumbnail and badges -->
+            <include layout="@layout/media_page_header" />
+
+            <!-- Toolbar with add to list button -->
+            <include layout="@layout/media_page_toolbar" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pearl"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/marginBig">
+
+            <!-- Title (visible when collapsed) -->
+            <TextView
+                android:id="@+id/mediaTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/titleFontSize"
+                android:textStyle="bold" />
+
+            <!-- Tab Navigation -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tabChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+                app:selectionRequired="true"
+                app:singleSelection="true"
+                app:singleLine="false">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipOverview"
+                    style="@style/TabChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/tab_overview" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipWatch"
+                    style="@style/TabChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_watch" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCharacters"
+                    style="@style/TabChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_characters" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipStaff"
+                    style="@style/TabChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_staff" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipReviews"
+                    style="@style/TabChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_reviews" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipStats"
+                    style="@style/TabChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_stats" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Stats Row -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/layoutHorizontalPadding">
+
+                    <include
+                        android:id="@+id/statAverageScore"
+                        layout="@layout/media_page_item_stat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/marginNormal" />
+
+                    <include
+                        android:id="@+id/statMeanScore"
+                        layout="@layout/media_page_item_stat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/marginNormal" />
+
+                    <include
+                        android:id="@+id/statPopularity"
+                        layout="@layout/media_page_item_stat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/marginNormal" />
+
+                    <include
+                        android:id="@+id/statFavorites"
+                        layout="@layout/media_page_item_stat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/marginNormal" />
+
+                    <include
+                        android:id="@+id/statStudios"
+                        layout="@layout/media_page_item_stat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Format/Type Row -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/formatContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/layoutHorizontalPadding">
+
+                    <!-- Format items will be added dynamically -->
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Tags Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/layoutHorizontalPadding">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/tagsChipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="false"
+                    app:chipSpacingVertical="@dimen/chipRowSpacing">
+
+                    <!-- Tags will be added dynamically -->
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <ImageButton
+                    android:id="@+id/toggleSpoilerTags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/toggle_spoiler_tags"
+                    android:padding="@dimen/marginTiny"
+                    android:src="@drawable/ic_visibility_off" />
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:background="@color/lightGrey" />
+
+            <!-- Description Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/description"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/sectionTitleFontSize"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:fontFamily="@font/comfortaa"
+                android:lineSpacingMultiplier="1.3"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/bodyTextSize"
+                tools:text="The second season of Jujutsu Kaisen..." />
+
+            <TextView
+                android:id="@+id/descriptionSource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/captionTextSize"
+                tools:text="(Source: Crunchyroll)" />
+
+            <!-- Relations Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/relations"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/sectionTitleFontSize"
+                android:textStyle="bold" />
+
+            <!-- Relations progress indicator -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/relationsProgressActive"
+                    android:layout_width="@dimen/progressIndicatorWidth"
+                    android:layout_height="@dimen/progressBarHeight"
+                    android:background="@color/darkBlue" />
+
+                <View
+                    android:id="@+id/relationsProgressInactive"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/progressBarHeight"
+                    android:layout_weight="1"
+                    android:background="@color/lightGrey" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/relationsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/media_page_item_relation" />
+
+            <!-- Characters Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/characters"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/sectionTitleFontSize"
+                android:textStyle="bold" />
+
+            <!-- Characters progress indicator -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/charactersProgressActive"
+                    android:layout_width="@dimen/progressIndicatorWidth"
+                    android:layout_height="@dimen/progressBarHeight"
+                    android:background="@color/darkBlue" />
+
+                <View
+                    android:id="@+id/charactersProgressInactive"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/progressBarHeight"
+                    android:layout_weight="1"
+                    android:background="@color/lightGrey" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/charactersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+                android:paddingBottom="@dimen/marginSmall"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/media_page_item_character_column" />
+
+            <!-- Trailer Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/trailer"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/sectionTitleFontSize"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/trailerCard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/trailerHeight"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginSmall"
+                app:cardCornerRadius="@dimen/cardCornerRadius"
+                app:cardElevation="@dimen/zero">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/trailerThumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/trailer_thumbnail"
+                        android:scaleType="centerCrop"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                    <ImageView
+                        android:layout_width="@dimen/iconSizeLarge"
+                        android:layout_height="@dimen/iconSizeLarge"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/play_trailer"
+                        android:src="@drawable/ic_play_circle" />
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Score Distribution Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/score_distribution"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/sectionTitleFontSize"
+                android:textStyle="bold" />
+
+            <include
+                android:id="@+id/scoreDistributionChart"
+                layout="@layout/media_page_score_distribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginSmall" />
+
+            <!-- Recommendations Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/recommendations"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/sectionTitleFontSize"
+                android:textStyle="bold" />
+
+            <!-- Recommendations progress indicator -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/recommendationsProgressActive"
+                    android:layout_width="@dimen/progressIndicatorWidth"
+                    android:layout_height="@dimen/progressBarHeight"
+                    android:background="@color/darkBlue" />
+
+                <View
+                    android:id="@+id/recommendationsProgressInactive"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/progressBarHeight"
+                    android:layout_weight="1"
+                    android:background="@color/lightGrey" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recommendationsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+                android:paddingBottom="@dimen/marginSmall"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/media_page_item_recommendation" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

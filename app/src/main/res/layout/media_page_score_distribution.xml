@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/marginSmall">
+
+    <!-- Bar Chart Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/scoreChartHeight"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bar1Count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/captionTextSize"
+                android:visibility="gone"
+                tools:text="1"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/bar1"
+                android:layout_width="@dimen/scoreBarWidth"
+                android:layout_height="@dimen/marginNormal"
+                android:background="@drawable/score_bar_background" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bar2Count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/captionTextSize"
+                android:visibility="gone"
+                tools:text="1"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/bar2"
+                android:layout_width="@dimen/scoreBarWidth"
+                android:layout_height="@dimen/layoutHorizontalPadding"
+                android:background="@drawable/score_bar_background" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bar3Count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/captionTextSize"
+                tools:text="3" />
+
+            <View
+                android:id="@+id/bar3"
+                android:layout_width="@dimen/scoreBarWidth"
+                android:layout_height="@dimen/notesMinHeight"
+                android:background="@drawable/score_bar_background" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bar4Count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/captionTextSize"
+                android:visibility="gone"
+                tools:text="1"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/bar4"
+                android:layout_width="@dimen/scoreBarWidth"
+                android:layout_height="@dimen/marginNormal"
+                android:background="@drawable/score_bar_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Labels Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:text="@string/score_25"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/bodyTextSize"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:text="@string/score_50"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/bodyTextSize"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:text="@string/score_75"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/bodyTextSize"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:text="@string/score_100"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/bodyTextSize"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
