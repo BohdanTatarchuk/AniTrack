@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.AniTrack" parent="Base.Theme.AniTrack" />
+
+    <!-- Theme for Media Detail with transparent status bar -->
+    <style name="Theme.AniTrack.NoActionBar" parent="Theme.AniTrack">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>

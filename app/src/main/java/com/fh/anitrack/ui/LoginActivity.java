@@ -51,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleLogin() {
-        //Todo call an auth service
+        // TODO: call an auth service
+        // For testing, navigate to MediaDetailActivity
+        Intent intent = new Intent(LoginActivity.this, MediaDetailActivity.class);
+        startActivity(intent);
     }
 }

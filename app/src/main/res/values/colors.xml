@@ -9,4 +9,14 @@
     <color name="darkBlue10op">#E8E1D8</color>
     <color name="darkBlue35op">#9E9AAE</color>
     <color name="darkBlue">#15185F</color>
+
+    <!-- Additional colors for Media Detail -->
+    <color name="accentBlue">#3371FF</color>
+    <color name="accentGreen">#4CAF50</color>
+    <color name="gold">#FFD700</color>
+    <color name="tagChipBackground">#EEEEF5</color>
+    <color name="tabChipSelected">#15185F</color>
+    <color name="tabChipUnselected">#FFFFFF</color>
+    <color name="tabChipTextSelected">#FFFFFF</color>
+    <color name="tabChipTextUnselected">#15185F</color>
 </resources>

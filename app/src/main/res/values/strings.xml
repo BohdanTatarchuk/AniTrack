@@ -13,4 +13,68 @@
     <string name="terms_of_service">You agree to our <a href="https://anilist.co/terms">terms of service</a></string>
     <string name="reset_password">Reset password</string>
     <string name="back_to_login"><u>Back to login</u></string>
+
+    <!-- Media Detail Screen -->
+    <string name="add_to_list">Add to List</string>
+    <string name="favorite">Favorite</string>
+    <string name="media_thumbnail">Media thumbnail</string>
+
+    <!-- Tab labels -->
+    <string name="tab_overview">Overview</string>
+    <string name="tab_watch">Watch</string>
+    <string name="tab_characters">Characters</string>
+    <string name="tab_staff">Staff</string>
+    <string name="tab_reviews">Reviews</string>
+    <string name="tab_stats">Stats</string>
+
+    <!-- Section titles -->
+    <string name="description">Description</string>
+    <string name="relations">Relations</string>
+    <string name="characters">Characters</string>
+    <string name="trailer">Trailer</string>
+    <string name="score_distribution">Score Distribution</string>
+    <string name="recommendations">Recommendations</string>
+
+    <!-- Stats labels -->
+    <string name="average_score">Average Score</string>
+    <string name="mean_score">Mean Score</string>
+    <string name="popularity">Popularity</string>
+    <string name="favorites">Favorites</string>
+    <string name="studios">Studios</string>
+
+    <!-- Score labels -->
+    <string name="score_25">25</string>
+    <string name="score_50">50</string>
+    <string name="score_75">75</string>
+    <string name="score_100">100</string>
+
+    <!-- Content descriptions -->
+    <string name="toggle_spoiler_tags">Toggle spoiler tags</string>
+    <string name="relation_image">Related media image</string>
+    <string name="character_image">Character image</string>
+    <string name="voice_actor_image">Voice actor image</string>
+    <string name="recommendation_image">Recommended media image</string>
+    <string name="trailer_thumbnail">Trailer thumbnail</string>
+    <string name="play_trailer">Play trailer</string>
+
+    <!-- Add to List Dialog -->
+    <string name="status">Status</string>
+    <string name="score">Score</string>
+    <string name="episode_progress">Episode Progress</string>
+    <string name="start_date">Start Date</string>
+    <string name="finish_date">Finish Date</string>
+    <string name="total_rewatches">Total rewatches</string>
+    <string name="notes">Notes</string>
+    <string name="private_entry">Private</string>
+    <string name="save">Save</string>
+    <string name="adjust_score">Adjust score</string>
+    <string name="adjust_episode">Adjust episode</string>
+    <string name="adjust_rewatches">Adjust rewatches</string>
+
+    <!-- Status options -->
+    <string name="status_watching">Watching</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_on_hold">On Hold</string>
+    <string name="status_dropped">Dropped</string>
+    <string name="status_plan_to_watch">Plan to Watch</string>
 </resources>

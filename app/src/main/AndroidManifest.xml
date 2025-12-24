@@ -11,6 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AniTrack">
         <activity
+            android:name=".ui.MediaDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AniTrack.NoActionBar" />
+        <activity
             android:name=".ui.ForgotPasswordActivity"
             android:exported="false" />
         <activity
