@@ -1,9 +1,7 @@
 package com.fh.anitrack.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -53,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private void handleLogin() {
         // TODO: call an auth service
         // For testing, navigate to MediaDetailActivity
-        Intent intent = new Intent(LoginActivity.this, MediaDetailActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
 }

@@ -32,7 +32,7 @@ import com.google.android.material.chip.ChipGroup;
  * By default, all data fields are empty. To populate with test data,
  * set USE_MOCK_DATA = true. For production, integrate with your backend service.
  */
-public class MediaDetailActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     // Set to true to load mock data for testing, false for empty/production state
     private static final boolean USE_MOCK_DATA = true;

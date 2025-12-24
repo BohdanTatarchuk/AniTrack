@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AniTrack">
         <activity
-            android:name=".ui.MediaDetailActivity"
+            android:name=".ui.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.AniTrack.NoActionBar" />
         <activity
