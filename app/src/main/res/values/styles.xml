@@ -40,4 +40,13 @@
         <item name="android:fontFamily">@font/comfortaa</item>
         <item name="android:textColor">@color/darkGrey</item>
     </style>
+
+    <style name="FormattingButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
 </resources>

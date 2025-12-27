@@ -1,4 +1,4 @@
-package com.fh.anitrack.ui;
+package com.fh.anitrack.ui.browse;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

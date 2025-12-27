@@ -1,4 +1,4 @@
-package com.fh.anitrack.ui;
+package com.fh.anitrack.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.fh.anitrack.R;
+import com.fh.anitrack.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 
 public class LoginActivity extends AppCompatActivity {

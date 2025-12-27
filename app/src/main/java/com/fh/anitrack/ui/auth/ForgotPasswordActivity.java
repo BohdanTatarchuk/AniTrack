@@ -1,4 +1,4 @@
-package com.fh.anitrack.ui;
+package com.fh.anitrack.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;

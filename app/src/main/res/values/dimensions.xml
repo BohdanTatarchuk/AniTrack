@@ -75,4 +75,7 @@
     <!-- Elevation -->
     <dimen name="cardElevation">2dp</dimen>
     <dimen name="header_heíght">70dp</dimen>
+    <dimen name="fontSizeHeader">22sp</dimen>
+    <dimen name="homeEditTextHeight">80dp</dimen>
+    <dimen name="homeBorderRadius">20dp</dimen>
 </resources>

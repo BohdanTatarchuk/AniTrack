@@ -97,4 +97,23 @@
     <string name="profile_picture">profile picture</string>
     <string name="search_icon">search icon</string>
     <string name="menu_button">menu button</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_read_the_guidelines_before_posting">Please read the guidelines before posting</string>
+    <string name="video">Video</string>
+    <string name="ordered_list">ordered list</string>
+    <string name="unordered_list">unordered List</string>
+    <string name="heading">Heading</string>
+    <string name="center">Center</string>
+    <string name="quote">Quote</string>
+    <string name="html">HTML</string>
+    <string name="youtube">Youtube</string>
+    <string name="image">Image</string>
+    <string name="link">Link</string>
+    <string name="spoiler">Spoiler</string>
+    <string name="strikethrough">Strikethrough</string>
+    <string name="italic">Italic</string>
+    <string name="bold">Bold</string>
+    <string name="preview">Preview</string>
+    <string name="your_status_will_appear_here">Your status will appear here...</string>
 </resources>

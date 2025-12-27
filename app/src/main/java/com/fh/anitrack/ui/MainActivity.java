@@ -22,5 +22,12 @@ public class MainActivity extends AppCompatActivity {
         View btnMenu = headerView.findViewById(R.id.btnMenu);
 
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.END));
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragment_container, new HomeFragment())
+                    .commit();
+        }
     }
 }

@@ -10,133 +10,252 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideS"
+            android:id="@+id/guideStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/layoutHorizontalPadding" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideE"
+            android:id="@+id/guideEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/layoutHorizontalPadding" />
 
-        <!-- Activity Header -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.03" />
+
         <TextView
             android:id="@+id/tvActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:fontFamily="@font/comfortaa"
             android:text="@string/activity"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="@id/guideS"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/fontSizeHeader"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/guideTop" />
 
-        <!-- Form Editor Section (Simplified for space, would contain the icons) -->
         <LinearLayout
-            android:id="@+id/editorControls"
+            android:id="@+id/formattingOptions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/darkBlue10op"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="@id/guideE"
-            app:layout_constraintStart_toStartOf="@id/guideS"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:background="@drawable/bg_rounded_input"
+            android:orientation="vertical"
+            android:padding="@dimen/paddingTiny"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
             app:layout_constraintTop_toBottomOf="@id/tvActivity">
-            <!-- Icon buttons for B, I, etc. would go here -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_bold" android:contentDescription="@string/bold" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_italic" android:contentDescription="@string/italic" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_crossed" android:contentDescription="@string/strikethrough" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_visibility" android:contentDescription="@string/spoiler" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_link" android:contentDescription="@string/link" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_image" android:contentDescription="@string/image" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_youtube" android:contentDescription="@string/youtube" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:orientation="horizontal"
+                android:weightSum="7">
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_video" android:contentDescription="@string/video" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_nlist" android:contentDescription="@string/ordered_list" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_unlist" android:contentDescription="@string/unordered_list" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_h" android:contentDescription="@string/heading" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_center" android:contentDescription="@string/center" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_quote" android:contentDescription="@string/quote" />
+                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_html" android:contentDescription="@string/html" />
+            </LinearLayout>
         </LinearLayout>
 
         <EditText
             android:id="@+id/etStatus"
-            android:importantForAutofill="no"
-            android:inputType="text"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:background="@color/darkBlue10op"
+            android:textSize="@dimen/labelFontSize"
+            android:layout_height="@dimen/homeEditTextHeight"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/bg_rounded_input"
             android:fontFamily="@font/comfortaa"
             android:gravity="top"
             android:hint="@string/write_a_status"
-            android:padding="12dp"
-            app:layout_constraintEnd_toEndOf="@id/guideE"
-            app:layout_constraintStart_toStartOf="@id/guideS"
-            app:layout_constraintTop_toBottomOf="@id/editorControls" />
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:paddingHorizontal="@dimen/textFieldHorizontalPadding"
+            android:paddingVertical="@dimen/textFieldVerticalPadding"
+            android:textColorHint="@color/darkBlue35op"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/formattingOptions" />
 
-        <!-- Buttons -->
+        <TextView
+            android:id="@+id/tvPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/preview"
+            android:textSize="@dimen/fontSizeHeader"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/etStatus" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/previewContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/bg_rounded_input"
+            android:padding="@dimen/textFieldHorizontalPadding"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/tvPreview">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/previewAvatarCard"
+                android:layout_width="@dimen/iconSizeBig"
+                android:layout_height="@dimen/iconSizeBig"
+                app:cardCornerRadius="@dimen/homeBorderRadius"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/user_avatar"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_picture" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvPreviewUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginSmall"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/username"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/labelFontSize"
+                app:layout_constraintBottom_toBottomOf="@id/previewAvatarCard"
+                app:layout_constraintStart_toEndOf="@id/previewAvatarCard"
+                app:layout_constraintTop_toTopOf="@id/previewAvatarCard" />
+
+            <TextView
+                android:id="@+id/tvPreviewStatusContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/your_status_will_appear_here"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/labelFontSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previewAvatarCard" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textViewGuidelines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/please_read_the_guidelines_before_posting"
+            android:textColor="@color/darkBlue"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toBottomOf="@+id/previewContainer" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPublish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/marginTiny"
             android:backgroundTint="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
             android:text="@string/publish"
             android:textAllCaps="false"
-            android:fontFamily="@font/comfortaa"
-            app:layout_constraintEnd_toEndOf="@id/guideE"
-            app:layout_constraintTop_toBottomOf="@id/etStatus" />
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGuidelines" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/marginTiny"
+            android:fontFamily="@font/comfortaa"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:fontFamily="@font/comfortaa"
             app:layout_constraintBottom_toBottomOf="@id/btnPublish"
-            app:layout_constraintEnd_toStartOf="@id/btnPublish" />
+            app:layout_constraintEnd_toStartOf="@id/btnPublish"
+            app:layout_constraintTop_toTopOf="@id/btnPublish" />
 
-        <!-- Activity Feed (Using a layout container for example) -->
-        <LinearLayout
-            android:id="@+id/feedContainer"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFeed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@id/guideE"
-            app:layout_constraintStart_toStartOf="@id/guideS"
-            app:layout_constraintTop_toBottomOf="@id/btnPublish">
-
-            <!-- Include items like item_activity_post here -->
-        </LinearLayout>
+            android:layout_marginTop="@dimen/marginNormal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/btnPublish" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLoadMoreFeed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/marginTiny"
             android:backgroundTint="@color/darkBlue"
-            android:text="@string/load_more"
             android:fontFamily="@font/comfortaa"
-            app:layout_constraintEnd_toEndOf="@id/guideE"
-            app:layout_constraintStart_toStartOf="@id/guideS"
-            app:layout_constraintTop_toBottomOf="@id/feedContainer" />
+            android:text="@string/load_more"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/rvFeed" />
 
         <TextView
             android:id="@+id/tvTrending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="@dimen/marginNormal"
             android:fontFamily="@font/comfortaa"
             android:text="@string/trending_anime_anp_manga"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@id/guideS"
-            app:layout_constraintTop_toBottomOf="@id/btnLoadMoreFeed" />
+            android:textSize="@dimen/fontSizeHeader"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoadMoreFeed" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTrending"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/marginNormal"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
-            app:layout_constraintEnd_toEndOf="@id/guideE"
-            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
             app:layout_constraintTop_toBottomOf="@id/tvTrending" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadMoreTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:backgroundTint="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/load_more"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/rvTrending" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

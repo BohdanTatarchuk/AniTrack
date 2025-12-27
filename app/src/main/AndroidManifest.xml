@@ -14,17 +14,17 @@
             android:name=".ui.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MediaActivity"
+            android:name=".ui.browse.MediaActivity"
             android:exported="false"
             android:theme="@style/Theme.AniTrack.NoActionBar" />
         <activity
-            android:name=".ui.ForgotPasswordActivity"
+            android:name=".ui.auth.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SingUpActivity"
+            android:name=".ui.auth.SingUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
