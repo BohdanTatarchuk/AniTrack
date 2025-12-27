@@ -51,6 +51,7 @@
     <dimen name="thumbnailExpandedHeight">600dp</dimen>
     <dimen name="iconSizeSmall">16dp</dimen>
     <dimen name="iconSizeMedium">24dp</dimen>
+    <dimen name="iconSizeBig">40dp</dimen>
     <dimen name="iconSizeLarge">60dp</dimen>
     <dimen name="toolbarButtonHeight">36dp</dimen>
     <dimen name="chipMinHeight">36dp</dimen>
@@ -73,4 +74,5 @@
 
     <!-- Elevation -->
     <dimen name="cardElevation">2dp</dimen>
+    <dimen name="header_heíght">70dp</dimen>
 </resources>

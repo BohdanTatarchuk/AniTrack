@@ -30,4 +30,14 @@
         <item name="chipSpacingHorizontal">@dimen/chipSpacingSmall</item>
         <item name="chipSpacingVertical">@dimen/chipSpacingSmall</item>
     </style>
+
+    <!-- Navigation right sidebar text style -->
+    <style name="NavMenuItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/titleFontSize</item>
+        <item name="android:padding">@dimen/textFieldHorizontalPadding</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textColor">@color/darkGrey</item>
+    </style>
 </resources>

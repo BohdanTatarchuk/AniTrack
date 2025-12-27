@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/layoutHorizontalPadding" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/layoutHorizontalPadding" />
+
+        <!-- Activity Header -->
+        <TextView
+            android:id="@+id/tvActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/activity"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Form Editor Section (Simplified for space, would contain the icons) -->
+        <LinearLayout
+            android:id="@+id/editorControls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/darkBlue10op"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="@id/guideE"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toBottomOf="@id/tvActivity">
+            <!-- Icon buttons for B, I, etc. would go here -->
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etStatus"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="@color/darkBlue10op"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="top"
+            android:hint="@string/write_a_status"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="@id/guideE"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toBottomOf="@id/editorControls" />
+
+        <!-- Buttons -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPublish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/darkBlue"
+            android:text="@string/publish"
+            android:textAllCaps="false"
+            android:fontFamily="@font/comfortaa"
+            app:layout_constraintEnd_toEndOf="@id/guideE"
+            app:layout_constraintTop_toBottomOf="@id/etStatus" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:fontFamily="@font/comfortaa"
+            app:layout_constraintBottom_toBottomOf="@id/btnPublish"
+            app:layout_constraintEnd_toStartOf="@id/btnPublish" />
+
+        <!-- Activity Feed (Using a layout container for example) -->
+        <LinearLayout
+            android:id="@+id/feedContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/guideE"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toBottomOf="@id/btnPublish">
+
+            <!-- Include items like item_activity_post here -->
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadMoreFeed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/darkBlue"
+            android:text="@string/load_more"
+            android:fontFamily="@font/comfortaa"
+            app:layout_constraintEnd_toEndOf="@id/guideE"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toBottomOf="@id/feedContainer" />
+
+        <TextView
+            android:id="@+id/tvTrending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/trending_anime_anp_manga"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toBottomOf="@id/btnLoadMoreFeed" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTrending"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintEnd_toEndOf="@id/guideE"
+            app:layout_constraintStart_toStartOf="@id/guideS"
+            app:layout_constraintTop_toBottomOf="@id/tvTrending" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
