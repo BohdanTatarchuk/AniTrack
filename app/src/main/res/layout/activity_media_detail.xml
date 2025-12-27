@@ -27,7 +27,7 @@
             app:expandedTitleMarginBottom="@dimen/marginNormal"
             app:expandedTitleMarginStart="@dimen/layoutHorizontalPadding"
             app:expandedTitleTextColor="@color/pearl"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleCollapseMode="scale">
 
             <!-- Header with thumbnail and badges -->

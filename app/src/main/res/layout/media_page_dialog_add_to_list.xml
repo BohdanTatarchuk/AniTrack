@@ -62,12 +62,16 @@
             android:orientation="horizontal"
             android:padding="@dimen/inputFieldPadding">
 
-            <TextView
+            <EditText
                 android:id="@+id/scoreValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="no"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
+                android:hint="0"
+                android:inputType="numberDecimal"
                 android:textColor="@color/darkGrey"
                 android:textSize="@dimen/inputTextSize"
                 tools:text="0" />
@@ -101,12 +105,16 @@
             android:orientation="horizontal"
             android:padding="@dimen/inputFieldPadding">
 
-            <TextView
+            <EditText
                 android:id="@+id/episodeProgressValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="no"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
+                android:hint="0"
+                android:inputType="number"
                 android:textColor="@color/darkGrey"
                 android:textSize="@dimen/inputTextSize"
                 tools:text="23" />
@@ -143,13 +151,17 @@
                     android:textSize="@dimen/labelFontSize"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
                     android:id="@+id/startDateValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/marginTiny"
+                    android:autofillHints="no"
                     android:background="@drawable/input_field_background"
+                    android:focusable="true"
                     android:fontFamily="@font/comfortaa"
+                    android:hint="@string/start_date"
+                    android:inputType="date"
                     android:padding="@dimen/inputFieldPadding"
                     android:textColor="@color/darkGrey"
                     android:textSize="@dimen/inputTextSize"
@@ -173,13 +185,17 @@
                     android:textSize="@dimen/labelFontSize"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
                     android:id="@+id/finishDateValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/marginTiny"
+                    android:autofillHints="no"
                     android:background="@drawable/input_field_background"
+                    android:focusable="true"
                     android:fontFamily="@font/comfortaa"
+                    android:hint="@string/finish_date"
+                    android:inputType="date"
                     android:padding="@dimen/inputFieldPadding"
                     android:textColor="@color/darkGrey"
                     android:textSize="@dimen/inputTextSize"
@@ -209,12 +225,16 @@
             android:orientation="horizontal"
             android:padding="@dimen/inputFieldPadding">
 
-            <TextView
+            <EditText
                 android:id="@+id/rewatchesValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="no"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
+                android:hint="0"
+                android:inputType="number"
                 android:textColor="@color/darkGrey"
                 android:textSize="@dimen/inputTextSize"
                 tools:text="23" />

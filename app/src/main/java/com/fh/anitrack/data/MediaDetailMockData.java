@@ -26,6 +26,11 @@ public class MediaDetailMockData {
 
     // Stats
     public static final String FAVORITE_COUNT = "18.1k";
+    public static final String STAT_AVERAGE_SCORE = "85%";
+    public static final String STAT_MEAN_SCORE = "84%";
+    public static final String STAT_POPULARITY = "#25";
+    public static final String STAT_FAVORITES = "18.1k";
+    public static final String STAT_STUDIOS = "MAPPA";
     public static final String STAT_FORMAT = "TV";
     public static final String STAT_EPISODES = "23";
     public static final String STAT_DURATION = "24 min";

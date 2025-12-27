@@ -34,6 +34,20 @@
             android:textSize="@dimen/captionTextSize"
             tools:text="Source" />
 
+        <TextView
+            android:id="@+id/relationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:maxLines="2"
+            android:minLines="2"
+            android:padding="@dimen/marginTiny"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/captionTextSize"
+            tools:text="Jujutsu Kaisen 0" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

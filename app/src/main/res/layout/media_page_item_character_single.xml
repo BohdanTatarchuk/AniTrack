@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/pearl"
     app:cardCornerRadius="@dimen/cardCornerRadius"
     app:cardElevation="@dimen/cardElevation">
 
@@ -115,9 +115,9 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:cardCornerRadius="20dp"
+                android:layout_width="@dimen/avatarSizeSmall"
+                android:layout_height="@dimen/avatarSizeSmall"
+                app:cardCornerRadius="@dimen/avatarCornerRadius"
                 app:cardElevation="@dimen/zero">
 
                 <ImageView

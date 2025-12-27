@@ -1,12 +1,16 @@
 package com.fh.anitrack.ui;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,15 +20,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fh.anitrack.R;
 import com.fh.anitrack.data.MediaDetailMockData;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+
+import java.util.Calendar;
 
 /**
  * Media Detail Activity - displays detailed information about an anime/manga.
@@ -141,6 +149,78 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.trailerCard).setOnClickListener(v -> {
             // Open trailer (YouTube intent, etc.)
         });
+
+        // Setup toolbar hide/show behavior after thumbnail collapses
+        setupToolbarScrollBehavior();
+    }
+
+    private void setupToolbarScrollBehavior() {
+        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        // Track if thumbnail is fully collapsed
+        final boolean[] isCollapsed = {false};
+        final int[] lastScrollY = {0};
+        final boolean[] toolbarHidden = {false};
+
+        // Listen to AppBar offset to know when thumbnail is collapsed
+        appBarLayout.addOnOffsetChangedListener((appBar, verticalOffset) -> {
+            int totalScrollRange = appBar.getTotalScrollRange();
+            // Thumbnail is fully collapsed when offset equals negative total range
+            isCollapsed[0] = Math.abs(verticalOffset) >= totalScrollRange;
+            
+            // If thumbnail expanded again, restore toolbar
+            if (!isCollapsed[0] && toolbarHidden[0]) {
+                toolbar.animate()
+                        .translationY(0)
+                        .setDuration(200)
+                        .start();
+                nestedScrollView.animate()
+                        .translationY(0)
+                        .setDuration(200)
+                        .start();
+                toolbarHidden[0] = false;
+            }
+        });
+
+        // Listen to scroll to hide/show toolbar after thumbnail is collapsed
+        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (!isCollapsed[0]) {
+                lastScrollY[0] = scrollY;
+                return;
+            }
+
+            // Thumbnail is collapsed, now handle toolbar visibility
+            int deltaY = scrollY - lastScrollY[0];
+            int toolbarHeight = toolbar.getHeight();
+            
+            if (deltaY > 5 && !toolbarHidden[0]) {
+                // Scrolling down - hide toolbar and move content up
+                toolbar.animate()
+                        .translationY(-toolbarHeight)
+                        .setDuration(200)
+                        .start();
+                nestedScrollView.animate()
+                        .translationY(-toolbarHeight)
+                        .setDuration(200)
+                        .start();
+                toolbarHidden[0] = true;
+            } else if (deltaY < -5 && toolbarHidden[0]) {
+                // Scrolling up - show toolbar and restore content
+                toolbar.animate()
+                        .translationY(0)
+                        .setDuration(200)
+                        .start();
+                nestedScrollView.animate()
+                        .translationY(0)
+                        .setDuration(200)
+                        .start();
+                toolbarHidden[0] = false;
+            }
+            
+            lastScrollY[0] = scrollY;
+        });
     }
 
     /**
@@ -171,11 +251,11 @@ public class MainActivity extends AppCompatActivity {
         favoriteCount.setText(MediaDetailMockData.FAVORITE_COUNT);
 
         // Stats
-        setupStatColumn(R.id.statAverageScore, "Average Score", "85%");
-        setupStatColumn(R.id.statMeanScore, "Mean Score", "84%");
-        setupStatColumn(R.id.statPopularity, "Popularity", "#25");
-        setupStatColumn(R.id.statFavorites, "Favorites", "18.1k");
-        setupStatColumn(R.id.statStudios, "Studios", "MAPPA");
+        setupStatColumn(R.id.statAverageScore, "Average Score", MediaDetailMockData.STAT_AVERAGE_SCORE);
+        setupStatColumn(R.id.statMeanScore, "Mean Score", MediaDetailMockData.STAT_MEAN_SCORE);
+        setupStatColumn(R.id.statPopularity, "Popularity", MediaDetailMockData.STAT_POPULARITY);
+        setupStatColumn(R.id.statFavorites, "Favorites", MediaDetailMockData.STAT_FAVORITES);
+        setupStatColumn(R.id.statStudios, "Studios", MediaDetailMockData.STAT_STUDIOS);
 
         // Format row
         LinearLayout formatContainer = findViewById(R.id.formatContainer);
@@ -252,6 +332,44 @@ public class MainActivity extends AppCompatActivity {
                 .inflate(R.layout.media_page_dialog_add_to_list, null);
         dialog.setContentView(dialogView);
 
+        // Setup status spinner
+        Spinner statusSpinner = dialogView.findViewById(R.id.statusSpinner);
+        String[] statusOptions = getResources().getStringArray(R.array.anime_status);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, statusOptions);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(statusAdapter);
+
+        // Setup date pickers
+        EditText startDateValue = dialogView.findViewById(R.id.startDateValue);
+        EditText finishDateValue = dialogView.findViewById(R.id.finishDateValue);
+
+        startDateValue.setFocusable(false);
+        startDateValue.setClickable(true);
+        startDateValue.setOnClickListener(v -> showDatePicker(startDateValue));
+
+        finishDateValue.setFocusable(false);
+        finishDateValue.setClickable(true);
+        finishDateValue.setOnClickListener(v -> showDatePicker(finishDateValue));
+
+        // Setup increment/decrement buttons
+        EditText scoreValue = dialogView.findViewById(R.id.scoreValue);
+        EditText episodeProgressValue = dialogView.findViewById(R.id.episodeProgressValue);
+        EditText rewatchesValue = dialogView.findViewById(R.id.rewatchesValue);
+
+        ImageView scoreUpDown = dialogView.findViewById(R.id.scoreUpDown);
+        ImageView episodeUpDown = dialogView.findViewById(R.id.episodeUpDown);
+        ImageView rewatchesUpDown = dialogView.findViewById(R.id.rewatchesUpDown);
+
+        // Score increment (on click cycles: increment, or you could add long press for decrement)
+        scoreUpDown.setOnClickListener(v -> incrementValue(scoreValue, 0, 10, 0.5));
+
+        // Episode progress increment
+        episodeUpDown.setOnClickListener(v -> incrementValue(episodeProgressValue, 0, Integer.MAX_VALUE, 1));
+
+        // Rewatches increment
+        rewatchesUpDown.setOnClickListener(v -> incrementValue(rewatchesValue, 0, Integer.MAX_VALUE, 1));
+
         // Setup dialog views
         MaterialButton saveButton = dialogView.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> {
@@ -260,6 +378,48 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    private void incrementValue(EditText field, double min, double max, double step) {
+        String currentText = field.getText().toString().trim();
+        double currentValue = 0;
+        
+        if (!currentText.isEmpty()) {
+            try {
+                currentValue = Double.parseDouble(currentText);
+            } catch (NumberFormatException e) {
+                currentValue = min;
+            }
+        }
+
+        currentValue += step;
+        if (currentValue > max) {
+            currentValue = min; // Wrap around to minimum
+        }
+
+        // Format the value (show decimal only if step has decimal)
+        if (step % 1 == 0) {
+            field.setText(String.valueOf((int) currentValue));
+        } else {
+            field.setText(String.format("%.1f", currentValue));
+        }
+    }
+
+    private void showDatePicker(EditText dateField) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Format the date as YYYY-MM-DD
+                    String formattedDate = String.format("%04d-%02d-%02d",
+                            selectedYear, selectedMonth + 1, selectedDay);
+                    dateField.setText(formattedDate);
+                }, year, month, day);
+
+        datePickerDialog.show();
     }
 
     private void setupDynamicScrollbar(RecyclerView recyclerView, View activeIndicator, View inactiveIndicator) {
@@ -277,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateScrollIndicator(RecyclerView recyclerView, View activeIndicator, View inactiveIndicator) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        if (layoutManager == null) return;
+        if (layoutManager == null || activeIndicator == null || inactiveIndicator == null) return;
 
         int totalItemCount = layoutManager.getItemCount();
         if (totalItemCount == 0) return;
@@ -337,9 +497,18 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             if (position < relationTypes.length) {
                 holder.relationType.setText(relationTypes[position]);
+                holder.relationTitle.setText(relationTitles[position]);
             }
             // Set a placeholder color for the image
             holder.relationImage.setBackgroundColor(getColor(R.color.darkBlue35op));
+
+            // Set click listener for the entire card
+            holder.itemView.setOnClickListener(v -> {
+                if (position < relationTitles.length) {
+                    // TODO: Open related media detail page
+                    // For now, show a toast or log
+                }
+            });
         }
 
         @Override
@@ -349,11 +518,13 @@ public class MainActivity extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView relationType;
+            TextView relationTitle;
             ImageView relationImage;
 
             ViewHolder(View itemView) {
                 super(itemView);
                 relationType = itemView.findViewById(R.id.relationType);
+                relationTitle = itemView.findViewById(R.id.relationTitle);
                 relationImage = itemView.findViewById(R.id.relationImage);
             }
         }
@@ -385,6 +556,16 @@ public class MainActivity extends AppCompatActivity {
                 holder.characterImage1.setBackgroundColor(getColor(R.color.darkBlue));
                 holder.voiceActorImage1.setBackgroundColor(getColor(R.color.darkBlue35op));
                 holder.card1.setVisibility(View.VISIBLE);
+
+                // Click listener for character avatar
+                holder.characterImage1.setOnClickListener(v -> {
+                    // TODO: Open character detail page
+                });
+
+                // Click listener for voice actor avatar
+                holder.voiceActorImage1.setOnClickListener(v -> {
+                    // TODO: Open voice actor/staff detail page
+                });
             } else {
                 holder.card1.setVisibility(View.INVISIBLE);
             }
@@ -399,6 +580,16 @@ public class MainActivity extends AppCompatActivity {
                 holder.characterImage2.setBackgroundColor(getColor(R.color.darkBlue));
                 holder.voiceActorImage2.setBackgroundColor(getColor(R.color.darkBlue35op));
                 holder.card2.setVisibility(View.VISIBLE);
+
+                // Click listener for character avatar
+                holder.characterImage2.setOnClickListener(v -> {
+                    // TODO: Open character detail page
+                });
+
+                // Click listener for voice actor avatar
+                holder.voiceActorImage2.setOnClickListener(v -> {
+                    // TODO: Open voice actor/staff detail page
+                });
             } else {
                 holder.card2.setVisibility(View.INVISIBLE);
             }
@@ -456,6 +647,13 @@ public class MainActivity extends AppCompatActivity {
             }
             // Set a placeholder color for the image
             holder.recommendationImage.setBackgroundColor(getColor(R.color.darkBlue));
+
+            // Set click listener for the entire card
+            holder.itemView.setOnClickListener(v -> {
+                if (position < recommendationTitles.length) {
+                    // TODO: Open recommended media detail page
+                }
+            });
         }
 
         @Override

@@ -77,4 +77,15 @@
     <string name="status_on_hold">On Hold</string>
     <string name="status_dropped">Dropped</string>
     <string name="status_plan_to_watch">Plan to Watch</string>
+    <string name="status_rewatching">Rewatching</string>
+    <string name="status_paused">Paused</string>
+
+    <string-array name="anime_status">
+        <item>Watching</item>
+        <item>Plan to watch</item>
+        <item>Completed</item>
+        <item>Rewatching</item>
+        <item>Paused</item>
+        <item>Dropped</item>
+    </string-array>
 </resources>

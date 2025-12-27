@@ -23,7 +23,7 @@
             android:layout_marginStart="@dimen/marginSmall"
             android:backgroundTint="@color/accentBlue"
             android:fontFamily="@font/comfortaa"
-            android:gravity="center"
+            android:gravity="center_vertical|center"
             android:minHeight="@dimen/zero"
             android:paddingHorizontal="@dimen/marginSmall"
             android:text="@string/add_to_list"
@@ -48,7 +48,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/favorite"
             android:padding="@dimen/marginTiny"
-            android:src="@drawable/ic_heart_outline" />
+            android:src="@drawable/selector_heart" />
 
         <TextView
             android:id="@+id/favoriteCount"
