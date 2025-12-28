@@ -71,11 +71,11 @@
         app:layout_constraintStart_toStartOf="@+id/guideStart"
         app:layout_constraintTop_toBottomOf="@id/btnClose">
 
-        <TextView style="@style/NavMenuItem" android:text="@string/home" />
-        <TextView style="@style/NavMenuItem" android:text="@string/profile" />
-        <TextView style="@style/NavMenuItem" android:text="@string/anime_list" />
-        <TextView style="@style/NavMenuItem" android:text="@string/manga_list" />
-        <TextView style="@style/NavMenuItem" android:text="@string/browse" />
+        <TextView android:id="@+id/navHome" style="@style/NavMenuItem" android:text="@string/home" />
+        <TextView android:id="@+id/navProfile" style="@style/NavMenuItem" android:text="@string/profile" />
+        <TextView android:id="@+id/navAnimeList" style="@style/NavMenuItem" android:text="@string/anime_list" />
+        <TextView android:id="@+id/navMangaList" style="@style/NavMenuItem" android:text="@string/manga_list" />
+        <TextView android:id="@+id/navBrowse" style="@style/NavMenuItem" android:text="@string/browse" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

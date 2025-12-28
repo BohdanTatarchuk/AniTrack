@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.fh.anitrack.R;
+import com.fh.anitrack.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
