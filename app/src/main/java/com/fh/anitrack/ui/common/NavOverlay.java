@@ -17,35 +17,19 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
-import com.fh.anitrack.api.AniListQueries;
-import com.fh.anitrack.api.AniListService;
-import com.fh.anitrack.api.AuthRepository;
-import com.fh.anitrack.api.GraphQLRequest;
-import com.fh.anitrack.api.RetrofitClient;
-import com.fh.anitrack.api.response.UserResponse;
-import com.fh.anitrack.ui.browse.BrowsePage;
+import com.fh.anitrack.ui.browse.MediaPage;
 import com.fh.anitrack.ui.home.HomeFragment;
-import com.fh.anitrack.ui.login.LoginActivity;
+import com.fh.anitrack.ui.browse.BrowsePage;
 import com.fh.anitrack.ui.notifications.NotificationsPage;
 import com.fh.anitrack.ui.profile.ProfileAnimeList;
 import com.fh.anitrack.ui.profile.ProfileMangaList;
 import com.fh.anitrack.ui.profile.ProfileOverview;
 import com.fh.anitrack.ui.settings.SettingsProfile;
 
-import java.util.HashMap;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class NavOverlay extends Fragment {
 
     private DrawerLayout drawerLayout;
-    private ImageView userAvatar;
-    private TextView navUsername;
-    private AuthRepository authRepository;
 
     @Nullable
     @Override
@@ -59,6 +43,7 @@ public class NavOverlay extends Fragment {
         navUsername = view.findViewById(R.id.navUsername);
 
         view.findViewById(R.id.btnClose).setOnClickListener(v -> closeDrawer());
+
         view.findViewById(R.id.navHome).setOnClickListener(v -> replaceFragment(new HomeFragment()));
         view.findViewById(R.id.navProfile).setOnClickListener(v -> replaceFragment(new ProfileOverview()));
         view.findViewById(R.id.navAnimeList).setOnClickListener(v -> replaceFragment(new ProfileAnimeList()));
@@ -145,6 +130,7 @@ public class NavOverlay extends Fragment {
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+
         closeDrawer();
     }
 
