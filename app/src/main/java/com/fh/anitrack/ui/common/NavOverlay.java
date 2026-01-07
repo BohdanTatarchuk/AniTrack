@@ -21,6 +21,9 @@ import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
 import com.fh.anitrack.ui.browse.MediaPage;
 import com.fh.anitrack.ui.home.HomeFragment;
+import com.fh.anitrack.ui.browse.BrowsePage;
+import com.fh.anitrack.ui.browse.MediaPage;
+import com.fh.anitrack.ui.home.HomeFragment;
 import com.fh.anitrack.api.AniListQueries;
 import com.fh.anitrack.api.AniListService;
 import com.fh.anitrack.api.AuthRepository;
@@ -147,7 +150,6 @@ public class NavOverlay extends Fragment {
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
-
         closeDrawer();
     }
 
