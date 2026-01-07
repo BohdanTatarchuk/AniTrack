@@ -23,7 +23,16 @@
                 android:id="@+id/searchHeader"
                 layout="@layout/browse_layout_search_header" />
 
-            <!-- Active Filter Chips (Always Visible) -->
+            <!-- Advanced Filters Section (toggleable) -->
+            <include
+                android:id="@+id/advancedFilters"
+                layout="@layout/browse_layout_advanced_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginSmall" />
+
+            <!-- Active Filter Tags (shown when filters are active) -->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/activeFiltersChipGroup"
                 android:layout_width="match_parent"
