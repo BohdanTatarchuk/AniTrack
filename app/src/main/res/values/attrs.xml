@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LabeledRangeSlider">
+        <attr name="lrs_minValue" format="float" />
+        <attr name="lrs_maxValue" format="float" />
+        <attr name="lrs_minSelectedValue" format="float" />
+        <attr name="lrs_maxSelectedValue" format="float" />
+        <attr name="lrs_stepSize" format="integer" />
+        <attr name="lrs_showAsInt" format="boolean" />
+    </declare-styleable>
+</resources>

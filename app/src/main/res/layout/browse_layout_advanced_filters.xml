@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_advanced_filters"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+    android:paddingVertical="@dimen/marginNormal"
+    android:visibility="gone"
+    android:id="@+id/advancedFiltersContainer">
+
+    <!-- Year Range Slider -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/year_range"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/bodyTextSize" />
+
+    <com.fh.anitrack.ui.browse.widget.LabeledRangeSlider
+        android:id="@+id/yearRangeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/marginTiny"
+        app:lrs_minValue="1970"
+        app:lrs_maxValue="2026"
+        app:lrs_minSelectedValue="1976"
+        app:lrs_maxSelectedValue="2022"
+        app:lrs_stepSize="1"
+        app:lrs_showAsInt="true" />
+
+    <!-- Episodes Range Slider -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginSmall"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/episodes"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/bodyTextSize" />
+
+    <com.fh.anitrack.ui.browse.widget.LabeledRangeSlider
+        android:id="@+id/episodesRangeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/marginTiny"
+        app:lrs_minValue="0"
+        app:lrs_maxValue="150"
+        app:lrs_minSelectedValue="0"
+        app:lrs_maxSelectedValue="150"
+        app:lrs_stepSize="1"
+        app:lrs_showAsInt="true" />
+
+    <!-- Duration Range Slider -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginSmall"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/duration"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/bodyTextSize" />
+
+    <com.fh.anitrack.ui.browse.widget.LabeledRangeSlider
+        android:id="@+id/durationRangeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/marginTiny"
+        app:lrs_minValue="0"
+        app:lrs_maxValue="150"
+        app:lrs_minSelectedValue="0"
+        app:lrs_maxSelectedValue="150"
+        app:lrs_stepSize="1"
+        app:lrs_showAsInt="true" />
+
+    <!-- Checkbox Preferences -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/hide_my_anime"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/captionTextSize" />
+
+            <CheckBox
+                android:id="@+id/checkboxHideMyAnime"
+                style="@style/customCheckbox"
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:layout_marginStart="@dimen/marginSmall" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/only_show_my_anime"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/captionTextSize" />
+
+            <CheckBox
+                android:id="@+id/checkboxOnlyShowMyAnime"
+                style="@style/customCheckbox"
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:layout_marginStart="@dimen/marginSmall" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
