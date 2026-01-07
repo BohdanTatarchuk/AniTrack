@@ -219,7 +219,7 @@ public class BrowsePage extends Fragment {
         if (yearRangeSlider != null) {
             int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
             yearRangeSlider.setRange(1970, currentYear);
-            yearRangeSlider.setSelectedRange(1976, currentYear);
+            yearRangeSlider.setSelectedRange(1970, currentYear);
         }
 
         // Load mock data
