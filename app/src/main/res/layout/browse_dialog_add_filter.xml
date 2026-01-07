@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:padding="@dimen/dialogPadding">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="@dimen/dragIndicatorWidth"
+        android:layout_height="@dimen/dragIndicatorHeight"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/marginNormal"
+        android:background="@drawable/drag_indicator" />
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="Add Filter"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/sectionTitleFontSize"
+        android:textStyle="bold" />
+
+    <!-- Filter Type Selection -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/filter_type"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/bodyTextSize"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/dropdownFilterType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:background="@drawable/bg_dropdown"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/inputFieldPadding">
+
+        <TextView
+            android:id="@+id/textFilterType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:text="Select filter type..."
+            android:textColor="@color/darkGrey"
+            android:textSize="@dimen/bodyTextSize" />
+
+        <ImageView
+            android:layout_width="@dimen/iconSizeMedium"
+            android:layout_height="@dimen/iconSizeMedium"
+            android:contentDescription="@string/dropdown_icon"
+            android:src="@drawable/ic_dropdown" />
+
+    </LinearLayout>
+
+    <!-- Filter Value Selection -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:fontFamily="@font/comfortaa"
+        android:text="Value"
+        android:textColor="@color/darkBlue"
+        android:textSize="@dimen/bodyTextSize"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/dropdownFilterValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:background="@drawable/bg_dropdown"
+        android:clickable="true"
+        android:enabled="false"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/inputFieldPadding">
+
+        <TextView
+            android:id="@+id/textFilterValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:text="Select filter type first..."
+            android:textColor="@color/darkGrey"
+            android:textSize="@dimen/bodyTextSize" />
+
+        <ImageView
+            android:layout_width="@dimen/iconSizeMedium"
+            android:layout_height="@dimen/iconSizeMedium"
+            android:contentDescription="@string/dropdown_icon"
+            android:src="@drawable/ic_dropdown" />
+
+    </LinearLayout>
+
+    <!-- Add Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddFilterConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:backgroundTint="@color/accentBlue"
+        android:enabled="false"
+        android:fontFamily="@font/comfortaa"
+        android:text="Add Filter"
+        android:textColor="@color/pearl"
+        app:cornerRadius="@dimen/buttonCornerRadius" />
+
+</LinearLayout>

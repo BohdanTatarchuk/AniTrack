@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/marginNormal"
+    app:cardBackgroundColor="@color/pearl"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="@dimen/cardElevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/marginSmall">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/optionsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
