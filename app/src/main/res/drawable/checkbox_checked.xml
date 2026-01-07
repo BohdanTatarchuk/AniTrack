@@ -3,9 +3,17 @@
     android:height="15dp"
     android:viewportWidth="15"
     android:viewportHeight="15">
+  <!-- White fill -->
   <path
       android:pathData="M4,0L11,0A4,4 0,0 1,15 4L15,11A4,4 0,0 1,11 15L4,15A4,4 0,0 1,0 11L0,4A4,4 0,0 1,4 0z"
       android:fillColor="#ffffff"/>
+  <!-- Dark blue border -->
+  <path
+      android:pathData="M4,1L11,1A3,3 0,0 1,14 4L14,11A3,3 0,0 1,11 14L4,14A3,3 0,0 1,1 11L1,4A3,3 0,0 1,4 1z"
+      android:fillColor="@android:color/transparent"
+      android:strokeWidth="1.5"
+      android:strokeColor="#15185F"/>
+  <!-- Checkmark -->
   <path
       android:pathData="M5.969,11.25L2.406,7.688L3.297,6.797L5.969,9.469L11.703,3.734L12.594,4.625L5.969,11.25Z"
       android:fillColor="#15185F"/>
