@@ -48,7 +48,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/favorite"
             android:padding="@dimen/marginTiny"
-            android:src="@drawable/ic_heart_outline" />
+            android:src="@drawable/selector_heart"
+            android:tint="@color/selector_heart_tint" />
 
         <TextView
             android:id="@+id/favoriteCount"
