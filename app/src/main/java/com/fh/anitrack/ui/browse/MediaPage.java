@@ -116,14 +116,20 @@ public class MediaPage extends Fragment {
 
         // Add to List button
         MaterialButton addToListButton = view.findViewById(R.id.addToListButton);
-        addToListButton.setOnClickListener(v -> showAddToListDialog());
+        if (addToListButton != null) {
+            addToListButton.setOnClickListener(v -> showAddToListDialog());
+        }
 
         // Favorite button
         ImageButton favoriteButton = view.findViewById(R.id.favoriteButton);
-        favoriteButton.setOnClickListener(v -> {
-            // Toggle favorite state
-            v.setSelected(!v.isSelected());
-        });
+        if (favoriteButton != null) {
+            favoriteButton.setOnClickListener(v -> {
+                // Toggle favorite state - the selector drawable will handle icon switching
+                v.setSelected(!v.isSelected());
+                // Optionally add haptic feedback
+                v.performHapticFeedback(android.view.HapticFeedbackConstants.CONTEXT_CLICK);
+            });
+        }
     }
 
     private void setupViews(View view) {
@@ -279,19 +285,126 @@ public class MediaPage extends Fragment {
     }
 
     private void showAddToListDialog() {
+        if (getContext() == null) {
+            return;
+        }
+        
         BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
         View dialogView = LayoutInflater.from(requireContext())
                 .inflate(R.layout.media_page_dialog_add_to_list, null);
         dialog.setContentView(dialogView);
 
-        // Setup dialog views
+        // Setup Spinner
+        android.widget.Spinner statusSpinner = dialogView.findViewById(R.id.statusSpinner);
+        android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                new String[]{"Planning", "Watching", "Completed", "Paused", "Dropped"}
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(adapter);
+
+        // Setup Score controls
+        TextView scoreValue = dialogView.findViewById(R.id.scoreValue);
+        ImageView scoreUpDown = dialogView.findViewById(R.id.scoreUpDown);
+        scoreValue.setText("0");
+        scoreValue.setOnClickListener(v -> showScorePicker(scoreValue));
+        scoreUpDown.setOnClickListener(v -> showScorePicker(scoreValue));
+
+        // Setup Episode Progress controls
+        TextView episodeValue = dialogView.findViewById(R.id.episodeProgressValue);
+        ImageView episodeUpDown = dialogView.findViewById(R.id.episodeUpDown);
+        episodeValue.setText("0");
+        episodeValue.setOnClickListener(v -> showNumberPicker(episodeValue, "Episode Progress", 0, 1000));
+        episodeUpDown.setOnClickListener(v -> showNumberPicker(episodeValue, "Episode Progress", 0, 1000));
+
+        // Setup Date controls
+        TextView startDateValue = dialogView.findViewById(R.id.startDateValue);
+        TextView finishDateValue = dialogView.findViewById(R.id.finishDateValue);
+        startDateValue.setOnClickListener(v -> showDatePicker(startDateValue));
+        finishDateValue.setOnClickListener(v -> showDatePicker(finishDateValue));
+
+        // Setup Rewatches controls
+        TextView rewatchesValue = dialogView.findViewById(R.id.rewatchesValue);
+        ImageView rewatchesUpDown = dialogView.findViewById(R.id.rewatchesUpDown);
+        rewatchesValue.setText("0");
+        rewatchesValue.setOnClickListener(v -> showNumberPicker(rewatchesValue, "Total Rewatches", 0, 100));
+        rewatchesUpDown.setOnClickListener(v -> showNumberPicker(rewatchesValue, "Total Rewatches", 0, 100));
+
+        // Notes EditText is already interactive by default
+        
+        // Private checkbox is already interactive by default
+
+        // Setup Save button
         MaterialButton saveButton = dialogView.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v -> {
-            // Save list entry
-            dialog.dismiss();
-        });
+        if (saveButton != null) {
+            saveButton.setOnClickListener(v -> {
+                // Save list entry
+                dialog.dismiss();
+            });
+        }
 
         dialog.show();
+    }
+
+    private void showScorePicker(TextView scoreView) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        builder.setTitle("Select Score");
+        
+        String[] scores = new String[11];
+        for (int i = 0; i <= 10; i++) {
+            scores[i] = String.valueOf(i);
+        }
+        
+        builder.setItems(scores, (dialog, which) -> {
+            scoreView.setText(scores[which]);
+            dialog.dismiss();
+        });
+        
+        builder.show();
+    }
+
+    private void showNumberPicker(TextView targetView, String title, int minValue, int maxValue) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        builder.setTitle(title);
+        
+        android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(requireContext());
+        numberPicker.setMinValue(minValue);
+        numberPicker.setMaxValue(maxValue);
+        
+        try {
+            int currentValue = Integer.parseInt(targetView.getText().toString());
+            numberPicker.setValue(currentValue);
+        } catch (NumberFormatException e) {
+            numberPicker.setValue(minValue);
+        }
+        
+        builder.setView(numberPicker);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            targetView.setText(String.valueOf(numberPicker.getValue()));
+            dialog.dismiss();
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        
+        builder.show();
+    }
+
+    private void showDatePicker(TextView dateView) {
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        int year = calendar.get(java.util.Calendar.YEAR);
+        int month = calendar.get(java.util.Calendar.MONTH);
+        int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+        
+        android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(
+                requireContext(),
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String date = String.format("%02d/%02d/%d", selectedMonth + 1, selectedDay, selectedYear);
+                    dateView.setText(date);
+                },
+                year, month, day
+        );
+        
+        datePickerDialog.show();
     }
 
     private void setupDynamicScrollbar(RecyclerView recyclerView, View activeIndicator, View inactiveIndicator) {

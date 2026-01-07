@@ -15,6 +15,7 @@
     <color name="accentBlue">#3371FF</color>
     <color name="accentGreen">#4CAF50</color>
     <color name="gold">#FFD700</color>
+    <color name="heartRed">#FF4458</color>
     <color name="tagChipBackground">#EEEEF5</color>
     <color name="tabChipSelected">#15185F</color>
     <color name="tabChipUnselected">#FFFFFF</color>
