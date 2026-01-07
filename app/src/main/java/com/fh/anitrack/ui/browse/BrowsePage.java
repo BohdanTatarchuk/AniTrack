@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fh.anitrack.R;
 import com.fh.anitrack.data.BrowseMockData;
+import com.fh.anitrack.data.model.ActiveFilter;
 import com.fh.anitrack.data.model.AnimeItem;
 import com.fh.anitrack.data.model.FilterOption;
 import com.fh.anitrack.ui.browse.adapter.AnimeAdapter;
@@ -32,6 +34,7 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Browse page fragment for searching and filtering anime/manga.
@@ -41,11 +44,11 @@ public class BrowsePage extends Fragment {
     // Views
     private EditText searchEditText;
     private LinearLayout dropdownMediaType;
-    private LinearLayout dropdownFilterType;
-    private LinearLayout dropdownTypeOption;
     private TextView textMediaType;
-    private TextView textFilterType;
-    private TextView textTypeOption;
+    private LinearLayout filtersHeader;
+    private LinearLayout filtersContent;
+    private ImageView iconFiltersToggle;
+    private MaterialButton btnAddFilter;
     private MaterialButton btnMoreOptions;
     private View advancedFiltersContainer;
     private ChipGroup activeFiltersChipGroup;
@@ -65,8 +68,8 @@ public class BrowsePage extends Fragment {
 
     // State
     private FilterOption selectedMediaType;
-    private FilterOption selectedFilterType;
-    private List<FilterOption> selectedTypeOptions = new ArrayList<>();
+    private List<ActiveFilter> activeFilters = new ArrayList<>();
+    private boolean isFiltersExpanded = true;
     private boolean isAdvancedFiltersExpanded = false;
 
     public BrowsePage() {
@@ -98,20 +101,23 @@ public class BrowsePage extends Fragment {
         View searchHeader = view.findViewById(R.id.searchHeader);
         searchEditText = searchHeader.findViewById(R.id.searchEditText);
         dropdownMediaType = searchHeader.findViewById(R.id.dropdownMediaType);
-        dropdownFilterType = searchHeader.findViewById(R.id.dropdownFilterType);
-        dropdownTypeOption = searchHeader.findViewById(R.id.dropdownTypeOption);
         textMediaType = searchHeader.findViewById(R.id.textMediaType);
-        textFilterType = searchHeader.findViewById(R.id.textFilterType);
-        textTypeOption = searchHeader.findViewById(R.id.textTypeOption);
+        filtersHeader = searchHeader.findViewById(R.id.filtersHeader);
+        filtersContent = searchHeader.findViewById(R.id.filtersContent);
+        iconFiltersToggle = searchHeader.findViewById(R.id.iconFiltersToggle);
+        btnAddFilter = searchHeader.findViewById(R.id.btnAddFilter);
         btnMoreOptions = searchHeader.findViewById(R.id.btnMoreOptions);
 
-        // Advanced filters views
-        advancedFiltersContainer = view.findViewById(R.id.advancedFiltersContainer);
-        yearRangeSlider = view.findViewById(R.id.yearRangeSlider);
-        episodesRangeSlider = view.findViewById(R.id.episodesRangeSlider);
-        durationRangeSlider = view.findViewById(R.id.durationRangeSlider);
-        checkboxHideMyAnime = view.findViewById(R.id.checkboxHideMyAnime);
-        checkboxOnlyShowMyAnime = view.findViewById(R.id.checkboxOnlyShowMyAnime);
+        // Advanced filters - the include tag's ID replaces the root element's ID
+        // So advancedFilters IS the container (not a parent of it)
+        advancedFiltersContainer = searchHeader.findViewById(R.id.advancedFilters);
+        if (advancedFiltersContainer != null) {
+            yearRangeSlider = advancedFiltersContainer.findViewById(R.id.yearRangeSlider);
+            episodesRangeSlider = advancedFiltersContainer.findViewById(R.id.episodesRangeSlider);
+            durationRangeSlider = advancedFiltersContainer.findViewById(R.id.durationRangeSlider);
+            checkboxHideMyAnime = advancedFiltersContainer.findViewById(R.id.checkboxHideMyAnime);
+            checkboxOnlyShowMyAnime = advancedFiltersContainer.findViewById(R.id.checkboxOnlyShowMyAnime);
+        }
 
         // Main content views
         activeFiltersChipGroup = view.findViewById(R.id.activeFiltersChipGroup);
@@ -146,41 +152,61 @@ public class BrowsePage extends Fragment {
             }
         });
 
-        // Dropdown click listeners
+        // Media type dropdown
         dropdownMediaType.setOnClickListener(v -> showMediaTypeDropdown());
-        dropdownFilterType.setOnClickListener(v -> showFilterTypeDropdown());
-        dropdownTypeOption.setOnClickListener(v -> showTypeOptionDropdown());
+
+        // Filters header toggle
+        filtersHeader.setOnClickListener(v -> toggleFiltersSection());
+
+        // Add filter button
+        btnAddFilter.setOnClickListener(v -> {
+            v.setEnabled(false);
+            showAddFilterDialog();
+            v.postDelayed(() -> v.setEnabled(true), 500);
+        });
 
         // More options toggle
-        btnMoreOptions.setOnClickListener(v -> toggleAdvancedFilters());
+        btnMoreOptions.setOnClickListener(v -> {
+            v.setEnabled(false);
+            toggleAdvancedFilters();
+            v.postDelayed(() -> v.setEnabled(true), 300);
+        });
 
         // Range slider listeners
-        yearRangeSlider.setOnRangeChangedListener((min, max) -> {
-            updateActiveFilters();
-        });
+        if (yearRangeSlider != null) {
+            yearRangeSlider.setOnRangeChangedListener((min, max) -> {
+                updateActiveFiltersFromAdvanced();
+            });
+        }
 
-        episodesRangeSlider.setOnRangeChangedListener((min, max) -> {
-            updateActiveFilters();
-        });
+        if (episodesRangeSlider != null) {
+            episodesRangeSlider.setOnRangeChangedListener((min, max) -> {
+                updateActiveFiltersFromAdvanced();
+            });
+        }
 
-        durationRangeSlider.setOnRangeChangedListener((min, max) -> {
-            updateActiveFilters();
-        });
+        if (durationRangeSlider != null) {
+            durationRangeSlider.setOnRangeChangedListener((min, max) -> {
+                updateActiveFiltersFromAdvanced();
+            });
+        }
 
         // Checkbox listeners - mutually exclusive
-        checkboxHideMyAnime.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                checkboxOnlyShowMyAnime.setChecked(false);
-            }
-            updateActiveFilters();
-        });
+        if (checkboxHideMyAnime != null && checkboxOnlyShowMyAnime != null) {
+            checkboxHideMyAnime.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    checkboxOnlyShowMyAnime.setChecked(false);
+                }
+                updateActiveFiltersFromAdvanced();
+            });
 
-        checkboxOnlyShowMyAnime.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                checkboxHideMyAnime.setChecked(false);
-            }
-            updateActiveFilters();
-        });
+            checkboxOnlyShowMyAnime.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    checkboxHideMyAnime.setChecked(false);
+                }
+                updateActiveFiltersFromAdvanced();
+            });
+        }
     }
 
     private void loadInitialData() {
@@ -189,11 +215,37 @@ public class BrowsePage extends Fragment {
         textMediaType.setText(selectedMediaType.getDisplayName());
         textMediaType.setTextColor(requireContext().getColor(R.color.darkBlue));
 
+        // Set year slider max to current year
+        if (yearRangeSlider != null) {
+            int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+            yearRangeSlider.setRange(1970, currentYear);
+            yearRangeSlider.setSelectedRange(1976, currentYear);
+        }
+
         // Load mock data
         List<AnimeItem> mockItems = BrowseMockData.getMockAnimeList();
         animeAdapter.setItems(mockItems);
 
         updateEmptyState(mockItems.isEmpty());
+    }
+
+    private void toggleFiltersSection() {
+        isFiltersExpanded = !isFiltersExpanded;
+
+        if (isFiltersExpanded) {
+            // Expand
+            filtersContent.setVisibility(View.VISIBLE);
+            iconFiltersToggle.animate().rotation(180).setDuration(200).start();
+        } else {
+            // Collapse
+            filtersContent.setVisibility(View.GONE);
+            iconFiltersToggle.animate().rotation(0).setDuration(200).start();
+            
+            // Also collapse advanced filters if expanded
+            if (isAdvancedFiltersExpanded) {
+                toggleAdvancedFilters();
+            }
+        }
     }
 
     private void showMediaTypeDropdown() {
@@ -204,59 +256,88 @@ public class BrowsePage extends Fragment {
                     selectedMediaType = option;
                     textMediaType.setText(option.getDisplayName());
                     textMediaType.setTextColor(requireContext().getColor(R.color.darkBlue));
-                    updateActiveFilters();
                     performSearch(searchEditText.getText().toString());
                 }
         );
     }
 
-    private void showFilterTypeDropdown() {
-        showDropdownDialog(
-                BrowseMockData.getFilterTypes(),
-                "Select Filter Type",
-                (option, position) -> {
-                    selectedFilterType = option;
-                    textFilterType.setText(option.getDisplayName());
-                    textFilterType.setTextColor(requireContext().getColor(R.color.darkBlue));
+    private void showAddFilterDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.browse_dialog_add_filter, null);
+        dialog.setContentView(dialogView);
 
-                    // Reset type option when filter type changes
-                    selectedTypeOptions.clear();
-                    textTypeOption.setText(R.string.type_option);
-                    textTypeOption.setTextColor(requireContext().getColor(R.color.darkGrey));
-                }
-        );
-    }
+        LinearLayout dropdownFilterType = dialogView.findViewById(R.id.dropdownFilterType);
+        LinearLayout dropdownFilterValue = dialogView.findViewById(R.id.dropdownFilterValue);
+        TextView textFilterType = dialogView.findViewById(R.id.textFilterType);
+        TextView textFilterValue = dialogView.findViewById(R.id.textFilterValue);
+        MaterialButton btnAddFilterConfirm = dialogView.findViewById(R.id.btnAddFilterConfirm);
 
-    private void showTypeOptionDropdown() {
-        if (selectedFilterType == null) {
-            // Show filter type dropdown first
-            showFilterTypeDropdown();
-            return;
-        }
+        final FilterOption[] selectedType = {null};
+        final FilterOption[] selectedValue = {null};
 
-        List<FilterOption> options = BrowseMockData.getOptionsForFilterType(selectedFilterType.getId());
+        // Filter type dropdown
+        dropdownFilterType.setOnClickListener(v -> {
+            showDropdownDialog(
+                    BrowseMockData.getFilterTypes(),
+                    "Select Filter Type",
+                    (option, position) -> {
+                        selectedType[0] = option;
+                        textFilterType.setText(option.getDisplayName());
+                        textFilterType.setTextColor(requireContext().getColor(R.color.darkBlue));
 
-        showDropdownDialog(
-                options,
-                "Select " + selectedFilterType.getDisplayName(),
-                (option, position) -> {
-                    // Add to selected options if not already present
-                    if (!selectedTypeOptions.contains(option)) {
-                        selectedTypeOptions.add(option);
+                        // Enable value dropdown
+                        dropdownFilterValue.setEnabled(true);
+                        dropdownFilterValue.setAlpha(1.0f);
+                        textFilterValue.setText("Select " + option.getDisplayName().toLowerCase() + "...");
+                        
+                        // Reset selected value
+                        selectedValue[0] = null;
+                        btnAddFilterConfirm.setEnabled(false);
                     }
+            );
+        });
 
-                    // Update display text
-                    if (selectedTypeOptions.size() == 1) {
-                        textTypeOption.setText(option.getDisplayName());
-                    } else {
-                        textTypeOption.setText(selectedTypeOptions.size() + " selected");
+        // Filter value dropdown
+        dropdownFilterValue.setOnClickListener(v -> {
+            if (selectedType[0] == null) return;
+
+            List<FilterOption> options = BrowseMockData.getOptionsForFilterType(selectedType[0].getId());
+            showDropdownDialog(
+                    options,
+                    "Select " + selectedType[0].getDisplayName(),
+                    (option, position) -> {
+                        selectedValue[0] = option;
+                        textFilterValue.setText(option.getDisplayName());
+                        textFilterValue.setTextColor(requireContext().getColor(R.color.darkBlue));
+                        btnAddFilterConfirm.setEnabled(true);
                     }
-                    textTypeOption.setTextColor(requireContext().getColor(R.color.darkBlue));
+            );
+        });
 
-                    updateActiveFilters();
-                    performSearch(searchEditText.getText().toString());
-                }
-        );
+        // Add button
+        btnAddFilterConfirm.setOnClickListener(v -> {
+            if (selectedType[0] != null && selectedValue[0] != null) {
+                // Create new filter
+                String filterId = UUID.randomUUID().toString();
+                ActiveFilter newFilter = new ActiveFilter(
+                        filterId,
+                        selectedType[0].getId(),
+                        selectedType[0].getDisplayName(),
+                        selectedValue[0].getId(),
+                        selectedValue[0].getDisplayName()
+                );
+
+                // Add to active filters
+                activeFilters.add(newFilter);
+                updateActiveFiltersDisplay();
+                performSearch(searchEditText.getText().toString());
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void showDropdownDialog(List<FilterOption> options, String title,
@@ -281,10 +362,16 @@ public class BrowsePage extends Fragment {
     }
 
     private void toggleAdvancedFilters() {
+        if (advancedFiltersContainer == null) {
+            return;
+        }
+
         isAdvancedFiltersExpanded = !isAdvancedFiltersExpanded;
 
         if (isAdvancedFiltersExpanded) {
             advancedFiltersContainer.setVisibility(View.VISIBLE);
+            btnMoreOptions.setText("Hide advanced filters");
+            
             // Animate expand
             advancedFiltersContainer.setAlpha(0f);
             advancedFiltersContainer.animate()
@@ -292,6 +379,8 @@ public class BrowsePage extends Fragment {
                     .setDuration(200)
                     .start();
         } else {
+            btnMoreOptions.setText(R.string.more_filter_options);
+            
             // Animate collapse
             advancedFiltersContainer.animate()
                     .alpha(0f)
@@ -301,68 +390,106 @@ public class BrowsePage extends Fragment {
         }
     }
 
-    private void updateActiveFilters() {
+    private void updateActiveFiltersDisplay() {
         activeFiltersChipGroup.removeAllViews();
-        boolean hasActiveFilters = false;
 
-        // Add selected type options as chips
-        for (FilterOption option : selectedTypeOptions) {
-            addFilterChip(option.getDisplayName(), () -> {
-                selectedTypeOptions.remove(option);
-                updateTypeOptionText();
-                updateActiveFilters();
+        // Add chips for standard filters
+        for (ActiveFilter filter : activeFilters) {
+            addFilterChip(filter.getDisplayText(), () -> {
+                activeFilters.remove(filter);
+                updateActiveFiltersDisplay();
                 performSearch(searchEditText.getText().toString());
             });
-            hasActiveFilters = true;
         }
 
-        // Add range filter chips if modified from default
-        if (yearRangeSlider.getMinSelectedValue() != yearRangeSlider.getMinValue() ||
-                yearRangeSlider.getMaxSelectedValue() != yearRangeSlider.getMaxValue()) {
+        // Add chips for advanced filters
+        addAdvancedFilterChips();
+
+        // Show/hide chip group
+        boolean hasActiveFilters = activeFiltersChipGroup.getChildCount() > 0;
+        activeFiltersChipGroup.setVisibility(hasActiveFilters ? View.VISIBLE : View.GONE);
+    }
+
+    private void updateActiveFiltersFromAdvanced() {
+        updateActiveFiltersDisplay();
+        performSearch(searchEditText.getText().toString());
+    }
+
+    private void addAdvancedFilterChips() {
+        // Year range chip
+        if (yearRangeSlider != null && 
+                (yearRangeSlider.getMinSelectedValue() != yearRangeSlider.getMinValue() ||
+                yearRangeSlider.getMaxSelectedValue() != yearRangeSlider.getMaxValue())) {
             String yearText = (int) yearRangeSlider.getMinSelectedValue() + " - " +
                     (int) yearRangeSlider.getMaxSelectedValue();
             addFilterChip("Year: " + yearText, () -> {
-                yearRangeSlider.setSelectedRange(
-                        yearRangeSlider.getMinValue(),
-                        yearRangeSlider.getMaxValue()
-                );
-                updateActiveFilters();
+                if (yearRangeSlider != null) {
+                    yearRangeSlider.setSelectedRange(
+                            yearRangeSlider.getMinValue(),
+                            yearRangeSlider.getMaxValue()
+                    );
+                    updateActiveFiltersDisplay();
+                    performSearch(searchEditText.getText().toString());
+                }
             });
-            hasActiveFilters = true;
         }
 
-        if (episodesRangeSlider.getMinSelectedValue() != episodesRangeSlider.getMinValue() ||
-                episodesRangeSlider.getMaxSelectedValue() != episodesRangeSlider.getMaxValue()) {
+        // Episodes range chip
+        if (episodesRangeSlider != null &&
+                (episodesRangeSlider.getMinSelectedValue() != episodesRangeSlider.getMinValue() ||
+                episodesRangeSlider.getMaxSelectedValue() != episodesRangeSlider.getMaxValue())) {
             String epText = (int) episodesRangeSlider.getMinSelectedValue() + " - " +
                     (int) episodesRangeSlider.getMaxSelectedValue();
             addFilterChip("Episodes: " + epText, () -> {
-                episodesRangeSlider.setSelectedRange(
-                        episodesRangeSlider.getMinValue(),
-                        episodesRangeSlider.getMaxValue()
-                );
-                updateActiveFilters();
+                if (episodesRangeSlider != null) {
+                    episodesRangeSlider.setSelectedRange(
+                            episodesRangeSlider.getMinValue(),
+                            episodesRangeSlider.getMaxValue()
+                    );
+                    updateActiveFiltersDisplay();
+                    performSearch(searchEditText.getText().toString());
+                }
             });
-            hasActiveFilters = true;
+        }
+
+        // Duration range chip
+        if (durationRangeSlider != null &&
+                (durationRangeSlider.getMinSelectedValue() != durationRangeSlider.getMinValue() ||
+                durationRangeSlider.getMaxSelectedValue() != durationRangeSlider.getMaxValue())) {
+            String durText = (int) durationRangeSlider.getMinSelectedValue() + " - " +
+                    (int) durationRangeSlider.getMaxSelectedValue();
+            addFilterChip("Duration: " + durText, () -> {
+                if (durationRangeSlider != null) {
+                    durationRangeSlider.setSelectedRange(
+                            durationRangeSlider.getMinValue(),
+                            durationRangeSlider.getMaxValue()
+                    );
+                    updateActiveFiltersDisplay();
+                    performSearch(searchEditText.getText().toString());
+                }
+            });
         }
 
         // Checkbox filters
-        if (checkboxHideMyAnime.isChecked()) {
+        if (checkboxHideMyAnime != null && checkboxHideMyAnime.isChecked()) {
             addFilterChip("Hide My Anime", () -> {
-                checkboxHideMyAnime.setChecked(false);
-                updateActiveFilters();
+                if (checkboxHideMyAnime != null) {
+                    checkboxHideMyAnime.setChecked(false);
+                    updateActiveFiltersDisplay();
+                    performSearch(searchEditText.getText().toString());
+                }
             });
-            hasActiveFilters = true;
         }
 
-        if (checkboxOnlyShowMyAnime.isChecked()) {
+        if (checkboxOnlyShowMyAnime != null && checkboxOnlyShowMyAnime.isChecked()) {
             addFilterChip("Only My Anime", () -> {
-                checkboxOnlyShowMyAnime.setChecked(false);
-                updateActiveFilters();
+                if (checkboxOnlyShowMyAnime != null) {
+                    checkboxOnlyShowMyAnime.setChecked(false);
+                    updateActiveFiltersDisplay();
+                    performSearch(searchEditText.getText().toString());
+                }
             });
-            hasActiveFilters = true;
         }
-
-        activeFiltersChipGroup.setVisibility(hasActiveFilters ? View.VISIBLE : View.GONE);
     }
 
     private void addFilterChip(String text, Runnable onClose) {
@@ -371,19 +498,6 @@ public class BrowsePage extends Fragment {
         chip.setText(text);
         chip.setOnCloseIconClickListener(v -> onClose.run());
         activeFiltersChipGroup.addView(chip);
-    }
-
-    private void updateTypeOptionText() {
-        if (selectedTypeOptions.isEmpty()) {
-            textTypeOption.setText(R.string.type_option);
-            textTypeOption.setTextColor(requireContext().getColor(R.color.darkGrey));
-        } else if (selectedTypeOptions.size() == 1) {
-            textTypeOption.setText(selectedTypeOptions.get(0).getDisplayName());
-            textTypeOption.setTextColor(requireContext().getColor(R.color.darkBlue));
-        } else {
-            textTypeOption.setText(selectedTypeOptions.size() + " selected");
-            textTypeOption.setTextColor(requireContext().getColor(R.color.darkBlue));
-        }
     }
 
     private void performSearch(String query) {
