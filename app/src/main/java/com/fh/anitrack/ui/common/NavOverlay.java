@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.fh.anitrack.R;
+import com.fh.anitrack.ui.browse.MediaPage;
 import com.fh.anitrack.ui.home.HomeFragment;
 import com.fh.anitrack.ui.browse.BrowsePage;
 import com.fh.anitrack.ui.notifications.NotificationsPage;
@@ -37,7 +38,7 @@ public class NavOverlay extends Fragment {
         view.findViewById(R.id.navProfile).setOnClickListener(v -> replaceFragment(new ProfileOverview()));
         view.findViewById(R.id.navAnimeList).setOnClickListener(v -> replaceFragment(new ProfileAnimeList()));
         view.findViewById(R.id.navMangaList).setOnClickListener(v -> replaceFragment(new ProfileMangaList()));
-        view.findViewById(R.id.navBrowse).setOnClickListener(v -> replaceFragment(new BrowsePage()));
+        view.findViewById(R.id.navBrowse).setOnClickListener(v -> replaceFragment(new MediaPage()));
         view.findViewById(R.id.navSettings).setOnClickListener(v -> replaceFragment(new SettingsProfile()));
         view.findViewById(R.id.navNotifications).setOnClickListener(v -> replaceFragment(new NotificationsPage()));
 
