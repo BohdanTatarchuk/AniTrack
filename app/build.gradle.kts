@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -8,12 +10,27 @@ android {
         version = release(36)
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.fh.anitrack"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+
+        val properties = Properties()
+        val propertiesFile = project.rootProject.file("local.properties")
+        if (propertiesFile.exists()) {
+            properties.load(propertiesFile.inputStream())
+        }
+
+        buildConfigField("String", "ANILIST_CLIENT_ID", "\"${properties.getProperty("anilist.client.id")}\"")
+        buildConfigField("String", "ANILIST_REDIRECT_URI", "\"${properties.getProperty("anilist.redirect.uri")}\"")
+        buildConfigField("String", "ANILIST_AUTH_URL", "\"https://anilist.co/api/v2/oauth/authorize\"")
+        buildConfigField("String", "ANILIST_API_URL", "\"https://graphql.anilist.co/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,4 +59,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.security.crypto)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.converter.scalars)
+    implementation(libs.converter.gson)
 }

@@ -1,6 +1,7 @@
-package com.fh.anitrack.ui.auth;
+package com.fh.anitrack.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.CheckBox;
@@ -17,17 +18,6 @@ import com.fh.anitrack.R;
 import com.google.android.material.button.MaterialButton;
 
 public class SingUpActivity extends AppCompatActivity {
-
-    private EditText emailEditText;
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-    private EditText confirmPasswordEditText;
-    private CheckBox termsOfService;
-
-    private TextView termsOfServiceText;
-    private MaterialButton singUpButton;
-    private TextView resendVerificationText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +29,14 @@ public class SingUpActivity extends AppCompatActivity {
             return insets;
         });
 
-        emailEditText = findViewById(R.id.singUpEmailEditText);
-        usernameEditText = findViewById(R.id.singUpUsernameEditText);
-        passwordEditText = findViewById(R.id.singUpPasswordEditText);
-        confirmPasswordEditText = findViewById(R.id.singUpConfirmPasswordEditText);
-        termsOfService = findViewById(R.id.termsOfServiceCheckbox);
-        termsOfServiceText = findViewById(R.id.termsOfServiceText);
-        singUpButton = findViewById(R.id.singUpButton);
-        resendVerificationText = findViewById(R.id.resendVerificationEmailTextView);
+        EditText emailEditText = findViewById(R.id.singUpEmailEditText);
+        EditText usernameEditText = findViewById(R.id.singUpUsernameEditText);
+        EditText passwordEditText = findViewById(R.id.singUpPasswordEditText);
+        EditText confirmPasswordEditText = findViewById(R.id.singUpConfirmPasswordEditText);
+        CheckBox termsOfService = findViewById(R.id.termsOfServiceCheckbox);
+        TextView termsOfServiceText = findViewById(R.id.termsOfServiceText);
+        MaterialButton singUpButton = findViewById(R.id.singUpButton);
+        TextView resendVerificationText = findViewById(R.id.resendVerificationEmailTextView);
         TextView alreadyHaveAnAccountText = findViewById(R.id.alreadyHaveAnAccountTextView);
 
         alreadyHaveAnAccountText.setOnClickListener(v -> {
@@ -62,6 +52,8 @@ public class SingUpActivity extends AppCompatActivity {
     }
 
     private void handleSingUp() {
-        //TODO call an auth service here
+        String signUpUrl = "https://anilist.co/signup";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(signUpUrl));
+        startActivity(intent);
     }
 }

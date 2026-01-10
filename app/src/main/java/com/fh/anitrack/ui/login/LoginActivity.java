@@ -1,6 +1,7 @@
-package com.fh.anitrack.ui.auth;
+package com.fh.anitrack.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.fh.anitrack.R;
+import com.fh.anitrack.api.AniTrackConfig;
+import com.fh.anitrack.api.AuthRepository;
 import com.fh.anitrack.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 
@@ -19,6 +22,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (AuthRepository.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return;
+        }
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
@@ -28,13 +37,11 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        EditText emailEditText = findViewById(R.id.loginEmailEditText);
-        EditText passwordEditText = findViewById(R.id.loginPasswordEditText);
         TextView forgotPasswordTextView = findViewById(R.id.loginForgotPassword);
         MaterialButton loginButton = findViewById(R.id.loginButton);
-        TextView singUpTextView = findViewById(R.id.doNotHaveAnAccountText);
+        TextView signUpTextView = findViewById(R.id.doNotHaveAnAccountText);
 
-        singUpTextView.setOnClickListener(v -> {
+        signUpTextView.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SingUpActivity.class);
             startActivity(intent);
         });
@@ -44,15 +51,16 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        loginButton.setOnClickListener(v -> {
-            handleLogin();
-        });
+        loginButton.setOnClickListener(v -> startAniListLogin());
     }
 
-    private void handleLogin() {
-        // TODO: call an auth service
-        // For testing, navigate to MediaDetailActivity
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+    private void startAniListLogin() {
+        String authUrl = AniTrackConfig.AUTH_URL
+                + "?client_id=" + AniTrackConfig.CLIENT_ID
+                + "&redirect_uri=" + AniTrackConfig.REDIRECT_URI
+                + "&response_type=token";
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl));
         startActivity(intent);
     }
 }
