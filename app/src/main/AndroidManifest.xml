@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AniTrack">
         <activity
+            android:name=".ui.auth.AuthCallbackActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="com.fh.anitrack"
+                    android:host="auth" />
+            </intent-filter>
+
+        </activity>
+        <activity
             android:name=".ui.MainActivity"
             android:exported="false" />
         <activity
@@ -18,13 +36,13 @@
             android:exported="false"
             android:theme="@style/Theme.AniTrack.NoActionBar" />
         <activity
-            android:name=".ui.auth.ForgotPasswordActivity"
+            android:name=".ui.login.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.SingUpActivity"
+            android:name=".ui.login.SingUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
