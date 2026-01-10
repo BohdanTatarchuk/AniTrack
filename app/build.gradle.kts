@@ -29,8 +29,8 @@ android {
 
         buildConfigField("String", "ANILIST_CLIENT_ID", "\"${properties.getProperty("anilist.client.id")}\"")
         buildConfigField("String", "ANILIST_REDIRECT_URI", "\"${properties.getProperty("anilist.redirect.uri")}\"")
-        buildConfigField("String", "ANILIST_AUTH_URL", "\"https://anilist.co/api/v2/oauth/authorize\"")
-        buildConfigField("String", "ANILIST_API_URL", "\"https://graphql.anilist.co/\"")
+        buildConfigField("String", "ANILIST_AUTH_URL", "\"${properties.getProperty("anilist.auth.uri")}\"")
+        buildConfigField("String", "ANILIST_API_URL", "\"${properties.getProperty("anilist.api.uri")}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
