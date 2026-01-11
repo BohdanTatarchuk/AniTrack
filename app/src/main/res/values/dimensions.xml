@@ -78,4 +78,7 @@
     <dimen name="fontSizeHeader">22sp</dimen>
     <dimen name="homeEditTextHeight">80dp</dimen>
     <dimen name="homeBorderRadius">20dp</dimen>
+    <dimen name="homeActivityImageWidth">140dp</dimen>
+    <dimen name="activityCardCornerRadius">16dp</dimen>
+    <dimen name="activityCardHeight">200dp</dimen>
 </resources>

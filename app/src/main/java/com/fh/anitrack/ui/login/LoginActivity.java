@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             Uri uri = Uri.parse(url);
             String fragment = uri.getFragment();
 
+            //getting the token from the redirect url
             if (fragment != null && fragment.contains("access_token=")) {
                 String[] params = fragment.split("&");
                 for (String param : params) {
