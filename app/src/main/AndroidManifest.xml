@@ -29,7 +29,6 @@
                     android:scheme="com.fh.anitrack"
                     android:host="auth" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.MainActivity"

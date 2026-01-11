@@ -123,4 +123,15 @@
     <string name="comment_icon">comment icon</string>
     <string name="heart_icon">heart icon</string>
     <string name="activity_card_image">activity card image</string>
+
+    <!-- Logic & Dialog Messages -->
+    <string name="cancel_post">Discard Status?</string>
+    <string name="discard_changes_confirm">Are you sure you want to discard your status? All typed text will be lost.</string>
+    <string name="publish_status">Publish Status</string>
+    <string name="publish_confirm_msg">Are you sure you want to post this status update to the community?</string>
+    <string name="status_cannot_be_empty">Please write something before publishing.</string>
+    <string name="published_successfully">Status published successfully!</string>
+    <string name="network_failure">Network error. Please check your connection.</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

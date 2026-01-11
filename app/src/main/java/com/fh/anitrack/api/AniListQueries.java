@@ -31,4 +31,13 @@ public class AniListQueries {
                     "    }" +
                     "  }" +
                     "}";
+
+    public static final String SAVE_TEXT_ACTIVITY =
+            "mutation ($text: String) {" +
+                    "  SaveTextActivity (text: $text) {" +
+                    "    id text" +
+                    "  }" +
+                    "}";
+
+
 }

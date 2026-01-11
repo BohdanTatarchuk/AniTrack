@@ -1,6 +1,7 @@
 package com.fh.anitrack.api;
 
 import com.fh.anitrack.api.response.ActivityResponse;
+import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.fh.anitrack.api.response.UserResponse;
 
 import retrofit2.Call;
@@ -14,4 +15,8 @@ public interface AniListService {
 
     @POST("/")
     Call<ActivityResponse> postQuery(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<SaveActivityResponse> saveTextActivity(@Body GraphQLRequest body);
+
 }
