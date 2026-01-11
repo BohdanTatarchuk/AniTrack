@@ -6,6 +6,7 @@
     <string name="forgot_password"><u>Forgot password?</u></string>
     <string name="do_not_have_an_account_yet"><u>Do not have an account yet?</u></string>
     <string name="username">username</string>
+    <string name="logout">logout</string>
     <string name="confirm_password">confirm password</string>
     <string name="resend_verification_email"><u>Resend verification email</u></string>
     <string name="sing_up">Sing up</string>
@@ -116,4 +117,10 @@
     <string name="bold">Bold</string>
     <string name="preview">Preview</string>
     <string name="your_status_will_appear_here">Your status will appear here...</string>
+    <string name="trending_image">trending image</string>
+    <string name="_20">20</string>
+    <string name="_350">350</string>
+    <string name="comment_icon">comment icon</string>
+    <string name="heart_icon">heart icon</string>
+    <string name="activity_card_image">activity card image</string>
 </resources>

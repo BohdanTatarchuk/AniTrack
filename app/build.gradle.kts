@@ -59,6 +59,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation(libs.security.crypto)
     implementation(libs.okhttp)
     implementation(libs.retrofit)

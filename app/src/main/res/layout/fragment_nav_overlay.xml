@@ -113,6 +113,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/navNotifications" />
 
+        <TextView
+            android:id="@+id/navLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginSmall"
+            app:drawableStartCompat="@drawable/ic_logout"
+            android:fontFamily="@font/comfortaa"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:drawablePadding="@dimen/textFieldHorizontalPadding"
+            android:text="@string/logout"
+            android:textSize="@dimen/titleFontSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navSettings" />
+
         <ImageView
             android:id="@+id/userAvatar"
             android:layout_width="@dimen/iconSizeLarge"
@@ -123,7 +138,7 @@
             app:layout_constraintEnd_toStartOf="@+id/navUsername"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/navSettings" />
+            app:layout_constraintTop_toBottomOf="@id/navLogout" />
 
         <TextView
             android:id="@+id/navUsername"

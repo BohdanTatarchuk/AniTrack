@@ -6,12 +6,17 @@ import android.content.SharedPreferences;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
+//class, which stores access token, username, pfp and is used to define if the user is logged in
 public class AuthRepository {
+
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_AVATAR = "avatar_url";
 
     private static final String PREFS_NAME = "auth_prefs";
     private static final String KEY_ACCESS_TOKEN = "access_token";
 
     private static AuthRepository instance;
+    //Preferences are stored in form of key-value pairs
     private final SharedPreferences prefs;
 
     private AuthRepository(Context context) {
@@ -28,6 +33,7 @@ public class AuthRepository {
         }
     }
 
+    //singleton class
     public static synchronized AuthRepository getInstance(Context context) {
         if (instance == null) {
             instance = new AuthRepository(context);
@@ -40,6 +46,16 @@ public class AuthRepository {
                 .putString(KEY_ACCESS_TOKEN, token)
                 .apply();
     }
+
+    public void saveUserInfo(String username, String avatarUrl) {
+        prefs.edit()
+                .putString(KEY_USERNAME, username)
+                .putString(KEY_AVATAR, avatarUrl)
+                .apply();
+    }
+
+    public String getUsername() { return prefs.getString(KEY_USERNAME, "Guest"); }
+    public String getAvatarUrl() { return prefs.getString(KEY_AVATAR, null); }
 
     public String getAccessToken() {
         return prefs.getString(KEY_ACCESS_TOKEN, null);
