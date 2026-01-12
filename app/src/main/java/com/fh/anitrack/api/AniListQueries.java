@@ -32,6 +32,7 @@ public class AniListQueries {
                     "  }" +
                     "}";
 
+    // Publish status (home page)
     public static final String SAVE_TEXT_ACTIVITY =
             "mutation ($text: String) {" +
                     "  SaveTextActivity (text: $text) {" +

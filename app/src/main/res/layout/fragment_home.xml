@@ -58,13 +58,48 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="7">
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_bold" android:contentDescription="@string/bold" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_italic" android:contentDescription="@string/italic" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_crossed" android:contentDescription="@string/strikethrough" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_visibility" android:contentDescription="@string/spoiler" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_link" android:contentDescription="@string/link" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_image" android:contentDescription="@string/image" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_youtube" android:contentDescription="@string/youtube" />
+
+                <ImageButton
+                    android:id="@+id/btnBold"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/bold"
+                    android:src="@drawable/ic_formatting_bold" />
+
+                <ImageButton
+                    android:id="@+id/btnItalic"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/italic"
+                    android:src="@drawable/ic_formatting_italic" />
+
+                <ImageButton
+                    android:id="@+id/btnStrikethrough"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/strikethrough"
+                    android:src="@drawable/ic_formatting_crossed" />
+
+                <ImageButton
+                    android:id="@+id/btnSpoiler"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/spoiler"
+                    android:src="@drawable/ic_formatting_visibility" />
+
+                <ImageButton
+                    android:id="@+id/btnLink"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/link"
+                    android:src="@drawable/ic_formatting_link" />
+
+                <ImageButton
+                    android:id="@+id/btnImage"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_formatting_image" />
+
+                <ImageButton
+                    android:id="@+id/btnYoutube"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/youtube"
+                    android:src="@drawable/ic_formatting_youtube" />
             </LinearLayout>
 
             <LinearLayout
@@ -73,20 +108,54 @@
                 android:layout_marginTop="@dimen/marginTiny"
                 android:orientation="horizontal"
                 android:weightSum="7">
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_video" android:contentDescription="@string/video" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_nlist" android:contentDescription="@string/ordered_list" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_unlist" android:contentDescription="@string/unordered_list" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_h" android:contentDescription="@string/heading" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_center" android:contentDescription="@string/center" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_quote" android:contentDescription="@string/quote" />
-                <ImageButton style="@style/FormattingButton" android:src="@drawable/ic_formatting_html" android:contentDescription="@string/html" />
+
+                <ImageButton
+                    android:id="@+id/btnVideo"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/video"
+                    android:src="@drawable/ic_formatting_video" />
+
+                <ImageButton
+                    android:id="@+id/btnOrderedList"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/ordered_list"
+                    android:src="@drawable/ic_formatting_nlist" />
+
+                <ImageButton
+                    android:id="@+id/btnUnorderedList"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/unordered_list"
+                    android:src="@drawable/ic_formatting_unlist" />
+
+                <ImageButton
+                    android:id="@+id/btnHeading"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/heading"
+                    android:src="@drawable/ic_formatting_h" />
+
+                <ImageButton
+                    android:id="@+id/btnCenter"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/center"
+                    android:src="@drawable/ic_formatting_center" />
+
+                <ImageButton
+                    android:id="@+id/btnQuote"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/quote"
+                    android:src="@drawable/ic_formatting_quote" />
+
+                <ImageButton
+                    android:id="@+id/btnHtml"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/html"
+                    android:src="@drawable/ic_formatting_html" />
             </LinearLayout>
         </LinearLayout>
 
         <EditText
             android:id="@+id/etStatus"
             android:layout_width="0dp"
-            android:textSize="@dimen/labelFontSize"
             android:layout_height="@dimen/homeEditTextHeight"
             android:layout_marginTop="@dimen/marginTiny"
             android:background="@drawable/bg_rounded_input"
@@ -98,6 +167,7 @@
             android:paddingHorizontal="@dimen/textFieldHorizontalPadding"
             android:paddingVertical="@dimen/textFieldVerticalPadding"
             android:textColorHint="@color/darkBlue35op"
+            android:textSize="@dimen/labelFontSize"
             app:layout_constraintEnd_toEndOf="@id/guideEnd"
             app:layout_constraintStart_toStartOf="@id/guideStart"
             app:layout_constraintTop_toBottomOf="@id/formattingOptions" />
@@ -132,6 +202,7 @@
                 app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <ImageView
                     android:id="@+id/userAvatar"
                     android:layout_width="match_parent"
@@ -243,10 +314,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/marginNormal"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
             app:layout_constraintEnd_toEndOf="@id/guideEnd"
             app:layout_constraintStart_toStartOf="@id/guideStart"
-            app:layout_constraintTop_toBottomOf="@id/tvTrending" />
+            app:layout_constraintTop_toBottomOf="@id/tvTrending"
+            app:spanCount="2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLoadMoreTitles"
