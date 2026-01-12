@@ -17,19 +17,35 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
-import com.fh.anitrack.ui.browse.MediaPage;
-import com.fh.anitrack.ui.home.HomeFragment;
+import com.fh.anitrack.api.AuthRepository;
+import com.fh.anitrack.api.AniListQueries;
+import com.fh.anitrack.api.AniListService;
+import com.fh.anitrack.api.GraphQLRequest;
+import com.fh.anitrack.api.RetrofitClient;
+import com.fh.anitrack.api.response.UserResponse;
 import com.fh.anitrack.ui.browse.BrowsePage;
+import com.fh.anitrack.ui.home.HomeFragment;
+import com.fh.anitrack.ui.login.LoginActivity;
 import com.fh.anitrack.ui.notifications.NotificationsPage;
 import com.fh.anitrack.ui.profile.ProfileAnimeList;
 import com.fh.anitrack.ui.profile.ProfileMangaList;
 import com.fh.anitrack.ui.profile.ProfileOverview;
 import com.fh.anitrack.ui.settings.SettingsProfile;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class NavOverlay extends Fragment {
 
     private DrawerLayout drawerLayout;
+    private AuthRepository authRepository;
+    private ImageView userAvatar;
+    private TextView navUsername;
 
     @Nullable
     @Override
