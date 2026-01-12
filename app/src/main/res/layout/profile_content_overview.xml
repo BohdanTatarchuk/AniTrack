@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/layoutHorizontalPadding">
+
+    <!-- Placeholder for Overview Content -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="Profile Overview Content"
+        android:textAlignment="center"
+        android:textColor="@color/darkGrey"
+        android:textSize="@dimen/bodyTextSize"
+        android:layout_marginTop="@dimen/marginBig"
+        tools:text="Overview content will be implemented here" />
+
+    <!-- TODO: Add overview-specific content here -->
+    <!-- - User bio -->
+    <!-- - Activity timeline -->
+    <!-- - Recent updates -->
+    <!-- - etc. -->
+
+</LinearLayout>

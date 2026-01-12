@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Placeholder for Anime List Content -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="Anime List Content"
+        android:textAlignment="center"
+        android:textColor="@color/darkGrey"
+        android:textSize="@dimen/bodyTextSize"
+        android:padding="@dimen/layoutHorizontalPadding"
+        android:layout_marginTop="@dimen/marginBig"
+        tools:text="Anime list content will be implemented here" />
+
+    <!-- TODO: Add anime list-specific content here -->
+    <!-- - Filter search bar -->
+    <!-- - List status filters (All, Watching, Completed, etc.) -->
+    <!-- - Additional filters (Format, Status, Genres, Country, Year, Sort) -->
+    <!-- - RecyclerView with anime cards -->
+    <!-- - Load more button -->
+
+</LinearLayout>

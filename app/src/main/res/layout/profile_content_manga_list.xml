@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Placeholder for Manga List Content -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:text="Manga List Content"
+        android:textAlignment="center"
+        android:textColor="@color/darkGrey"
+        android:textSize="@dimen/bodyTextSize"
+        android:padding="@dimen/layoutHorizontalPadding"
+        android:layout_marginTop="@dimen/marginBig"
+        tools:text="Manga list content will be implemented here" />
+
+    <!-- TODO: Add manga list-specific content here -->
+    <!-- Similar structure to anime list -->
+    <!-- - Filter search bar -->
+    <!-- - List status filters -->
+    <!-- - Additional filters -->
+    <!-- - RecyclerView with manga cards -->
+    <!-- - Load more button -->
+
+</LinearLayout>
