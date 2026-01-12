@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/activityCardHeight"
-    app:cardCornerRadius="@dimen/cardCornerRadius">
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="@dimen/cardElevation"
+    android:layout_margin="@dimen/marginMicro">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -24,7 +26,7 @@
             android:background="@color/lightGrey"
             android:ellipsize="end"
             android:gravity="center"
-            android:padding="@dimen/paddingTiny"
+            android:padding="@dimen/paddingSmall"
             android:textColor="@android:color/white"
             android:textSize="@dimen/labelFontSize" />
 

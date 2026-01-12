@@ -32,11 +32,13 @@
     <dimen name="dialogPadding">24dp</dimen>
     <dimen name="paddingTiny">4dp</dimen>
     <dimen name="paddingMicro">2dp</dimen>
+    <dimen name="paddingSmall">6dp</dimen>
 
     <!-- margins -->
     <dimen name="marginNormal">20dp</dimen>
     <dimen name="marginBig">70sp</dimen>
     <dimen name="layoutHorizontalPadding">30dp</dimen>
+    <dimen name="marginMicro">4dp</dimen>
     <dimen name="marginTiny">8dp</dimen>
     <dimen name="marginSmall">12dp</dimen>
     <dimen name="badgeMarginTop">120dp</dimen>

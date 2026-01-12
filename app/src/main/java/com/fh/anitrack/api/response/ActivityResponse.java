@@ -5,14 +5,22 @@ import java.util.List;
 //this class describes how does the response to getActivities() api call looks. Is used on the home page
 public class ActivityResponse {
     public Data data;
-    public static class Data { public Page Page; }
+
+    public static class Data {
+        public Page Page;
+    }
+
     public static class Page {
         public PageInfo pageInfo;
         public List<Activity> activities;
 
         public List<Media> media;
     }
-    public static class PageInfo { public boolean hasNextPage; public int currentPage; }
+
+    public static class PageInfo {
+        public boolean hasNextPage;
+        public int currentPage;
+    }
 
     public static class Activity {
         public int id;
@@ -31,8 +39,20 @@ public class ActivityResponse {
         public CoverImage coverImage;
     }
 
-    public static class Title { public String userPreferred; }
-    public static class CoverImage { public String large; }
-    public static class User { public String name; public Avatar avatar; }
-    public static class Avatar { public String large; }
+    public static class Title {
+        public String userPreferred;
+    }
+
+    public static class CoverImage {
+        public String large;
+    }
+
+    public static class User {
+        public String name;
+        public Avatar avatar;
+    }
+
+    public static class Avatar {
+        public String large;
+    }
 }
