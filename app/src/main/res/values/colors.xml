@@ -9,6 +9,7 @@
     <color name="darkBlue10op">#E8E1D8</color>
     <color name="darkBlue35op">#9E9AAE</color>
     <color name="darkBlue">#15185F</color>
+    <color name="titleTransparent">#9915185F</color>
 
     <!-- Additional colors for Media Detail -->
     <color name="accentBlue">#3371FF</color>

@@ -83,4 +83,6 @@
     <dimen name="homeActivityImageWidth">140dp</dimen>
     <dimen name="activityCardCornerRadius">16dp</dimen>
     <dimen name="activityCardHeight">200dp</dimen>
+    <dimen name="trendingCardHeight">300dp</dimen>
+    <dimen name="paddingNormal">15dp</dimen>
 </resources>

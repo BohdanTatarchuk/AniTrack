@@ -24,10 +24,13 @@ public class ActivityResponse {
 
     public static class Activity {
         public int id;
+        public String type;
         public String status;
         public String progress;
+        public String text;
         public long createdAt;
         public int likeCount;
+        public boolean isLiked;
         public int replyCount;
         public User user;
         public Media media;
