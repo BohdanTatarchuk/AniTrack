@@ -1,6 +1,7 @@
 package com.fh.anitrack.ui.home;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         // 1. Load media cover image
         if (activity.media != null && activity.media.coverImage != null) {
-            Glide.with(holder.itemView.getContext())
-                    .load(activity.media.coverImage.large)
-                    .centerCrop()
-                    .into(holder.mediaCoverImage);
+            Glide.with(holder.itemView.getContext()).load(activity.media.coverImage.large).centerCrop().into(holder.mediaCoverImage);
         }
 
         // 2. Load user avatar
         if (activity.user != null && activity.user.avatar != null) {
-            Glide.with(holder.itemView.getContext())
-                    .load(activity.user.avatar.large)
-                    .circleCrop()
-                    .into(holder.userAvatar);
+            Glide.with(holder.itemView.getContext()).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
 
             holder.tvUsername.setText(activity.user.name);
         }
@@ -60,12 +55,20 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         // 3. Set time
         // AniList returns seconds and DateUtils needs milliseconds, so convert
         long timeMillis = activity.createdAt * 1000L;
-        CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(
-                timeMillis,
-                System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS
-        );
-        holder.tvTimeAgo.setText(relativeTime);
+
+        long nowSeconds = System.currentTimeMillis() / 1000L;
+        long createdAtSeconds = activity.createdAt;
+        long diffSeconds = nowSeconds - createdAtSeconds;
+
+        //Since feed activities are posted just before the api call was made, the time almost certainly will be around 1 minute.
+        //Therefore we dont need hours, days etc.
+        long minResolution = (diffSeconds < 60) ? DateUtils.SECOND_IN_MILLIS : DateUtils.MINUTE_IN_MILLIS;
+        CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(timeMillis, System.currentTimeMillis(), minResolution);
+        if (diffSeconds < 1) {
+            holder.tvTimeAgo.setText("Just now");
+        } else {
+            holder.tvTimeAgo.setText(relativeTime);
+        }
 
         // 4. Make status text
         String statusText = formatStatus(activity);
