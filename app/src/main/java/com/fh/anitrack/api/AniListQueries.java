@@ -12,13 +12,27 @@ public class AniListQueries {
             "query ($page: Int, $perPage: Int) {" +
                     "  Page (page: $page, perPage: $perPage) {" +
                     "    pageInfo { total currentPage lastPage hasNextPage }" +
-                    "    activities (type: MEDIA_LIST, sort: ID_DESC) {" +
+                    "    activities (sort: ID_DESC) {" +
+                    "      __typename" +
                     "      ... on ListActivity {" +
-                    "        id status progress createdAt likeCount replyCount" +
+                    "        id type status progress createdAt likeCount replyCount isLiked" +
                     "        user { name avatar { large } }" +
                     "        media { title { userPreferred } coverImage { large } }" +
                     "      }" +
+                    "      ... on TextActivity {" +
+                    "        id type text createdAt likeCount replyCount isLiked" +
+                    "        user { name avatar { large } }" +
+                    "      }" +
                     "    }" +
+                    "  }" +
+                    "}";
+
+    // Toggle Like Mutation
+    public static final String TOGGLE_LIKE =
+            "mutation ($id: Int, $type: LikeableType) {" +
+                    "  ToggleLikeV2 (id: $id, type: $type) {" +
+                    "    ... on ListActivity { id isLiked likeCount }" +
+                    "    ... on TextActivity { id isLiked likeCount }" +
                     "  }" +
                     "}";
 

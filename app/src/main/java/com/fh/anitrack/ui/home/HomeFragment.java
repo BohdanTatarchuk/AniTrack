@@ -1,7 +1,5 @@
 package com.fh.anitrack.ui.home;
 
-import static com.fh.anitrack.api.RequestWrapper.sendRequest;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -38,8 +36,6 @@ import java.util.Map;
 import io.noties.markwon.Markwon;
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -115,6 +111,7 @@ public class HomeFragment extends Fragment {
 
         //adapters init
         activityAdapter = new ActivityAdapter();
+        activityAdapter.setMarkwon(markwon);
         rvFeed.setAdapter(activityAdapter);
         rvFeed.setNestedScrollingEnabled(false); // for better performance
         trendingAdapter = new TrendingAdapter();
@@ -223,8 +220,16 @@ public class HomeFragment extends Fragment {
         RequestWrapper.sendRequest(call, response -> {
             if (response.isSuccessful()) {
                 Toast.makeText(getContext(), R.string.published_successfully, Toast.LENGTH_SHORT).show();
+
+                //clear input and hide keyboard
                 clearStatusInput();
                 hideKeyboard();
+
+                //refresh the feed
+                activityPage = 1; // reset page counter to 1
+                activityAdapter.clearItems(); // clear current items in RecyclerView
+                fetchFeed(1); // fetch the first page again
+
             } else {
                 Toast.makeText(getContext(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
             }
@@ -232,7 +237,6 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), R.string.network_failure, Toast.LENGTH_SHORT).show();
         }, requireContext());
     }
-
     private void clearStatusInput() {
         etStatus.setText("");
     }

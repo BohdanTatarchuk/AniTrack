@@ -1,26 +1,42 @@
 package com.fh.anitrack.ui.home;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
+import com.fh.anitrack.api.AniListQueries;
+import com.fh.anitrack.api.AniListService;
+import com.fh.anitrack.api.GraphQLRequest;
+import com.fh.anitrack.api.RequestWrapper;
+import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.ActivityResponse;
-
+import com.fh.anitrack.api.response.ToggleLikeResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
+import io.noties.markwon.Markwon;
+import retrofit2.Call;
 
+public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int TYPE_LIST = 0;
+    private static final int TYPE_TEXT = 1;
     private final List<ActivityResponse.Activity> activities = new ArrayList<>();
+    private Markwon markwon;
+
+    public void setMarkwon(Markwon markwon) {
+        this.markwon = markwon;
+    }
 
     // used for pagination to add new items to the bottom of the list
     public void addItems(List<ActivityResponse.Activity> newItems) {
@@ -29,75 +45,156 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         notifyItemRangeInserted(startPosition, newItems.size());
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if ("TEXT".equals(activities.get(position).type)) {
+            return TYPE_TEXT;
+        }
+        return TYPE_LIST;
+    }
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activity, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == TYPE_TEXT) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_status_activity, parent, false);
+            return new StatusViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activity, parent, false);
+            return new MediaViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ActivityResponse.Activity activity = activities.get(position);
 
-        // 1. Load media cover image
-        if (activity.media != null && activity.media.coverImage != null) {
-            Glide.with(holder.itemView.getContext()).load(activity.media.coverImage.large).centerCrop().into(holder.mediaCoverImage);
+        if (holder instanceof StatusViewHolder) {
+            bindStatusActivity((StatusViewHolder) holder, activity);
+        } else if (holder instanceof MediaViewHolder) {
+            bindMediaActivity((MediaViewHolder) holder, activity);
+        }
+    }
+
+    private void bindStatusActivity(StatusViewHolder holder, ActivityResponse.Activity activity) {
+        Context context = holder.itemView.getContext();
+
+        holder.tvUsername.setText(activity.user.name);
+        Glide.with(context).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
+
+        setTime(holder.tvTimeAgo, activity.createdAt);
+
+        if (markwon != null && activity.text != null) {
+            markwon.setMarkdown(holder.tvStatusText, activity.text);
         }
 
-        // 2. Load user avatar
-        if (activity.user != null && activity.user.avatar != null) {
-            Glide.with(holder.itemView.getContext()).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
+        setupLikeLogic(context, activity, holder.ivHeart, holder.tvLikeCount);
+        holder.tvCommentCount.setText(String.valueOf(activity.replyCount));
+    }
 
+    private void bindMediaActivity(MediaViewHolder holder, ActivityResponse.Activity activity) {
+        Context context = holder.itemView.getContext();
+
+        if (activity.media != null && activity.media.coverImage != null) {
+            Glide.with(context).load(activity.media.coverImage.large).centerCrop().into(holder.mediaCoverImage);
+        }
+
+        if (activity.user != null && activity.user.avatar != null) {
+            Glide.with(context).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
             holder.tvUsername.setText(activity.user.name);
         }
 
-        // 3. Set time
-        // AniList returns seconds and DateUtils needs milliseconds, so convert
-        long timeMillis = activity.createdAt * 1000L;
+        setTime(holder.tvTimeAgo, activity.createdAt);
+        holder.tvStatus.setText(formatStatus(activity));
 
+        setupLikeLogic(context, activity, holder.ivLike, holder.tvLikeCount);
+        holder.tvCommentCount.setText(String.valueOf(activity.replyCount));
+    }
+
+    private void setTime(TextView tvTime, long createdAt) {
+        long timeMillis = createdAt * 1000L;
         long nowSeconds = System.currentTimeMillis() / 1000L;
-        long createdAtSeconds = activity.createdAt;
-        long diffSeconds = nowSeconds - createdAtSeconds;
+        long diffSeconds = nowSeconds - createdAt;
 
-        //Since feed activities are posted just before the api call was made, the time almost certainly will be around 1 minute.
-        //Therefore we dont need hours, days etc.
         long minResolution = (diffSeconds < 60) ? DateUtils.SECOND_IN_MILLIS : DateUtils.MINUTE_IN_MILLIS;
         CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(timeMillis, System.currentTimeMillis(), minResolution);
+
         if (diffSeconds < 1) {
-            holder.tvTimeAgo.setText("Just now");
+            tvTime.setText("Just now");
         } else {
-            holder.tvTimeAgo.setText(relativeTime);
+            tvTime.setText(relativeTime);
         }
+    }
 
-        // 4. Make status text
-        String statusText = formatStatus(activity);
-        holder.tvStatus.setText(statusText);
+    private void setupLikeLogic(Context context, ActivityResponse.Activity activity, ImageView ivHeart, TextView tvCount) {
+        updateLikeUI(ivHeart, tvCount, activity.isLiked, activity.likeCount);
 
-        // 5. Set likes and comms amountb
-        holder.tvLikeCount.setText(String.valueOf(activity.likeCount));
-        holder.tvCommentCount.setText(String.valueOf(activity.replyCount));
+        ivHeart.setOnClickListener(v -> {
+            //Save state
+            final boolean wasLiked = activity.isLiked;
+            final int originalCount = activity.likeCount;
+
+            //Update
+            activity.isLiked = !wasLiked;
+            activity.likeCount = activity.isLiked ? originalCount + 1 : originalCount - 1;
+            updateLikeUI(ivHeart, tvCount, activity.isLiked, activity.likeCount);
+
+            //Prep Request
+            Map<String, Object> vars = new HashMap<>();
+            vars.put("id", activity.id);
+            vars.put("type", "ACTIVITY");
+
+            AniListService service = RetrofitClient.getInstance(context).create(AniListService.class);
+            Call<ToggleLikeResponse> call = service.toggleLike(new GraphQLRequest(AniListQueries.TOGGLE_LIKE, vars));
+
+            RequestWrapper.sendRequest(call, response -> {
+                // Check if successful && the specific data field is !null
+                if (response.isSuccessful() && response.body() != null && response.body().data.ToggleLikeV2 != null) {
+                    ToggleLikeResponse.ToggleLikeV2 res = response.body().data.ToggleLikeV2;
+
+                    //sync server values
+                    activity.isLiked = res.isLiked;
+                    activity.likeCount = res.likeCount;
+                    updateLikeUI(ivHeart, tvCount, activity.isLiked, activity.likeCount);
+                } else {
+                    //revert happens if the response fails
+                    revertLike(activity, wasLiked, originalCount, ivHeart, tvCount);
+                    Toast.makeText(context, R.string.anilist_error_updating_like, Toast.LENGTH_SHORT).show();
+                }
+            }, t -> {
+                revertLike(activity, wasLiked, originalCount, ivHeart, tvCount);
+                Toast.makeText(context, R.string.network_failure, Toast.LENGTH_SHORT).show();
+            }, context);
+        });
+    }
+
+    private void updateLikeUI(ImageView ivHeart, TextView tvCount, boolean isLiked, int count) {
+        tvCount.setText(String.valueOf(count));
+        if (isLiked) {
+            ivHeart.setImageResource(R.drawable.ic_heart_filled);
+        } else {
+            ivHeart.setImageResource(R.drawable.ic_heart_outline);
+        }
+    }
+
+    private void revertLike(ActivityResponse.Activity activity, boolean wasLiked, int originalCount, ImageView ivHeart, TextView tvCount) {
+        activity.isLiked = wasLiked;
+        activity.likeCount = originalCount;
+        updateLikeUI(ivHeart, tvCount, wasLiked, originalCount);
     }
 
     private String formatStatus(ActivityResponse.Activity activity) {
         StringBuilder sb = new StringBuilder();
-
-        // capitalized first letter of status
         String status = activity.status;
         if (status != null && !status.isEmpty()) {
             sb.append(status.substring(0, 1).toUpperCase()).append(status.substring(1));
         }
-
-        // Add progress if exists (e.g., "episode 71 - 356")
         if (activity.progress != null && !activity.progress.isEmpty()) {
             sb.append(" ").append(activity.progress);
         }
-
-        // Add media title
         if (activity.media != null && activity.media.title != null) {
             sb.append(" of ").append(activity.media.title.userPreferred);
         }
-
         return sb.toString();
     }
 
@@ -106,14 +203,37 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         return activities.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView mediaCoverImage, userAvatar;
+    public static class StatusViewHolder extends RecyclerView.ViewHolder {
+        ImageView userAvatar, ivHeart;
+        TextView tvUsername, tvTimeAgo, tvStatusText, tvLikeCount, tvCommentCount;
+
+        public StatusViewHolder(@NonNull View itemView) {
+            super(itemView);
+            userAvatar = itemView.findViewById(R.id.userAvatar);
+            ivHeart = itemView.findViewById(R.id.ivHeart);
+            tvUsername = itemView.findViewById(R.id.userName);
+            tvTimeAgo = itemView.findViewById(R.id.timeAgo);
+            tvStatusText = itemView.findViewById(R.id.statusText);
+            tvLikeCount = itemView.findViewById(R.id.likeCount);
+            tvCommentCount = itemView.findViewById(R.id.commentCount);
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void clearItems() {
+        this.activities.clear();
+        notifyDataSetChanged();
+    }
+
+    public static class MediaViewHolder extends RecyclerView.ViewHolder {
+        ImageView mediaCoverImage, userAvatar, ivLike;
         TextView tvUsername, tvTimeAgo, tvStatus, tvLikeCount, tvCommentCount;
 
-        public ViewHolder(@NonNull View itemView) {
+        public MediaViewHolder(@NonNull View itemView) {
             super(itemView);
             mediaCoverImage = itemView.findViewById(R.id.mediaCoverImage);
             userAvatar = itemView.findViewById(R.id.userAvatar);
+            ivLike = itemView.findViewById(R.id.ivLike);
             tvUsername = itemView.findViewById(R.id.userName);
             tvTimeAgo = itemView.findViewById(R.id.timeAgo);
             tvStatus = itemView.findViewById(R.id.activityStatus);

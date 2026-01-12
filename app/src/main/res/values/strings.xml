@@ -134,6 +134,8 @@
     <string name="network_failure">Network error. Please check your connection.</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="error_updating_like">Error updating like</string>
+    <string name="anilist_error_updating_like">AniList: Error updating like</string>
 
     <!-- Browse Page -->
     <string name="search_hint">Search</string>
