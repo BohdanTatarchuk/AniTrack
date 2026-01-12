@@ -1,66 +1,47 @@
 package com.fh.anitrack.ui.profile;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.fh.anitrack.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileStats#newInstance} factory method to
- * create an instance of this fragment.
+ * Profile Stats Fragment - displays user's statistics.
  */
-public class ProfileStats extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ProfileStats extends BaseProfileFragment {
 
     public ProfileStats() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileStats.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileStats newInstance(String param1, String param2) {
-        ProfileStats fragment = new ProfileStats();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static ProfileStats newInstance() {
+        return new ProfileStats();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    protected void loadContent(View view) {
+        // Get the content container
+        FrameLayout contentContainer = view.findViewById(R.id.profileContentContainer);
+        
+        // Inflate the specific content for stats
+        View statsContent = LayoutInflater.from(requireContext())
+                .inflate(R.layout.profile_content_stats, contentContainer, false);
+        
+        // Add to container
+        contentContainer.removeAllViews();
+        contentContainer.addView(statsContent);
+        
+        // TODO: Setup stats-specific views and data here
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_stats, container, false);
+    protected void highlightCurrentTab() {
+        setTabState(getBtnOverview(), false);
+        setTabState(getBtnAnimeList(), false);
+        setTabState(getBtnMangaList(), false);
+        setTabState(getBtnStats(), true);
+        setTabState(getBtnFavorites(), false);
+        setTabState(getBtnSocial(), false);
     }
 }

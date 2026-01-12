@@ -173,4 +173,11 @@
     <string name="yes">Yes</string>
     <string name="error_updating_like">Error updating like</string>
     <string name="anilist_error_updating_like">AniList: Error updating like</string>
+
+    <!-- Profile Page -->
+    <string name="profile_banner">Profile banner</string>
+    <string name="profile_avatar">Profile avatar</string>
+    <string name="overview">Overview</string>
+    <string name="stats">Stats</string>
+    <string name="social">Social</string>
 </resources>
