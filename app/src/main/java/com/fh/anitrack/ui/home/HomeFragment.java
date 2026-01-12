@@ -25,7 +25,9 @@ import com.fh.anitrack.api.AniListQueries;
 import com.fh.anitrack.api.AniListService;
 import com.fh.anitrack.api.AuthRepository;
 import com.fh.anitrack.api.GraphQLRequest;
+import com.fh.anitrack.api.RequestWrapper;
 import com.fh.anitrack.api.RetrofitClient;
+import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -33,15 +35,20 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.noties.markwon.Markwon;
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
+    //for the formatting
+    private Markwon markwon;
+
     EditText etStatus;
 
-    //adapters are used for pagination (load more functionality to be precise)
+    //adapters are used for pagination ("load more" functionality to be precise)
     private ActivityAdapter activityAdapter;
     private TrendingAdapter trendingAdapter;
 
@@ -49,11 +56,17 @@ public class HomeFragment extends Fragment {
     private int activityPage = 1;
     private int trendingPage = 1;
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // Markwon init
+        markwon = Markwon.builder(requireContext())
+                .usePlugin(StrikethroughPlugin.create())
+                .build();
 
         // ui elements binding
         RecyclerView rvFeed = view.findViewById(R.id.rvFeed);
@@ -83,13 +96,21 @@ public class HomeFragment extends Fragment {
 
         etStatus.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvPreviewContent.setText(s.length() > 0 ? s.toString() : getString(R.string.your_status_will_appear_here));
+                if (s.length() > 0) {
+                    markwon.setMarkdown(tvPreviewContent, s.toString());
+                } else {
+                    tvPreviewContent.setText(getString(R.string.your_status_will_appear_here));
+                }
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //adapters init
@@ -104,11 +125,53 @@ public class HomeFragment extends Fragment {
         btnLoadMoreFeed.setOnClickListener(v -> fetchFeed(++activityPage));
         btnLoadMoreTitles.setOnClickListener(v -> fetchTrending(++trendingPage));
 
+        //initialize formatting buttons
+        bindFormattingListeners(view);
+
         //initial data loading
         fetchFeed(1);
         fetchTrending(1);
 
         return view;
+    }
+
+    private void applyFormatting(String startTag, String endTag) {
+        int start = etStatus.getSelectionStart();
+        int end = etStatus.getSelectionEnd();
+        Editable text = etStatus.getText();
+
+        if (start != -1 && end != -1) {
+            if (start != end) {
+                // user selected text: wrap it -> [start]Selected Text[end]
+                text.insert(start, startTag);
+                text.insert(end + startTag.length(), endTag);
+            } else {
+                // no selection: we just insert tags and place cursor in middle
+                text.insert(start, startTag + endTag);
+                etStatus.setSelection(start + startTag.length());
+            }
+        }
+        etStatus.requestFocus();
+    }
+
+    private void bindFormattingListeners(View root) {
+        // Row 1
+        root.findViewById(R.id.btnBold).setOnClickListener(v -> applyFormatting("__", "__"));
+        root.findViewById(R.id.btnItalic).setOnClickListener(v -> applyFormatting("_", "_"));
+        root.findViewById(R.id.btnStrikethrough).setOnClickListener(v -> applyFormatting("~~", "~~"));
+        root.findViewById(R.id.btnSpoiler).setOnClickListener(v -> applyFormatting("~! ", " !~"));
+        root.findViewById(R.id.btnLink).setOnClickListener(v -> applyFormatting("[", "](url)"));
+        root.findViewById(R.id.btnImage).setOnClickListener(v -> applyFormatting("img###(", ")"));
+        root.findViewById(R.id.btnYoutube).setOnClickListener(v -> applyFormatting("youtube(", ")"));
+
+        // Row 2
+        root.findViewById(R.id.btnVideo).setOnClickListener(v -> applyFormatting("webm(", ")"));
+        root.findViewById(R.id.btnOrderedList).setOnClickListener(v -> applyFormatting("1. ", ""));
+        root.findViewById(R.id.btnUnorderedList).setOnClickListener(v -> applyFormatting("- ", ""));
+        root.findViewById(R.id.btnHeading).setOnClickListener(v -> applyFormatting("### ", ""));
+        root.findViewById(R.id.btnCenter).setOnClickListener(v -> applyFormatting("center~", "~center"));
+        root.findViewById(R.id.btnQuote).setOnClickListener(v -> applyFormatting("> ", ""));
+        root.findViewById(R.id.btnHtml).setOnClickListener(v -> applyFormatting("<code>", "</code>"));
     }
 
     private void handleCancelAction() {
@@ -154,26 +217,20 @@ public class HomeFragment extends Fragment {
         Map<String, Object> vars = new HashMap<>();
         vars.put("text", content);
 
-        GraphQLRequest request = new GraphQLRequest(AniListQueries.SAVE_TEXT_ACTIVITY, vars);
         AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        Call<SaveActivityResponse> call = service.saveTextActivity(new GraphQLRequest(AniListQueries.SAVE_TEXT_ACTIVITY, vars));
 
-        service.saveTextActivity(request).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(@NonNull Call<SaveActivityResponse> call, @NonNull Response<SaveActivityResponse> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), R.string.published_successfully, Toast.LENGTH_SHORT).show();
-                    clearStatusInput();
-                    hideKeyboard();
-                } else {
-                    Toast.makeText(getContext(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
+        RequestWrapper.sendRequest(call, response -> {
+            if (response.isSuccessful()) {
+                Toast.makeText(getContext(), R.string.published_successfully, Toast.LENGTH_SHORT).show();
+                clearStatusInput();
+                hideKeyboard();
+            } else {
+                Toast.makeText(getContext(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            public void onFailure(@NonNull Call<SaveActivityResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), R.string.network_failure, Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, t -> {
+            Toast.makeText(getContext(), R.string.network_failure, Toast.LENGTH_SHORT).show();
+        }, requireContext());
     }
 
     private void clearStatusInput() {
@@ -193,8 +250,11 @@ public class HomeFragment extends Fragment {
         vars.put("page", page);
         vars.put("perPage", 10);
 
-        sendRequest(AniListQueries.GET_ACTIVITIES, vars, response -> {
-            if (response.body() != null && response.body().data.Page != null) {
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        Call<ActivityResponse> call = service.postQuery(new GraphQLRequest(AniListQueries.GET_ACTIVITIES, vars));
+
+        RequestWrapper.sendRequest(call, response -> {
+            if (response.isSuccessful() && response.body() != null && response.body().data.Page != null) {
                 activityAdapter.addItems(response.body().data.Page.activities);
             }
         }, requireContext());
@@ -205,8 +265,11 @@ public class HomeFragment extends Fragment {
         vars.put("page", page);
         vars.put("perPage", 6);
 
-        sendRequest(AniListQueries.GET_TRENDING, vars, response -> {
-            if (response.body() != null && response.body().data.Page != null) {
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        Call<ActivityResponse> call = service.postQuery(new GraphQLRequest(AniListQueries.GET_TRENDING, vars));
+
+        RequestWrapper.sendRequest(call, response -> {
+            if (response.isSuccessful() && response.body() != null && response.body().data.Page != null) {
                 trendingAdapter.addItems(response.body().data.Page.media);
             }
         }, requireContext());

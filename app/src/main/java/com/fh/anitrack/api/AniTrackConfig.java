@@ -6,7 +6,7 @@ import com.fh.anitrack.BuildConfig;
 // build.gradle.kts in its turn looks for defined properties in local.properties file. So to define those props:
 // 1) Find local.properties file
 // 2) define anilist.client.id (e.g. anilist.client.id=12345),
-//           anilist.redirect.uri (e.g.  anilist.redirect.uri=com.fh.anitrack://auth),
+//           anilist.redirect.uri (e.g. anilist.redirect.uri=com.fh.anitrack://auth),
 //           anilist.auth.uri (e.g. anilist.auth.uri=https://anilist.co/api/v2/oauth/authorize)
 //           anilist.api.uri (e.g. anilist.api.uri=https://graphql.anilist.co)
 public class AniTrackConfig {

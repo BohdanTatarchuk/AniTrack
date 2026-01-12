@@ -60,6 +60,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.github.bumptech.glide:glide:4.14.2")
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:ext-strikethrough:4.6.2")
     implementation(libs.security.crypto)
     implementation(libs.okhttp)
     implementation(libs.retrofit)
