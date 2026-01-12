@@ -19,8 +19,12 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
-import com.fh.anitrack.ui.browse.MediaPage;
-import com.fh.anitrack.ui.home.HomeFragment;
+import com.fh.anitrack.api.AuthRepository;
+import com.fh.anitrack.api.AniListQueries;
+import com.fh.anitrack.api.AniListService;
+import com.fh.anitrack.api.GraphQLRequest;
+import com.fh.anitrack.api.RetrofitClient;
+import com.fh.anitrack.api.response.UserResponse;
 import com.fh.anitrack.ui.browse.BrowsePage;
 import com.fh.anitrack.ui.browse.MediaPage;
 import com.fh.anitrack.ui.home.HomeFragment;
@@ -47,6 +51,9 @@ import retrofit2.Response;
 public class NavOverlay extends Fragment {
 
     private DrawerLayout drawerLayout;
+    private AuthRepository authRepository;
+    private ImageView userAvatar;
+    private TextView navUsername;
     private ImageView userAvatar;
     private TextView navUsername;
     private AuthRepository authRepository;
@@ -150,6 +157,7 @@ public class NavOverlay extends Fragment {
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+
         closeDrawer();
     }
 
