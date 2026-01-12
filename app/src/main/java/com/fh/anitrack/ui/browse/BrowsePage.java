@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -210,8 +211,8 @@ public class BrowsePage extends Fragment {
     }
 
     private void loadInitialData() {
-        // Set default media type
-        selectedMediaType = new FilterOption("ANIME", "Anime");
+        // Set default media type to "All"
+        selectedMediaType = new FilterOption("ALL", "All");
         textMediaType.setText(selectedMediaType.getDisplayName());
         textMediaType.setTextColor(requireContext().getColor(R.color.darkBlue));
 
@@ -249,8 +250,24 @@ public class BrowsePage extends Fragment {
     }
 
     private void showMediaTypeDropdown() {
+        // Get media types from data source
+        List<FilterOption> mediaTypes = new ArrayList<>(BrowseMockData.getMediaTypes());
+        
+        // Always ensure "All" option is at the beginning
+        boolean hasAll = false;
+        for (FilterOption option : mediaTypes) {
+            if ("ALL".equals(option.getId())) {
+                hasAll = true;
+                break;
+            }
+        }
+        
+        if (!hasAll) {
+            mediaTypes.add(0, new FilterOption("ALL", "All"));
+        }
+        
         showDropdownDialog(
-                BrowseMockData.getMediaTypes(),
+                mediaTypes,
                 "Select Media Type",
                 (option, position) -> {
                     selectedMediaType = option;
@@ -318,6 +335,24 @@ public class BrowsePage extends Fragment {
         // Add button
         btnAddFilterConfirm.setOnClickListener(v -> {
             if (selectedType[0] != null && selectedValue[0] != null) {
+                // Check if filter already exists
+                boolean filterExists = false;
+                for (ActiveFilter filter : activeFilters) {
+                    if (filter.getFilterType().equals(selectedType[0].getId()) &&
+                        filter.getFilterValue().equals(selectedValue[0].getId())) {
+                        filterExists = true;
+                        break;
+                    }
+                }
+                
+                if (filterExists) {
+                    // Show feedback that filter already exists
+                    Toast.makeText(requireContext(), 
+                            "This filter is already active", 
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
                 // Create new filter
                 String filterId = UUID.randomUUID().toString();
                 ActiveFilter newFilter = new ActiveFilter(
