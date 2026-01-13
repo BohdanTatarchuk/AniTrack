@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fh.anitrack.R;
+import com.fh.anitrack.api.AniListQueries;
+import com.fh.anitrack.api.AniListService;
+import com.fh.anitrack.api.GraphQLRequest;
+import com.fh.anitrack.api.RetrofitClient;
+import com.fh.anitrack.api.response.FilterOptionsResponse;
+import com.fh.anitrack.api.response.MediaSearchResponse;
 import com.fh.anitrack.data.BrowseMockData;
 import com.fh.anitrack.data.model.ActiveFilter;
 import com.fh.anitrack.data.model.AnimeItem;
@@ -34,8 +41,14 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Browse page fragment for searching and filtering anime/manga.
@@ -51,6 +64,7 @@ public class BrowsePage extends Fragment {
     private ImageView iconFiltersToggle;
     private MaterialButton btnAddFilter;
     private MaterialButton btnMoreOptions;
+    private MaterialButton btnLoadMore;
     private View advancedFiltersContainer;
     private ChipGroup activeFiltersChipGroup;
     private RecyclerView animeRecyclerView;
@@ -68,10 +82,28 @@ public class BrowsePage extends Fragment {
     private AnimeAdapter animeAdapter;
 
     // State
+    private static final String TAG = "BrowsePage";
+    private static final int MIN_RESULTS_THRESHOLD = 10; // Auto-load more if below this
     private FilterOption selectedMediaType;
     private List<ActiveFilter> activeFilters = new ArrayList<>();
     private boolean isFiltersExpanded = true;
     private boolean isAdvancedFiltersExpanded = false;
+    private boolean isAutoLoadingMore = false; // Prevent concurrent auto-loads
+    private int rateLimitRemaining = 90; // Track remaining requests
+    
+    // API filter data
+    private List<String> apiGenres = new ArrayList<>();
+    private List<FilterOptionsResponse.MediaTag> apiTags = new ArrayList<>();
+    private boolean filterOptionsLoaded = false;
+    
+    // Pagination state
+    private int currentPage = 1;
+    private boolean hasNextPage = false;
+    private String lastSearchQuery = "";
+    
+    // Debouncing for range sliders
+    private final android.os.Handler searchHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+    private Runnable pendingSearchRunnable = null;
 
     public BrowsePage() {
         // Required empty public constructor
@@ -95,6 +127,18 @@ public class BrowsePage extends Fragment {
         setupRecyclerView();
         setupListeners();
         loadInitialData();
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Cancel any pending searches and auto-loads to prevent memory leaks
+        if (pendingSearchRunnable != null) {
+            searchHandler.removeCallbacks(pendingSearchRunnable);
+            pendingSearchRunnable = null;
+        }
+        searchHandler.removeCallbacksAndMessages(null);
+        isAutoLoadingMore = false;
     }
 
     private void initViews(View view) {
@@ -125,6 +169,7 @@ public class BrowsePage extends Fragment {
         animeRecyclerView = view.findViewById(R.id.animeRecyclerView);
         emptyState = view.findViewById(R.id.emptyState);
         loadingIndicator = view.findViewById(R.id.loadingIndicator);
+        btnLoadMore = view.findViewById(R.id.btnLoadMore);
     }
 
     private void setupRecyclerView() {
@@ -173,22 +218,22 @@ public class BrowsePage extends Fragment {
             v.postDelayed(() -> v.setEnabled(true), 300);
         });
 
-        // Range slider listeners
+        // Range slider listeners - debounced to avoid excessive searches
         if (yearRangeSlider != null) {
             yearRangeSlider.setOnRangeChangedListener((min, max) -> {
-                updateActiveFiltersFromAdvanced();
+                debouncedUpdateFilters();
             });
         }
 
         if (episodesRangeSlider != null) {
             episodesRangeSlider.setOnRangeChangedListener((min, max) -> {
-                updateActiveFiltersFromAdvanced();
+                debouncedUpdateFilters();
             });
         }
 
         if (durationRangeSlider != null) {
             durationRangeSlider.setOnRangeChangedListener((min, max) -> {
-                updateActiveFiltersFromAdvanced();
+                debouncedUpdateFilters();
             });
         }
 
@@ -208,6 +253,9 @@ public class BrowsePage extends Fragment {
                 updateActiveFiltersFromAdvanced();
             });
         }
+        
+        // Load more button
+        btnLoadMore.setOnClickListener(v -> loadMoreResults());
     }
 
     private void loadInitialData() {
@@ -223,11 +271,45 @@ public class BrowsePage extends Fragment {
             yearRangeSlider.setSelectedRange(1970, currentYear);
         }
 
-        // Load mock data
-        List<AnimeItem> mockItems = BrowseMockData.getMockAnimeList();
-        animeAdapter.setItems(mockItems);
+        // Load filter options from API
+        fetchFilterOptions();
 
-        updateEmptyState(mockItems.isEmpty());
+        // Perform initial search (load trending/popular anime)
+        performSearch("");
+    }
+
+    private void fetchFilterOptions() {
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        GraphQLRequest request = new GraphQLRequest(AniListQueries.GET_FILTER_OPTIONS, new HashMap<>());
+        
+        service.getFilterOptions(request).enqueue(new Callback<FilterOptionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FilterOptionsResponse> call, 
+                                   @NonNull Response<FilterOptionsResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().data != null) {
+                    FilterOptionsResponse.Data data = response.body().data;
+                    
+                    if (data.genres != null) {
+                        apiGenres = data.genres;
+                        Log.d(TAG, "Loaded " + apiGenres.size() + " genres from API");
+                    }
+                    
+                    if (data.tags != null) {
+                        apiTags = data.tags;
+                        Log.d(TAG, "Loaded " + apiTags.size() + " tags from API");
+                    }
+                    
+                    filterOptionsLoaded = true;
+                } else {
+                    Log.e(TAG, "Failed to load filter options: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<FilterOptionsResponse> call, @NonNull Throwable t) {
+                Log.e(TAG, "Error fetching filter options", t);
+            }
+        });
     }
 
     private void toggleFiltersSection() {
@@ -296,7 +378,7 @@ public class BrowsePage extends Fragment {
         // Filter type dropdown
         dropdownFilterType.setOnClickListener(v -> {
             showDropdownDialog(
-                    BrowseMockData.getFilterTypes(),
+                    getFilterTypes(),
                     "Select Filter Type",
                     (option, position) -> {
                         selectedType[0] = option;
@@ -319,7 +401,7 @@ public class BrowsePage extends Fragment {
         dropdownFilterValue.setOnClickListener(v -> {
             if (selectedType[0] == null) return;
 
-            List<FilterOption> options = BrowseMockData.getOptionsForFilterType(selectedType[0].getId());
+            List<FilterOption> options = getOptionsForFilterType(selectedType[0].getId());
             showDropdownDialog(
                     options,
                     "Select " + selectedType[0].getDisplayName(),
@@ -445,6 +527,27 @@ public class BrowsePage extends Fragment {
         activeFiltersChipGroup.setVisibility(hasActiveFilters ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * Debounced update for range sliders to avoid excessive API calls.
+     * Updates display immediately but delays search by 500ms.
+     */
+    private void debouncedUpdateFilters() {
+        // Update chips immediately for visual feedback
+        updateActiveFiltersDisplay();
+        
+        // Cancel any pending search
+        if (pendingSearchRunnable != null) {
+            searchHandler.removeCallbacks(pendingSearchRunnable);
+        }
+        
+        // Schedule new search after delay
+        pendingSearchRunnable = () -> {
+            performSearch(searchEditText.getText().toString());
+            pendingSearchRunnable = null;
+        };
+        searchHandler.postDelayed(pendingSearchRunnable, 500);
+    }
+    
     private void updateActiveFiltersFromAdvanced() {
         updateActiveFiltersDisplay();
         performSearch(searchEditText.getText().toString());
@@ -536,17 +639,536 @@ public class BrowsePage extends Fragment {
     }
 
     private void performSearch(String query) {
+        // Reset pagination for new search
+        currentPage = 1;
+        lastSearchQuery = query;
+        isAutoLoadingMore = false; // Reset auto-loading flag
+        
+        // Cancel any pending auto-loads to prevent concurrent requests
+        searchHandler.removeCallbacksAndMessages(null);
+        
         // Show loading
         loadingIndicator.setVisibility(View.VISIBLE);
+        btnLoadMore.setVisibility(View.GONE);
+        
+        // Build search parameters from filter chips
+        Map<String, Object> variables = buildSearchVariables(query, currentPage);
+        
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        GraphQLRequest request = new GraphQLRequest(AniListQueries.SEARCH_MEDIA, variables);
+        
+        service.searchMedia(request).enqueue(new Callback<MediaSearchResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MediaSearchResponse> call, 
+                                   @NonNull Response<MediaSearchResponse> response) {
+                if (!isAdded()) return; // Fragment not attached
+                
+                loadingIndicator.setVisibility(View.GONE);
+                
+                // Extract rate limit headers
+                String rateLimitStr = response.headers().get("X-RateLimit-Remaining");
+                if (rateLimitStr != null) {
+                    try {
+                        rateLimitRemaining = Integer.parseInt(rateLimitStr);
+                        Log.d(TAG, "Rate limit remaining: " + rateLimitRemaining + "/90");
+                    } catch (NumberFormatException e) {
+                        Log.w(TAG, "Failed to parse rate limit header");
+                    }
+                }
+                
+                if (response.isSuccessful() && response.body() != null 
+                        && response.body().data != null 
+                        && response.body().data.page != null) {
+                    
+                    MediaSearchResponse.Page page = response.body().data.page;
+                    List<MediaSearchResponse.Media> mediaList = page.media;
+                    
+                    // Log server response details
+                    Log.d(TAG, "=== SERVER RESPONSE (Search) ===");
+                    Log.d(TAG, "Raw items from server: " + (mediaList != null ? mediaList.size() : 0));
+                    if (page.pageInfo != null) {
+                        Log.d(TAG, "PageInfo - current: " + page.pageInfo.currentPage 
+                                + ", total: " + page.pageInfo.total
+                                + ", perPage: " + page.pageInfo.perPage
+                                + ", hasNext: " + page.pageInfo.hasNextPage);
+                    }
+                    
+                    List<AnimeItem> results = convertToAnimeItems(mediaList);
+                    Log.d(TAG, "Items after conversion: " + results.size());
+                    
+                    // Apply client-side filters (advanced options)
+                    results = applyClientSideFilters(results);
+                    Log.d(TAG, "Items after client filtering: " + results.size());
+                    Log.d(TAG, "================================");
+                    
+                    animeAdapter.setItems(results);
+                    updateEmptyState(results.isEmpty());
+                    
+                    // Update pagination state
+                    hasNextPage = page.pageInfo != null && page.pageInfo.hasNextPage;
+                    btnLoadMore.setVisibility(hasNextPage ? View.VISIBLE : View.GONE);
+                    
+                    Log.d(TAG, "Search returned " + results.size() + " results after filtering, hasNextPage: " + hasNextPage);
+                    
+                    // Auto-load more pages if filtered results are below threshold
+                    checkAndAutoLoadMore();
+                } else {
+                    Log.e(TAG, "Search failed: " + response.code());
+                    animeAdapter.setItems(new ArrayList<>());
+                    updateEmptyState(true);
+                    hasNextPage = false;
+                    btnLoadMore.setVisibility(View.GONE);
+                    isAutoLoadingMore = false;
+                }
+            }
 
-        // In production, this would be an API call with all filter parameters
-        // For now, just show mock data after a brief delay
-        animeRecyclerView.postDelayed(() -> {
-            loadingIndicator.setVisibility(View.GONE);
-            List<AnimeItem> results = BrowseMockData.getMockAnimeList();
-            animeAdapter.setItems(results);
-            updateEmptyState(results.isEmpty());
-        }, 300);
+            @Override
+            public void onFailure(@NonNull Call<MediaSearchResponse> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
+                
+                loadingIndicator.setVisibility(View.GONE);
+                Log.e(TAG, "Search error", t);
+                Toast.makeText(requireContext(), "Search failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                animeAdapter.setItems(new ArrayList<>());
+                updateEmptyState(true);
+                hasNextPage = false;
+                btnLoadMore.setVisibility(View.GONE);
+                isAutoLoadingMore = false;
+            }
+        });
+    }
+
+    /**
+     * Load more results for pagination.
+     */
+    private void loadMoreResults() {
+        if (!hasNextPage) {
+            Log.d(TAG, "Load more clicked but hasNextPage=false. No more pages available.");
+            Toast.makeText(requireContext(), "No more results available", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        Log.d(TAG, "Load more clicked - loading page " + (currentPage + 1));
+        currentPage++;
+        
+        // Show loading
+        loadingIndicator.setVisibility(View.VISIBLE);
+        btnLoadMore.setEnabled(false);
+        
+        // Build search parameters with current page
+        Map<String, Object> variables = buildSearchVariables(lastSearchQuery, currentPage);
+        
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        GraphQLRequest request = new GraphQLRequest(AniListQueries.SEARCH_MEDIA, variables);
+        
+        service.searchMedia(request).enqueue(new Callback<MediaSearchResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MediaSearchResponse> call, 
+                                   @NonNull Response<MediaSearchResponse> response) {
+                if (!isAdded()) return;
+                
+                loadingIndicator.setVisibility(View.GONE);
+                btnLoadMore.setEnabled(true);
+                
+                // Extract rate limit headers
+                String rateLimitStr = response.headers().get("X-RateLimit-Remaining");
+                if (rateLimitStr != null) {
+                    try {
+                        rateLimitRemaining = Integer.parseInt(rateLimitStr);
+                        Log.d(TAG, "Rate limit remaining: " + rateLimitRemaining + "/90");
+                    } catch (NumberFormatException e) {
+                        Log.w(TAG, "Failed to parse rate limit header");
+                    }
+                }
+                
+                if (response.isSuccessful() && response.body() != null 
+                        && response.body().data != null 
+                        && response.body().data.page != null) {
+                    
+                    MediaSearchResponse.Page page = response.body().data.page;
+                    List<MediaSearchResponse.Media> mediaList = page.media;
+                    
+                    // Log server response details
+                    Log.d(TAG, "=== SERVER RESPONSE (Page " + currentPage + ") ===");
+                    Log.d(TAG, "Raw items from server: " + (mediaList != null ? mediaList.size() : 0));
+                    if (page.pageInfo != null) {
+                        Log.d(TAG, "PageInfo - current: " + page.pageInfo.currentPage 
+                                + ", total: " + page.pageInfo.total
+                                + ", perPage: " + page.pageInfo.perPage
+                                + ", hasNext: " + page.pageInfo.hasNextPage);
+                    }
+                    
+                    List<AnimeItem> results = convertToAnimeItems(mediaList);
+                    Log.d(TAG, "Items after conversion: " + results.size());
+                    
+                    // Apply client-side filters (advanced options)
+                    results = applyClientSideFilters(results);
+                    Log.d(TAG, "Items after client filtering: " + results.size());
+                    Log.d(TAG, "=================================");
+                    
+                    // Append to existing items
+                    animeAdapter.addItems(results);
+                    
+                    // Update pagination state
+                    hasNextPage = page.pageInfo != null && page.pageInfo.hasNextPage;
+                    btnLoadMore.setVisibility(hasNextPage ? View.VISIBLE : View.GONE);
+                    
+                    Log.d(TAG, "Loaded " + results.size() + " more results (page " + currentPage + "), total now: " + animeAdapter.getItemCount() + ", hasNextPage: " + hasNextPage);
+                    
+                    // Always check if we need to auto-load more (works for both auto and manual loads)
+                    // Reset flag before checking to allow fresh evaluation
+                    isAutoLoadingMore = false;
+                    checkAndAutoLoadMore();
+                } else {
+                    // Re-enable button for retry
+                    btnLoadMore.setEnabled(true);
+                    
+                    Log.e(TAG, "Load more failed: " + response.code());
+                    if (response.code() == 429) {
+                        // Extract Retry-After header
+                        String retryAfter = response.headers().get("Retry-After");
+                        int retrySeconds = 60; // Default to 1 minute
+                        if (retryAfter != null) {
+                            try {
+                                retrySeconds = Integer.parseInt(retryAfter);
+                            } catch (NumberFormatException e) {
+                                Log.w(TAG, "Failed to parse Retry-After header");
+                            }
+                        }
+                        Log.e(TAG, "Rate limited! Retry after " + retrySeconds + " seconds.");
+                        Toast.makeText(requireContext(), "Rate limited. Wait " + retrySeconds + "s", Toast.LENGTH_SHORT).show();
+                        
+                        // Stop auto-loading
+                        isAutoLoadingMore = false;
+                        searchHandler.removeCallbacksAndMessages(null);
+                    } else {
+                        // Other error codes
+                        Toast.makeText(requireContext(), "Failed to load more (Error " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                    }
+                    currentPage--; // Revert page increment
+                    isAutoLoadingMore = false;
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MediaSearchResponse> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
+                
+                loadingIndicator.setVisibility(View.GONE);
+                btnLoadMore.setEnabled(true);
+                Log.e(TAG, "Load more error", t);
+                Toast.makeText(requireContext(), "Failed to load more: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                currentPage--; // Revert page increment
+                isAutoLoadingMore = false;
+            }
+        });
+    }
+
+    /**
+     * Check if we have enough results after filtering, and auto-load more if needed.
+     * This prevents the user from having to click "Load More" multiple times
+     * when client-side filters reduce results significantly.
+     */
+    private void checkAndAutoLoadMore() {
+        // Don't auto-load if no more pages available
+        if (!hasNextPage) {
+            isAutoLoadingMore = false;
+            return;
+        }
+        
+        // Don't start a new auto-load cycle if one is already queued
+        if (isAutoLoadingMore) {
+            return;
+        }
+        
+        int currentItemCount = animeAdapter.getItemCount();
+        
+        // If we have fewer than threshold items, automatically load more
+        if (currentItemCount < MIN_RESULTS_THRESHOLD) {
+            Log.d(TAG, "Auto-loading more: only " + currentItemCount + " items after filtering");
+            isAutoLoadingMore = true;
+            
+            // Post to handler to avoid blocking the current callback
+            searchHandler.postDelayed(() -> {
+                if (isAdded() && hasNextPage) {
+                    loadMoreResults();
+                } else {
+                    isAutoLoadingMore = false;
+                }
+            }, 2000); // 2s delay for degraded rate limit (30 req/min)
+        } else {
+            Log.d(TAG, "Auto-load check: " + currentItemCount + " items, threshold reached");
+            isAutoLoadingMore = false;
+        }
+    }
+    
+    /**
+     * Build search variables map based on current filters.
+     * Only chip-based filters are sent to the server.
+     * Advanced filters (year range, episodes, duration, checkboxes) are applied client-side.
+     */
+    private Map<String, Object> buildSearchVariables(String searchQuery, int page) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("page", page);
+        
+        // Add search query if present
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            variables.put("search", searchQuery.trim());
+        }
+        
+        // Add media type filter (ANIME or MANGA)
+        if (selectedMediaType != null && !"ALL".equals(selectedMediaType.getId())) {
+            String typeId = selectedMediaType.getId();
+            if ("ANIME".equals(typeId) || "MANGA".equals(typeId)) {
+                variables.put("type", typeId);
+            }
+        }
+        
+        // Process active filter chips - collect all values by type
+        List<String> genres = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
+        List<String> formats = new ArrayList<>();
+        
+        for (ActiveFilter filter : activeFilters) {
+            switch (filter.getFilterType()) {
+                case "GENRES":
+                    genres.add(filter.getFilterValue());
+                    break;
+                case "TAGS":
+                    tags.add(filter.getFilterValue());
+                    break;
+                case "YEAR":
+                    // Year from chip filter (single year selection)
+                    variables.put("seasonYear", Integer.parseInt(filter.getFilterValue()));
+                    break;
+                case "SEASON":
+                    variables.put("season", filter.getFilterValue());
+                    break;
+                case "FORMAT":
+                    formats.add(filter.getFilterValue());
+                    break;
+                case "AIRING_STATUS":
+                    variables.put("status", filter.getFilterValue());
+                    break;
+                case "COUNTRY":
+                    variables.put("countryOfOrigin", filter.getFilterValue());
+                    break;
+                case "SOURCE":
+                    variables.put("source", filter.getFilterValue());
+                    break;
+            }
+        }
+        
+        // Add collected arrays to variables
+        if (!genres.isEmpty()) {
+            variables.put("genres", genres);
+        }
+        if (!tags.isEmpty()) {
+            variables.put("tags", tags);
+        }
+        if (!formats.isEmpty()) {
+            variables.put("format", formats);
+        }
+        
+        // Note: Advanced filters (year range, episodes, duration, onList checkboxes)
+        // are NOT sent to the server - they are applied client-side in applyClientSideFilters()
+        
+        return variables;
+    }
+
+    /**
+     * Apply client-side filters (advanced options) to the results.
+     * These filters are not sent to the GraphQL server.
+     */
+    private List<AnimeItem> applyClientSideFilters(List<AnimeItem> items) {
+        if (items == null || items.isEmpty()) {
+            return items;
+        }
+        
+        List<AnimeItem> filtered = new ArrayList<>(items);
+        
+        // Year range filter
+        if (yearRangeSlider != null) {
+            int minYear = (int) yearRangeSlider.getMinSelectedValue();
+            int maxYear = (int) yearRangeSlider.getMaxSelectedValue();
+            int sliderMin = (int) yearRangeSlider.getMinValue();
+            int sliderMax = (int) yearRangeSlider.getMaxValue();
+            
+            // Only filter if not at default values
+            if (minYear > sliderMin || maxYear < sliderMax) {
+                filtered.removeIf(item -> {
+                    int year = parseYearFromReleaseInfo(item.getReleaseInfo());
+                    if (year == 0) return false; // Keep items without year info
+                    return year < minYear || year > maxYear;
+                });
+            }
+        }
+        
+        // Episodes range filter
+        if (episodesRangeSlider != null) {
+            int minEp = (int) episodesRangeSlider.getMinSelectedValue();
+            int maxEp = (int) episodesRangeSlider.getMaxSelectedValue();
+            int sliderMin = (int) episodesRangeSlider.getMinValue();
+            int sliderMax = (int) episodesRangeSlider.getMaxValue();
+            
+            if (minEp > sliderMin || maxEp < sliderMax) {
+                filtered.removeIf(item -> {
+                    int episodes = item.getEpisodes();
+                    if (episodes == 0) return false; // Keep items without episode info
+                    return episodes < minEp || episodes > maxEp;
+                });
+            }
+        }
+        
+        // Duration range filter
+        if (durationRangeSlider != null) {
+            int minDur = (int) durationRangeSlider.getMinSelectedValue();
+            int maxDur = (int) durationRangeSlider.getMaxSelectedValue();
+            int sliderMin = (int) durationRangeSlider.getMinValue();
+            int sliderMax = (int) durationRangeSlider.getMaxValue();
+            
+            if (minDur > sliderMin || maxDur < sliderMax) {
+                filtered.removeIf(item -> {
+                    int duration = item.getDuration();
+                    if (duration == 0) return false; // Keep items without duration info
+                    return duration < minDur || duration > maxDur;
+                });
+            }
+        }
+        
+        // Note: "Hide my anime" / "Only show my anime" would require user list data
+        // which we don't have client-side, so those filters are skipped for now
+        
+        return filtered;
+    }
+
+    /**
+     * Parse year from release info string (e.g., "Spring 2024" -> 2024, "2024" -> 2024)
+     */
+    private int parseYearFromReleaseInfo(String releaseInfo) {
+        if (releaseInfo == null || releaseInfo.isEmpty()) {
+            return 0;
+        }
+        
+        // Try to find a 4-digit year in the string
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\b(19|20)\\d{2}\\b");
+        java.util.regex.Matcher matcher = pattern.matcher(releaseInfo);
+        if (matcher.find()) {
+            try {
+                return Integer.parseInt(matcher.group());
+            } catch (NumberFormatException e) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Convert API response media items to AnimeItem model objects.
+     */
+    private List<AnimeItem> convertToAnimeItems(List<MediaSearchResponse.Media> mediaList) {
+        List<AnimeItem> items = new ArrayList<>();
+        
+        if (mediaList == null) return items;
+        
+        for (MediaSearchResponse.Media media : mediaList) {
+            AnimeItem item = new AnimeItem();
+            item.setId(media.id);
+            
+            if (media.title != null) {
+                item.setTitle(media.title.userPreferred);
+            }
+            
+            if (media.coverImage != null) {
+                // Prefer large over extraLarge for list view
+                item.setCoverImageUrl(media.coverImage.large != null ? 
+                        media.coverImage.large : media.coverImage.extraLarge);
+            }
+            
+            item.setDescription(media.description);
+            item.setMediaType(media.type);
+            item.setFormat(media.format);
+            item.setStatus(media.status);
+            item.setEpisodes(media.episodes != null ? media.episodes : 0);
+            item.setDuration(media.duration != null ? media.duration : 0);
+            item.setScore(media.averageScore != null ? media.averageScore : 0);
+            
+            // Build release info string
+            item.setReleaseInfo(buildReleaseInfo(media));
+            
+            // Build next episode info
+            if (media.nextAiringEpisode != null) {
+                item.setNextEpisodeInfo(buildNextEpisodeInfo(media.nextAiringEpisode));
+            }
+            
+            // Get studio name
+            if (media.studios != null && media.studios.edges != null && !media.studios.edges.isEmpty()) {
+                for (MediaSearchResponse.StudioEdge edge : media.studios.edges) {
+                    if (edge.isMain && edge.node != null) {
+                        item.setStudio(edge.node.name);
+                        break;
+                    }
+                }
+            }
+            
+            items.add(item);
+        }
+        
+        return items;
+    }
+
+    /**
+     * Build release info string from media data.
+     */
+    private String buildReleaseInfo(MediaSearchResponse.Media media) {
+        StringBuilder sb = new StringBuilder();
+        
+        // Add season and year
+        if (media.season != null && media.seasonYear != null) {
+            sb.append(capitalizeFirst(media.season.toLowerCase()));
+            sb.append(" ");
+            sb.append(media.seasonYear);
+        } else if (media.seasonYear != null) {
+            sb.append(media.seasonYear);
+        } else if (media.startDate != null && media.startDate.year != null) {
+            sb.append(media.startDate.year);
+        }
+        
+        return sb.toString();
+    }
+
+    /**
+     * Build next episode info string.
+     */
+    private String buildNextEpisodeInfo(MediaSearchResponse.NextAiringEpisode nextEp) {
+        long seconds = nextEp.timeUntilAiring;
+        long days = seconds / (24 * 3600);
+        long hours = (seconds % (24 * 3600)) / 3600;
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ep ").append(nextEp.episode).append(" airing in ");
+        
+        if (days > 0) {
+            sb.append(days).append(" day").append(days > 1 ? "s" : "");
+            if (hours > 0) {
+                sb.append(", ").append(hours).append(" hour").append(hours > 1 ? "s" : "");
+            }
+        } else if (hours > 0) {
+            sb.append(hours).append(" hour").append(hours > 1 ? "s" : "");
+        } else {
+            long minutes = seconds / 60;
+            sb.append(minutes).append(" minute").append(minutes > 1 ? "s" : "");
+        }
+        
+        return sb.toString();
+    }
+
+    /**
+     * Capitalize the first letter of a string.
+     */
+    private String capitalizeFirst(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
     private void updateEmptyState(boolean isEmpty) {
@@ -571,5 +1193,81 @@ public class BrowsePage extends Fragment {
                 .replace(R.id.fragment_container, mediaPage)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /**
+     * Get filter types, combining API data with static options.
+     * If API genres/tags are loaded, include "Genre" and "Tags" options.
+     * Other filter types (Year, Season, Format, etc.) remain static.
+     */
+    private List<FilterOption> getFilterTypes() {
+        List<FilterOption> types = new ArrayList<>();
+        
+        // Add Genre if API data is available (or fallback to mock)
+        types.add(new FilterOption("GENRES", "Genres"));
+        
+        // Add Tags option if API tags are available
+        if (!apiTags.isEmpty()) {
+            types.add(new FilterOption("TAGS", "Tags"));
+        }
+        
+        // Static filter types from mock data
+        types.add(new FilterOption("YEAR", "Year"));
+        types.add(new FilterOption("SEASON", "Season"));
+        types.add(new FilterOption("FORMAT", "Format"));
+        types.add(new FilterOption("AIRING_STATUS", "Airing Status"));
+        types.add(new FilterOption("STREAMING_ON", "Streaming On"));
+        types.add(new FilterOption("COUNTRY", "Country of Origin"));
+        types.add(new FilterOption("SOURCE", "Source Material"));
+        
+        return types;
+    }
+
+    /**
+     * Get filter options based on filter type selection.
+     * Uses API data for genres and tags, mock data for other filter types.
+     */
+    private List<FilterOption> getOptionsForFilterType(String filterTypeId) {
+        if (filterTypeId == null) return new ArrayList<>();
+
+        switch (filterTypeId) {
+            case "GENRES":
+                // Use API genres if available, otherwise fallback to mock
+                if (!apiGenres.isEmpty()) {
+                    List<FilterOption> genreOptions = new ArrayList<>();
+                    for (String genre : apiGenres) {
+                        genreOptions.add(new FilterOption(genre, genre));
+                    }
+                    return genreOptions;
+                }
+                return BrowseMockData.getGenres();
+                
+            case "TAGS":
+                // Use API tags (filter out adult tags if needed)
+                List<FilterOption> tagOptions = new ArrayList<>();
+                for (FilterOptionsResponse.MediaTag tag : apiTags) {
+                    // Optionally filter adult tags: if (!tag.isAdult)
+                    tagOptions.add(new FilterOption(tag.name, tag.name));
+                }
+                return tagOptions;
+                
+            // Static options from mock data
+            case "YEAR":
+                return BrowseMockData.getYears();
+            case "SEASON":
+                return BrowseMockData.getSeasons();
+            case "FORMAT":
+                return BrowseMockData.getFormats();
+            case "AIRING_STATUS":
+                return BrowseMockData.getAiringStatuses();
+            case "STREAMING_ON":
+                return BrowseMockData.getStreamingPlatforms();
+            case "COUNTRY":
+                return BrowseMockData.getCountries();
+            case "SOURCE":
+                return BrowseMockData.getSourceMaterials();
+            default:
+                return new ArrayList<>();
+        }
     }
 }
