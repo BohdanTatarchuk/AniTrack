@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.fh.anitrack.R;
 import com.fh.anitrack.data.model.AnimeItem;
 
@@ -178,10 +180,19 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder> 
                 footer.setVisibility(View.GONE);
             }
 
-            // Load poster image (placeholder for now)
-            // In production, use Glide or Coil:
-            // Glide.with(context).load(item.getCoverImageUrl()).into(posterImage);
-            posterImage.setBackgroundColor(ContextCompat.getColor(context, R.color.darkBlue35op));
+            // Load poster image with Glide
+            if (item.getCoverImageUrl() != null && !item.getCoverImageUrl().isEmpty()) {
+                Glide.with(context)
+                        .load(item.getCoverImageUrl())
+                        .placeholder(R.color.darkBlue35op)
+                        .error(R.color.darkBlue35op)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(posterImage);
+            } else {
+                // Fallback to colored background if no image URL
+                posterImage.setImageDrawable(null);
+                posterImage.setBackgroundColor(ContextCompat.getColor(context, R.color.darkBlue35op));
+            }
         }
     }
 }

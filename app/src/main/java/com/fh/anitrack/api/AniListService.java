@@ -1,6 +1,8 @@
 package com.fh.anitrack.api;
 
 import com.fh.anitrack.api.response.ActivityResponse;
+import com.fh.anitrack.api.response.FilterOptionsResponse;
+import com.fh.anitrack.api.response.MediaSearchResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.fh.anitrack.api.response.ToggleLikeResponse;
 import com.fh.anitrack.api.response.UserResponse;
@@ -22,5 +24,11 @@ public interface AniListService {
 
     @POST("/")
     Call<ToggleLikeResponse> toggleLike(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<FilterOptionsResponse> getFilterOptions(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<MediaSearchResponse> searchMedia(@Body GraphQLRequest body);
 
 }

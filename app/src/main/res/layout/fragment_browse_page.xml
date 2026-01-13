@@ -43,10 +43,22 @@
                 android:layout_marginTop="@dimen/marginSmall"
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
-                android:paddingBottom="@dimen/marginBig"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
                 tools:listitem="@layout/browse_item_anime_card" />
+
+            <!-- Load More Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLoadMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:layout_marginBottom="@dimen/marginBig"
+                android:backgroundTint="@color/darkBlue"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/load_more"
+                android:visibility="gone" />
 
             <!-- Empty State -->
             <LinearLayout

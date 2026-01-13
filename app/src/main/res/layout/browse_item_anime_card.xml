@@ -14,16 +14,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="180dp">
 
         <!-- Left: Cover Image with Title Overlay -->
         <FrameLayout
             android:id="@+id/posterContainer"
             android:layout_width="120dp"
-            android:layout_height="0dp"
+            android:layout_height="180dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0">
 
             <ImageView
                 android:id="@+id/posterImage"
@@ -39,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@drawable/bg_anime_card_title_overlay"
+                android:background="@color/titleTransparent"
                 android:ellipsize="end"
                 android:fontFamily="@font/comfortaa"
                 android:maxLines="2"
@@ -63,7 +65,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/posterContainer"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0">
 
             <!-- Release Info Row -->
             <LinearLayout
