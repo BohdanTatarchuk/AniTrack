@@ -55,4 +55,23 @@ public class AniListQueries {
                     "}";
 
 
+    // Stats for profile overview page
+    public static final String GET_USER_STATS =
+            "query { " +
+                    "  Viewer { " +
+                    "    statistics { " +
+                    "      anime { " +
+                    "        count " +
+                    "        minutesWatched " +
+                    "        meanScore " +
+                    "        activityHistory { date amount } " +
+                    "      } " +
+                    "      manga { " +
+                    "        count " +
+                    "        chaptersRead " +
+                    "        meanScore " +
+                    "      } " +
+                    "    } " +
+                    "  } " +
+                    "}";
 }

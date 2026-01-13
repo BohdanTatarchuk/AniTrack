@@ -180,4 +180,16 @@
     <string name="overview">Overview</string>
     <string name="stats">Stats</string>
     <string name="social">Social</string>
+    <string name="_0">0</string>
+    <string name="label">Label</string>
+    <string name="_200">200</string>
+    <string name="_150">150</string>
+    <string name="_100">100</string>
+    <string name="total_anime">Total Anime</string>
+    <string name="days_watched">Days Watched</string>
+    <string name="total_manga">Total Manga</string>
+    <string name="chapters_read">Chapters Read</string>
+    <string name="user_statistics">User statistics</string>
+    <string name="activity_history">Activity history</string>
+    <string name="activity_heatmap">Activity heatmap</string>
 </resources>

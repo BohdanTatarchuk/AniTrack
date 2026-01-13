@@ -1,27 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/layoutHorizontalPadding">
+    android:layout_marginHorizontal="@dimen/layoutHorizontalPadding">
 
-    <!-- Placeholder for Overview Content -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_heatmap"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/titleFontSize"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginNormal"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:strokeColor="@color/darkBlue10op"
+        app:strokeWidth="@dimen/strokeWidthHeatmap"
+        app:cardCornerRadius="@dimen/cardCornerRadius">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvActivityHistory"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heatmapHeight"
+            android:padding="@dimen/paddingNormal"
+            android:clipToPadding="false"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"
-        android:text="Profile Overview Content"
-        android:textAlignment="center"
-        android:textColor="@color/darkGrey"
-        android:textSize="@dimen/bodyTextSize"
-        android:layout_marginTop="@dimen/marginBig"
-        tools:text="Overview content will be implemented here" />
+        android:textSize="@dimen/titleFontSize"
+        android:text="@string/user_statistics"
+        android:layout_marginVertical="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
 
-    <!-- TODO: Add overview-specific content here -->
-    <!-- - User bio -->
-    <!-- - Activity timeline -->
-    <!-- - Recent updates -->
-    <!-- - etc. -->
+    <!-- Anime Stats Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/marginNormal"
+        app:cardBackgroundColor="@color/darkBlue10op"
+        app:cardCornerRadius="@dimen/cardCornerRadius"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/cardPadding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+                <include layout="@layout/view_profile_stat_item" android:id="@+id/statTotalAnime" />
+                <include layout="@layout/view_profile_stat_item" android:id="@+id/statDaysWatched" />
+                <include layout="@layout/view_profile_stat_item" android:id="@+id/statAnimeMeanScore" />
+            </LinearLayout>
+
+            <include layout="@layout/view_stat_progress_bar" android:id="@+id/progressAnime" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Manga Stats Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/darkBlue10op"
+        app:cardCornerRadius="@dimen/cardCornerRadius"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/cardPadding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+                <include layout="@layout/view_profile_stat_item" android:id="@+id/statTotalManga" />
+                <include layout="@layout/view_profile_stat_item" android:id="@+id/statChaptersRead" />
+                <include layout="@layout/view_profile_stat_item" android:id="@+id/statMangaMeanScore" />
+            </LinearLayout>
+
+            <include layout="@layout/view_stat_progress_bar" android:id="@+id/progressManga" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/titleFontSize"
+        android:text="@string/activity_history"
+        android:layout_marginVertical="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
 </LinearLayout>

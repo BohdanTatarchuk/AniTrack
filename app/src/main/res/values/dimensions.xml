@@ -85,4 +85,8 @@
     <dimen name="activityCardHeight">200dp</dimen>
     <dimen name="trendingCardHeight">300dp</dimen>
     <dimen name="paddingNormal">15dp</dimen>
+    <dimen name="profileProgressBarHeight">24dp</dimen>
+    <dimen name="cardPadding">20dp</dimen>
+    <dimen name="strokeWidthHeatmap">3dp</dimen>
+    <dimen name="heatmapHeight">120dp</dimen>
 </resources>
