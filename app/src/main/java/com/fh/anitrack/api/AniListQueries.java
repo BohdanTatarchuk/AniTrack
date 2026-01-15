@@ -157,4 +157,220 @@ public class AniListQueries {
                     "  }" +
                     "}";
 
+    // Media detail query for media page
+    public static final String GET_MEDIA_DETAILS =
+            "query ($id: Int, $type: MediaType) {" +
+                    "  Media (id: $id, type: $type) {" +
+                    "    id " +
+                    "    title { userPreferred romaji english native } " +
+                    "    coverImage { extraLarge large color } " +
+                    "    bannerImage " +
+                    "    startDate { year month day } " +
+                    "    endDate { year month day } " +
+                    "    description " +
+                    "    season " +
+                    "    seasonYear " +
+                    "    type " +
+                    "    format " +
+                    "    status(version: 2) " +
+                    "    episodes " +
+                    "    duration " +
+                    "    chapters " +
+                    "    volumes " +
+                    "    genres " +
+                    "    synonyms " +
+                    "    source(version: 3) " +
+                    "    isAdult " +
+                    "    isLocked " +
+                    "    meanScore " +
+                    "    averageScore " +
+                    "    popularity " +
+                    "    favourites " +
+                    "    hashtag " +
+                    "    countryOfOrigin " +
+                    "    isLicensed " +
+                    "    isFavourite " +
+                    "    isRecommendationBlocked " +
+                    "    isFavouriteBlocked " +
+                    "    isReviewBlocked " +
+                    "    nextAiringEpisode { airingAt timeUntilAiring episode } " +
+                    "    relations { " +
+                    "      edges { " +
+                    "        id " +
+                    "        relationType(version: 2) " +
+                    "        node { " +
+                    "          id " +
+                    "          title { userPreferred } " +
+                    "          format " +
+                    "          type " +
+                    "          status(version: 2) " +
+                    "          bannerImage " +
+                    "          coverImage { large } " +
+                    "        } " +
+                    "      } " +
+                    "    } " +
+                    "    characterPreview: characters(perPage: 6, sort: [ROLE, RELEVANCE, ID]) { " +
+                    "      edges { " +
+                    "        id " +
+                    "        role " +
+                    "        name " +
+                    "        voiceActors(language: JAPANESE, sort: [RELEVANCE, ID]) { " +
+                    "          id " +
+                    "          name { userPreferred } " +
+                    "          language: languageV2 " +
+                    "          image { large } " +
+                    "        } " +
+                    "        node { " +
+                    "          id " +
+                    "          name { userPreferred } " +
+                    "          image { large } " +
+                    "        } " +
+                    "      } " +
+                    "    } " +
+                    "    staff(perPage: 8, sort: [RELEVANCE, ID]) { " +
+                    "      edges { " +
+                    "        id " +
+                    "        role " +
+                    "        node { " +
+                    "          id " +
+                    "          name { userPreferred } " +
+                    "          language: languageV2 " +
+                    "          image { large } " +
+                    "        } " +
+                    "      } " +
+                    "    } " +
+                    "    studios { " +
+                    "      edges { " +
+                    "        isMain " +
+                    "        node { " +
+                    "          id " +
+                    "          name " +
+                    "        } " +
+                    "      } " +
+                    "    } " +
+                    "    recommendations(perPage: 7, sort: [RATING_DESC, ID]) { " +
+                    "      pageInfo { total } " +
+                    "      nodes { " +
+                    "        id " +
+                    "        rating " +
+                    "        userRating " +
+                    "        mediaRecommendation { " +
+                    "          id " +
+                    "          title { userPreferred } " +
+                    "          format " +
+                    "          type " +
+                    "          status(version: 2) " +
+                    "          bannerImage " +
+                    "          coverImage { large } " +
+                    "        } " +
+                    "      } " +
+                    "    } " +
+                    "    stats { " +
+                    "      statusDistribution { status amount } " +
+                    "      scoreDistribution { score amount } " +
+                    "    } " +
+                    "    tags { " +
+                    "      id " +
+                    "      name " +
+                    "      description " +
+                    "      category " +
+                    "      rank " +
+                    "      isGeneralSpoiler " +
+                    "      isMediaSpoiler " +
+                    "      isAdult " +
+                    "      userId " +
+                    "    } " +
+                    "    mediaListEntry { " +
+                    "      id " +
+                    "      status " +
+                    "      score " +
+                    "      progress " +
+                    "      progressVolumes " +
+                    "      repeat " +
+                    "      priority " +
+                    "      private " +
+                    "      notes " +
+                    "      hiddenFromStatusLists " +
+                    "      customLists " +
+                    "      advancedScores " +
+                    "      startedAt { year month day } " +
+                    "      completedAt { year month day } " +
+                    "      updatedAt " +
+                    "      createdAt " +
+                    "    } " +
+                    "    rankings { " +
+                    "      id " +
+                    "      rank " +
+                    "      type " +
+                    "      format " +
+                    "      year " +
+                    "      season " +
+                    "      allTime " +
+                    "      context " +
+                    "    } " +
+                    "    externalLinks { " +
+                    "      id " +
+                    "      site " +
+                    "      url " +
+                    "      type " +
+                    "      language " +
+                    "      color " +
+                    "      icon " +
+                    "      notes " +
+                    "      isDisabled " +
+                    "    } " +
+                    "    streamingEpisodes { " +
+                    "      title " +
+                    "      thumbnail " +
+                    "      url " +
+                    "      site " +
+                    "    } " +
+                    "    trailer { " +
+                    "      id " +
+                    "      site " +
+                    "      thumbnail " +
+                    "    } " +
+                    "  } " +
+                    "}";
+
+    // Save Media List Entry Mutation
+    public static final String SAVE_MEDIA_LIST_ENTRY =
+            "mutation (" +
+                    "  $mediaId: Int, " +
+                    "  $status: MediaListStatus, " +
+                    "  $score: Float, " +
+                    "  $progress: Int, " +
+                    "  $progressVolumes: Int, " +
+                    "  $repeat: Int, " +
+                    "  $private: Boolean, " +
+                    "  $notes: String, " +
+                    "  $startedAt: FuzzyDateInput, " +
+                    "  $completedAt: FuzzyDateInput " +
+                    ") { " +
+                    "  SaveMediaListEntry (" +
+                    "    mediaId: $mediaId, " +
+                    "    status: $status, " +
+                    "    score: $score, " +
+                    "    progress: $progress, " +
+                    "    progressVolumes: $progressVolumes, " +
+                    "    repeat: $repeat, " +
+                    "    private: $private, " +
+                    "    notes: $notes, " +
+                    "    startedAt: $startedAt, " +
+                    "    completedAt: $completedAt " +
+                    "  ) { " +
+                    "    id " +
+                    "    mediaId " +
+                    "    status " +
+                    "    score " +
+                    "    progress " +
+                    "    progressVolumes " +
+                    "    repeat " +
+                    "    private " +
+                    "    notes " +
+                    "    startedAt { year month day } " +
+                    "    completedAt { year month day } " +
+                    "  } " +
+                    "}";
+
 }

@@ -51,6 +51,8 @@
 
     <!-- Content descriptions -->
     <string name="toggle_spoiler_tags">Toggle spoiler tags</string>
+    <string name="toggle_tags_expansion">Toggle tags expansion</string>
+    <string name="genres_tags">Genres &amp; Tags</string>
     <string name="relation_image">Related media image</string>
     <string name="character_image">Character image</string>
     <string name="voice_actor_image">Voice actor image</string>

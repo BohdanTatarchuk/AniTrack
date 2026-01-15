@@ -157,15 +157,6 @@ public class MediaActivity extends AppCompatActivity {
         TextView mediaTitle = findViewById(R.id.mediaTitle);
         mediaTitle.setText(MediaDetailMockData.TITLE);
 
-        // Badges
-        TextView badgeHighestRated = findViewById(R.id.badgeHighestRated);
-        badgeHighestRated.setText(MediaDetailMockData.BADGE_HIGHEST_RATED);
-        badgeHighestRated.setVisibility(View.VISIBLE);
-
-        TextView badgeMostPopular = findViewById(R.id.badgeMostPopular);
-        badgeMostPopular.setText(MediaDetailMockData.BADGE_MOST_POPULAR);
-        badgeMostPopular.setVisibility(View.VISIBLE);
-
         // Favorite count
         TextView favoriteCount = findViewById(R.id.favoriteCount);
         favoriteCount.setText(MediaDetailMockData.FAVORITE_COUNT);
