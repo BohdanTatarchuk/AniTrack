@@ -6,10 +6,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.response.ActivityResponse;
+import com.fh.anitrack.ui.browse.MediaPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,20 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
         ActivityResponse.Media media = mediaList.get(position);
         holder.title.setText(media.title.userPreferred);
         Glide.with(holder.itemView).load(media.coverImage.large).into(holder.image);
+        
+        // Add click listener to navigate to MediaPage
+        holder.itemView.setOnClickListener(v -> {
+            if (v.getContext() instanceof FragmentActivity) {
+                FragmentActivity activity = (FragmentActivity) v.getContext();
+                // Media doesn't have type field, so we pass "ANIME" as default (trending is typically anime)
+                MediaPage mediaPage = MediaPage.newInstance(String.valueOf(media.id), "ANIME");
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, mediaPage)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     @Override

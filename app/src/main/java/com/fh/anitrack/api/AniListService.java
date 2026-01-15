@@ -2,7 +2,13 @@ package com.fh.anitrack.api;
 
 import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.FollowersResponse;
+import com.fh.anitrack.api.response.FilterOptionsResponse;
+import com.fh.anitrack.api.response.MediaDetailResponse;
+import com.fh.anitrack.api.response.MediaListResponse;
+import com.fh.anitrack.api.response.MediaSearchResponse;
+import com.fh.anitrack.api.response.NotificationsResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
+import com.fh.anitrack.api.response.SaveMediaListResponse;
 import com.fh.anitrack.api.response.ToggleLikeResponse;
 import com.fh.anitrack.api.response.UserResponse;
 import com.fh.anitrack.api.response.UserStatsResponse;
@@ -33,5 +39,21 @@ public interface AniListService {
 
     @POST("/")
     Call<FollowersResponse> getFollowing(@Body GraphQLRequest body);
+    Call<FilterOptionsResponse> getFilterOptions(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<MediaSearchResponse> searchMedia(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<MediaDetailResponse> getMediaDetails(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<SaveMediaListResponse> saveMediaListEntry(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<NotificationsResponse> getNotifications(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<MediaListResponse> getUserMediaList(@Body GraphQLRequest body);
 
 }

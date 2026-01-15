@@ -1,8 +1,6 @@
-// UserStatsResponse.java
 package com.fh.anitrack.api.response;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.List;
 
 public class UserStatsResponse {
     public Data data;
@@ -13,6 +11,8 @@ public class UserStatsResponse {
     }
 
     public static class Viewer {
+        public int id;
+
         public String name;
         public Avatar avatar;
         @SerializedName("statistics")
@@ -31,13 +31,6 @@ public class UserStatsResponse {
         public int minutesWatched;
         public int chaptersRead;
         public float meanScore;
-        @SerializedName("activityHistory")
-        public List<HistoryItem> activityHistory;
-    }
-
-    public static class HistoryItem {
-        public long date;
-        public int amount;
     }
 
     public static class Avatar { public String large; }

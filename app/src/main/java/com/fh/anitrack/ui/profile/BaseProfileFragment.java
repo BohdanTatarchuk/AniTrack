@@ -10,20 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.AuthRepository;
+import com.fh.anitrack.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 
-/**
- * Base fragment for all profile views.
- * Contains common elements: banner, avatar, username, and navigation tabs.
- * Child fragments can be loaded into the content container.
- */
 public abstract class BaseProfileFragment extends Fragment {
 
-    // Views
     private ImageView profileBanner;
     private ImageView profileAvatar;
     private TextView profileUsername;
@@ -37,15 +33,15 @@ public abstract class BaseProfileFragment extends Fragment {
     // Data
     private AuthRepository authRepository;
 
+    protected SwipeRefreshLayout swipeRefresh;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_layout_base, container, false);
 
-        // Initialize repository
         authRepository = AuthRepository.getInstance(requireContext());
 
-        // Initialize views
         profileBanner = view.findViewById(R.id.profileBanner);
         profileAvatar = view.findViewById(R.id.profileAvatar);
         profileUsername = view.findViewById(R.id.profileUsername);
@@ -56,16 +52,58 @@ public abstract class BaseProfileFragment extends Fragment {
         btnFavorites = view.findViewById(R.id.btnFavorites);
         btnSocial = view.findViewById(R.id.btnSocial);
 
-        // Setup navigation
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setColorSchemeResources(R.color.darkBlue);
+        swipeRefresh.setOnRefreshListener(() -> {
+            loadUserProfile();
+            onRefreshTriggered();
+        });
+
         setupNavigation();
-
-        // Load user data
         loadUserProfile();
-
-        // Load specific content
         loadContent(view);
 
+        androidx.core.widget.NestedScrollView scrollView = view.findViewById(R.id.nestedScrollView);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setupScrollToTop(scrollView);
+        }
+
         return view;
+    }
+
+    private void loadUserProfile() {
+        String username = authRepository.getUsername();
+        String avatarUrl = authRepository.getAvatarUrl();
+
+        if (username != null && !username.isEmpty()) {
+            profileUsername.setText(username);
+        }
+
+        if (avatarUrl != null && !avatarUrl.isEmpty() && isAdded()) {
+            Glide.with(this)
+                    .load(avatarUrl)
+                    .circleCrop()
+                    .placeholder(R.drawable.profile_picture)
+                    .into(profileAvatar);
+        }
+
+        if (!swipeRefresh.isRefreshing()) stopRefreshing();
+    }
+
+    /**
+     * Helper to stop the animation from child fragments
+     */
+    protected void stopRefreshing() {
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
+
+    /**
+     * used in child fragments to reset their specific lists/data
+     */
+    protected void onRefreshTriggered() {
+        // Default implementation does nothing
     }
 
     private void setupNavigation() {
@@ -75,8 +113,6 @@ public abstract class BaseProfileFragment extends Fragment {
         btnStats.setOnClickListener(v -> navigateToProfile(new ProfileStats()));
         btnFavorites.setOnClickListener(v -> navigateToProfile(new ProfileFavorites()));
         btnSocial.setOnClickListener(v -> navigateToProfile(new ProfileSocial()));
-
-        // Highlight current tab
         highlightCurrentTab();
     }
 
@@ -89,44 +125,10 @@ public abstract class BaseProfileFragment extends Fragment {
         }
     }
 
-    private void loadUserProfile() {
-        // Get username and avatar from AuthRepository
-        String username = authRepository.getUsername();
-        String avatarUrl = authRepository.getAvatarUrl();
-
-        // Set username
-        if (username != null && !username.isEmpty()) {
-            profileUsername.setText(username);
-        }
-
-        // Load avatar using Glide
-        if (avatarUrl != null && !avatarUrl.isEmpty() && isAdded()) {
-            Glide.with(this)
-                    .load(avatarUrl)
-                    .circleCrop()
-                    .placeholder(R.drawable.profile_picture)
-                    .into(profileAvatar);
-        }
-
-        // Load banner (you can add banner URL to AuthRepository if needed)
-        // For now using default background color
-    }
-
-    /**
-     * Abstract method to be implemented by child fragments.
-     * Use this to load view-specific content into the content container.
-     */
     protected abstract void loadContent(View view);
 
-    /**
-     * Abstract method to highlight the current tab.
-     * Each child fragment should override this to indicate which tab is active.
-     */
     protected abstract void highlightCurrentTab();
 
-    /**
-     * Helper method to set tab states
-     */
     protected void setTabState(MaterialButton button, boolean isActive) {
         if (isActive) {
             button.setTextColor(requireContext().getColor(R.color.darkBlue));
@@ -138,10 +140,27 @@ public abstract class BaseProfileFragment extends Fragment {
         }
     }
 
-    protected MaterialButton getBtnOverview() { return btnOverview; }
-    protected MaterialButton getBtnAnimeList() { return btnAnimeList; }
-    protected MaterialButton getBtnMangaList() { return btnMangaList; }
-    protected MaterialButton getBtnStats() { return btnStats; }
-    protected MaterialButton getBtnFavorites() { return btnFavorites; }
-    protected MaterialButton getBtnSocial() { return btnSocial; }
+    protected MaterialButton getBtnOverview() {
+        return btnOverview;
+    }
+
+    protected MaterialButton getBtnAnimeList() {
+        return btnAnimeList;
+    }
+
+    protected MaterialButton getBtnMangaList() {
+        return btnMangaList;
+    }
+
+    protected MaterialButton getBtnStats() {
+        return btnStats;
+    }
+
+    protected MaterialButton getBtnFavorites() {
+        return btnFavorites;
+    }
+
+    protected MaterialButton getBtnSocial() {
+        return btnSocial;
+    }
 }

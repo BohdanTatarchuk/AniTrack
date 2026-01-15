@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginHorizontal="@dimen/layoutHorizontalPadding">
+    android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+    android:layout_marginBottom="@dimen/marginBig">
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,4 +81,20 @@
         android:text="@string/activity_history"
         android:layout_marginVertical="@dimen/marginNormal"
         android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPersonalActivities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoadMorePersonal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
 </LinearLayout>

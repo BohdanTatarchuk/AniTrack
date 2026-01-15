@@ -7,24 +7,37 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.AniListQueries;
 import com.fh.anitrack.api.AniListService;
 import com.fh.anitrack.api.GraphQLRequest;
 import com.fh.anitrack.api.RequestWrapper;
 import com.fh.anitrack.api.RetrofitClient;
+import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.UserStatsResponse;
+import com.fh.anitrack.ui.home.ActivityAdapter;
+import com.google.android.material.button.MaterialButton;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.noties.markwon.Markwon;
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin;
 import retrofit2.Call;
 
-/**
- * Profile Overview Fragment - displays user's profile overview stats and activity heatmap.
- */
 public class ProfileOverview extends BaseProfileFragment {
 
     private View view;
+    private ActivityAdapter activityAdapter;
+    private Markwon markwon;
+    private int activityPage = 1;
+    private boolean hasNextPage = false;
+    private int currentUserId = -1;
 
-    public ProfileOverview() {}
+    public ProfileOverview() {
+    }
 
     public static ProfileOverview newInstance() {
         return new ProfileOverview();
@@ -41,6 +54,32 @@ public class ProfileOverview extends BaseProfileFragment {
         contentContainer.removeAllViews();
         contentContainer.addView(overviewContent);
 
+        markwon = Markwon.builder(requireContext())
+                .usePlugin(StrikethroughPlugin.create())
+                .build();
+
+        RecyclerView rv = overviewContent.findViewById(R.id.rvPersonalActivities);
+        activityAdapter = new ActivityAdapter();
+        activityAdapter.setMarkwon(markwon);
+        activityAdapter.setPersonalProfile(true);
+        rv.setAdapter(activityAdapter);
+        rv.setNestedScrollingEnabled(false);
+
+        MaterialButton btnLoadMore = overviewContent.findViewById(R.id.btnLoadMorePersonal);
+        btnLoadMore.setOnClickListener(v -> fetchPersonalActivities());
+
+        fetchStats();
+    }
+
+    @Override
+    protected void onRefreshTriggered() {
+        activityPage = 1;
+        hasNextPage = false;
+
+        if (activityAdapter != null) {
+            activityAdapter.clearItems();
+        }
+
         fetchStats();
     }
 
@@ -49,10 +88,48 @@ public class ProfileOverview extends BaseProfileFragment {
         Call<UserStatsResponse> call = service.getUserStats(new GraphQLRequest(AniListQueries.GET_USER_STATS, null));
 
         RequestWrapper.sendRequest(call, response -> {
+            stopRefreshing();
+
             if (response.isSuccessful() && response.body() != null) {
                 if (response.body().data.viewer != null) {
-                    UserStatsResponse.Statistics stats = response.body().data.viewer.statistics;
-                    updateUI(stats);
+                    UserStatsResponse.Viewer user = response.body().data.viewer;
+                    this.currentUserId = user.id;
+
+                    updateUI(user.statistics);
+                    fetchPersonalActivities();
+                }
+            }
+        }, requireContext());
+    }
+
+    private void fetchPersonalActivities() {
+        if (currentUserId == -1) {
+            stopRefreshing();
+            return;
+        }
+
+        Map<String, Object> vars = new HashMap<>();
+        vars.put("userId", currentUserId);
+        vars.put("page", activityPage);
+        vars.put("perPage", 10);
+
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+        Call<ActivityResponse> call = service.postQuery(new GraphQLRequest(AniListQueries.GET_USER_ACTIVITIES, vars));
+
+        RequestWrapper.sendRequest(call, response -> {
+            stopRefreshing();
+
+            if (response.isSuccessful() && response.body() != null && response.body().data.Page != null) {
+                ActivityResponse.Page pageData = response.body().data.Page;
+
+                activityAdapter.addItems(pageData.activities);
+
+                this.hasNextPage = pageData.pageInfo.hasNextPage;
+                this.activityPage = pageData.pageInfo.currentPage + 1;
+
+                View loadMoreBtn = view.findViewById(R.id.btnLoadMorePersonal);
+                if (loadMoreBtn != null) {
+                    loadMoreBtn.setVisibility(hasNextPage ? View.VISIBLE : View.GONE);
                 }
             }
         }, requireContext());
@@ -62,42 +139,16 @@ public class ProfileOverview extends BaseProfileFragment {
     private void updateUI(UserStatsResponse.Statistics stats) {
         if (stats == null || view == null) return;
 
-        // anime stats
-        setupStatItem(view.findViewById(R.id.statTotalAnime),
-                String.valueOf(stats.anime.count),
-                getString(R.string.total_anime));
-
-        // convert minutes watched to days
+        setupStatItem(view.findViewById(R.id.statTotalAnime), String.valueOf(stats.anime.count), getString(R.string.total_anime));
         double daysWatched = stats.anime.minutesWatched / 1440.0;
-        setupStatItem(view.findViewById(R.id.statDaysWatched),
-                String.format("%.1f", daysWatched),
-                getString(R.string.days_watched));
+        setupStatItem(view.findViewById(R.id.statDaysWatched), String.format("%.1f", daysWatched), getString(R.string.days_watched));
+        setupStatItem(view.findViewById(R.id.statAnimeMeanScore), String.valueOf(stats.anime.meanScore), getString(R.string.mean_score));
+        setupProgressBar(view.findViewById(R.id.progressAnime), daysWatched, calculateDynamicMilestones(daysWatched));
 
-        setupStatItem(view.findViewById(R.id.statAnimeMeanScore),
-                String.valueOf(stats.anime.meanScore),
-                getString(R.string.mean_score));
-
-        // calc milestones relative to days watched
-        int[] animeMilestones = calculateDynamicMilestones(daysWatched);
-        setupProgressBar(view.findViewById(R.id.progressAnime), daysWatched, animeMilestones);
-
-
-        //manga stats
-        setupStatItem(view.findViewById(R.id.statTotalManga),
-                String.valueOf(stats.manga.count),
-                getString(R.string.total_manga));
-
-        setupStatItem(view.findViewById(R.id.statChaptersRead),
-                String.valueOf(stats.manga.chaptersRead),
-                getString(R.string.chapters_read));
-
-        setupStatItem(view.findViewById(R.id.statMangaMeanScore),
-                String.valueOf(stats.manga.meanScore),
-                getString(R.string.mean_score));
-
-        // calc milestones relative to chapters read
-        int[] mangaMilestones = calculateDynamicMilestones(stats.manga.chaptersRead);
-        setupProgressBar(view.findViewById(R.id.progressManga), stats.manga.chaptersRead, mangaMilestones);
+        setupStatItem(view.findViewById(R.id.statTotalManga), String.valueOf(stats.manga.count), getString(R.string.total_manga));
+        setupStatItem(view.findViewById(R.id.statChaptersRead), String.valueOf(stats.manga.chaptersRead), getString(R.string.chapters_read));
+        setupStatItem(view.findViewById(R.id.statMangaMeanScore), String.valueOf(stats.manga.meanScore), getString(R.string.mean_score));
+        setupProgressBar(view.findViewById(R.id.progressManga), stats.manga.chaptersRead, calculateDynamicMilestones(stats.manga.chaptersRead));
     }
 
     private void setupStatItem(View root, String value, String label) {
