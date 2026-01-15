@@ -17,6 +17,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.AuthRepository;
 import com.fh.anitrack.api.AniListQueries;
@@ -27,6 +28,7 @@ import com.fh.anitrack.api.response.UserResponse;
 import com.fh.anitrack.ui.browse.BrowsePage;
 import com.fh.anitrack.ui.browse.MediaPage;
 import com.fh.anitrack.ui.home.HomeFragment;
+import com.fh.anitrack.ui.login.LoginActivity;
 import com.fh.anitrack.api.AniListQueries;
 import com.fh.anitrack.api.AniListService;
 import com.fh.anitrack.api.AuthRepository;
