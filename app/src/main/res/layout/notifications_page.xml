@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/pearl">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkBlue"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/notificationsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notifications"
+            android:textColor="@color/pearl"
+            android:textSize="24sp"
+            android:fontFamily="@font/comfortaa"
+            android:textStyle="bold"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <!-- Filter Tabs -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="@color/pearl">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAll"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="All"
+                android:textColor="@color/pearl"
+                android:textSize="14sp"
+                android:fontFamily="@font/comfortaa"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:backgroundTint="@color/darkBlue35op"
+                app:cornerRadius="20dp"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAiring"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Airing"
+                android:textColor="@color/darkBlue"
+                android:textSize="14sp"
+                android:fontFamily="@font/comfortaa"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:backgroundTint="@color/darkBlue10op"
+                app:cornerRadius="20dp"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Activity"
+                android:textColor="@color/darkBlue"
+                android:textSize="14sp"
+                android:fontFamily="@font/comfortaa"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:backgroundTint="@color/darkBlue10op"
+                app:cornerRadius="20dp"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFollows"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Follows"
+                android:textColor="@color/darkBlue"
+                android:textSize="14sp"
+                android:fontFamily="@font/comfortaa"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:backgroundTint="@color/darkBlue10op"
+                app:cornerRadius="20dp"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Media"
+                android:textColor="@color/darkBlue"
+                android:textSize="14sp"
+                android:fontFamily="@font/comfortaa"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:backgroundTint="@color/darkBlue10op"
+                app:cornerRadius="20dp"
+                android:layout_marginEnd="8dp" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Mark all as read button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMarkAllRead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mark all as read"
+        android:textColor="@color/pearl"
+        android:textSize="16sp"
+        android:fontFamily="@font/comfortaa"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/darkBlue"
+        app:cornerRadius="8dp"
+        android:layout_margin="16dp" />
+
+    <!-- Notifications List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notificationsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
