@@ -21,6 +21,8 @@ import com.fh.anitrack.api.GraphQLRequest;
 import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.NotificationsResponse;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +40,8 @@ public class NotificationsPage extends Fragment {
     private RecyclerView recyclerView;
     private NotificationsAdapter adapter;
 
-    private MaterialButton btnAll, btnAiring, btnActivity, btnFollows, btnMedia;
+    private ChipGroup filterChipGroup;
+    private Chip chipAll, chipAiring, chipActivity, chipFollows, chipMedia;
     private MaterialButton btnMarkAllRead;
 
     private String currentFilter = "ALL";
@@ -64,11 +67,12 @@ public class NotificationsPage extends Fragment {
 
         // Initialize views
         recyclerView = view.findViewById(R.id.notificationsRecyclerView);
-        btnAll = view.findViewById(R.id.btnAll);
-        btnAiring = view.findViewById(R.id.btnAiring);
-        btnActivity = view.findViewById(R.id.btnActivity);
-        btnFollows = view.findViewById(R.id.btnFollows);
-        btnMedia = view.findViewById(R.id.btnMedia);
+        filterChipGroup = view.findViewById(R.id.filterChipGroup);
+        chipAll = view.findViewById(R.id.chipAll);
+        chipAiring = view.findViewById(R.id.chipAiring);
+        chipActivity = view.findViewById(R.id.chipActivity);
+        chipFollows = view.findViewById(R.id.chipFollows);
+        chipMedia = view.findViewById(R.id.chipMedia);
         btnMarkAllRead = view.findViewById(R.id.btnMarkAllRead);
 
         // Setup RecyclerView
@@ -76,8 +80,8 @@ public class NotificationsPage extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
 
-        // Setup filter buttons
-        setupFilterButtons();
+        // Setup filter chips
+        setupFilterChips();
 
         // Setup mark all as read button
         btnMarkAllRead.setOnClickListener(v -> loadNotifications(true));
@@ -86,74 +90,26 @@ public class NotificationsPage extends Fragment {
         loadNotifications(false);
     }
 
-    private void setupFilterButtons() {
-        btnAll.setOnClickListener(v -> {
-            currentFilter = "ALL";
-            updateFilterButtons();
+    private void setupFilterChips() {
+        filterChipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            if (checkedIds.isEmpty()) return;
+            
+            int checkedId = checkedIds.get(0);
+            
+            if (checkedId == R.id.chipAll) {
+                currentFilter = "ALL";
+            } else if (checkedId == R.id.chipAiring) {
+                currentFilter = "AIRING";
+            } else if (checkedId == R.id.chipActivity) {
+                currentFilter = "ACTIVITY";
+            } else if (checkedId == R.id.chipFollows) {
+                currentFilter = "FOLLOWING";
+            } else if (checkedId == R.id.chipMedia) {
+                currentFilter = "MEDIA";
+            }
+            
             loadNotifications(false);
         });
-
-        btnAiring.setOnClickListener(v -> {
-            currentFilter = "AIRING";
-            updateFilterButtons();
-            loadNotifications(false);
-        });
-
-        btnActivity.setOnClickListener(v -> {
-            currentFilter = "ACTIVITY";
-            updateFilterButtons();
-            loadNotifications(false);
-        });
-
-        btnFollows.setOnClickListener(v -> {
-            currentFilter = "FOLLOWING";
-            updateFilterButtons();
-            loadNotifications(false);
-        });
-
-        btnMedia.setOnClickListener(v -> {
-            currentFilter = "MEDIA";
-            updateFilterButtons();
-            loadNotifications(false);
-        });
-    }
-
-    private void updateFilterButtons() {
-        // Reset all buttons to inactive state
-        setButtonInactive(btnAll);
-        setButtonInactive(btnAiring);
-        setButtonInactive(btnActivity);
-        setButtonInactive(btnFollows);
-        setButtonInactive(btnMedia);
-
-        // Set active button
-        switch (currentFilter) {
-            case "ALL":
-                setButtonActive(btnAll);
-                break;
-            case "AIRING":
-                setButtonActive(btnAiring);
-                break;
-            case "ACTIVITY":
-                setButtonActive(btnActivity);
-                break;
-            case "FOLLOWING":
-                setButtonActive(btnFollows);
-                break;
-            case "MEDIA":
-                setButtonActive(btnMedia);
-                break;
-        }
-    }
-
-    private void setButtonActive(MaterialButton button) {
-        button.setBackgroundTintList(getResources().getColorStateList(R.color.darkBlue35op, null));
-        button.setTextColor(getResources().getColor(R.color.pearl, null));
-    }
-
-    private void setButtonInactive(MaterialButton button) {
-        button.setBackgroundTintList(getResources().getColorStateList(R.color.darkBlue10op, null));
-        button.setTextColor(getResources().getColor(R.color.darkBlue, null));
     }
 
     private void loadNotifications(boolean resetCount) {
