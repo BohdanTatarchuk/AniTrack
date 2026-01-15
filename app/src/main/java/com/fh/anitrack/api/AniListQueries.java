@@ -502,6 +502,10 @@ public class AniListQueries {
                     "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
                     "    following(userId: $id, sort: USERNAME) {" +
                     "      id name avatar { large }" +
+                    "    }" +
+                    "  }" +
+                    "}";
+
     // Profile overview user activities
     public static final String GET_USER_ACTIVITIES =
             "query ($userId: Int, $page: Int, $perPage: Int) {" +
