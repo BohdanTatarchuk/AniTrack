@@ -378,17 +378,8 @@ public class AniListQueries {
             "query { " +
                     "  Viewer { " +
                     "    statistics { " +
-                    "      anime { " +
-                    "        count " +
-                    "        minutesWatched " +
-                    "        meanScore " +
-                    "        activityHistory { date amount } " +
-                    "      } " +
-                    "      manga { " +
-                    "        count " +
-                    "        chaptersRead " +
-                    "        meanScore " +
-                    "      } " +
+                    "      anime { count minutesWatched meanScore } " +
+                    "      manga { count chaptersRead meanScore } " +
                     "    } " +
                     "  } " +
                     "}";
