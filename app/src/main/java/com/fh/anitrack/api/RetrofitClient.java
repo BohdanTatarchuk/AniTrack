@@ -42,4 +42,8 @@ public class RetrofitClient {
         }
         return retrofit;
     }
+
+    public static AniListService getAniListService(Context context) {
+        return getInstance(context).create(AniListService.class);
+    }
 }

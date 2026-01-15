@@ -5,6 +5,7 @@ import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaDetailResponse;
 import com.fh.anitrack.api.response.MediaListResponse;
 import com.fh.anitrack.api.response.MediaSearchResponse;
+import com.fh.anitrack.api.response.NotificationsResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.fh.anitrack.api.response.SaveMediaListResponse;
 import com.fh.anitrack.api.response.ToggleLikeResponse;
@@ -43,6 +44,9 @@ public interface AniListService {
 
     @POST("/")
     Call<SaveMediaListResponse> saveMediaListEntry(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<NotificationsResponse> getNotifications(@Body GraphQLRequest body);
 
     @POST("/")
     Call<MediaListResponse> getUserMediaList(@Body GraphQLRequest body);

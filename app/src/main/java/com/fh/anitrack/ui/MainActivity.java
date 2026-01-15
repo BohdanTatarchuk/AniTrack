@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         if (fabScrollTop == null) return;
 
         scrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY > 1000) {
+            if (scrollY > 10) {
                 fabScrollTop.show();
             } else {
                 fabScrollTop.hide();
