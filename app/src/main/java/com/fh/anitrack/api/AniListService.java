@@ -1,6 +1,7 @@
 package com.fh.anitrack.api;
 
 import com.fh.anitrack.api.response.ActivityResponse;
+import com.fh.anitrack.api.response.FollowersResponse;
 import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaDetailResponse;
 import com.fh.anitrack.api.response.MediaListResponse;
@@ -34,6 +35,10 @@ public interface AniListService {
     Call<UserStatsResponse> getUserStats(@Body GraphQLRequest body);
 
     @POST("/")
+    Call<FollowersResponse> getFollowers(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<FollowersResponse> getFollowing(@Body GraphQLRequest body);
     Call<FilterOptionsResponse> getFilterOptions(@Body GraphQLRequest body);
 
     @POST("/")

@@ -4,7 +4,7 @@ package com.fh.anitrack.api;
 public class AniListQueries {
     // Get current user data for navigation sidebar
     public static final String GET_CURRENT_USER =
-            "query { Viewer { name avatar { large } } }";
+            "query { Viewer { id name avatar { large } } }";
 
 
     // Activity Feed Query (home page)
@@ -484,6 +484,24 @@ public class AniListQueries {
                     "  } " +
                     "}";
 
+    // Get user followers
+    public static final String GET_FOLLOWERS =
+            "query ($id: Int!, $page: Int) {" +
+                    "  Page(page: $page) {" +
+                    "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
+                    "    followers(userId: $id, sort: USERNAME) {" +
+                    "      id name avatar { large }" +
+                    "    }" +
+                    "  }" +
+                    "}";
+
+    // Get user following
+    public static final String GET_FOLLOWING =
+            "query ($id: Int!, $page: Int) {" +
+                    "  Page(page: $page) {" +
+                    "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
+                    "    following(userId: $id, sort: USERNAME) {" +
+                    "      id name avatar { large }" +
     // Profile overview user activities
     public static final String GET_USER_ACTIVITIES =
             "query ($userId: Int, $page: Int, $perPage: Int) {" +

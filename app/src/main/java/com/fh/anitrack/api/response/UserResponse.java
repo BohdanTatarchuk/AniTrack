@@ -12,6 +12,7 @@ public class UserResponse {
     }
 
     public static class Viewer {
+        public int id;
         public String name;
         public Avatar avatar;
     }

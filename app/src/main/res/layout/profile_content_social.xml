@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/layoutHorizontalPadding">
+    android:orientation="vertical">
 
-    <!-- Placeholder for Social Content -->
-    <TextView
+    <!-- Following/Followers Tabs -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/comfortaa"
-        android:text="Social Content"
-        android:textAlignment="center"
-        android:textColor="@color/darkGrey"
-        android:textSize="@dimen/bodyTextSize"
-        android:layout_marginTop="@dimen/marginBig"
-        tools:text="Social content will be implemented here" />
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+        android:paddingVertical="@dimen/marginSmall"
+        android:gravity="center">
 
-    <!-- TODO: Add social-specific content here -->
-    <!-- - Friends list -->
-    <!-- - Followers/Following -->
-    <!-- - Activity feed -->
-    <!-- - etc. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFollowing"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="Following"
+            android:textColor="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/darkBlue10op"
+            app:cornerRadius="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFollowers"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="Followers"
+            android:textColor="@color/pearl"
+            android:fontFamily="@font/comfortaa"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/darkBlue35op"
+            app:cornerRadius="8dp" />
+
+    </LinearLayout>
+
+    <!-- Users Grid -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSocialUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+        android:paddingBottom="@dimen/marginNormal"
+        android:clipToPadding="false" />
 
 </LinearLayout>
