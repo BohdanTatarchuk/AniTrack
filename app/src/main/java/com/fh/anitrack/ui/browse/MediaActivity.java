@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fh.anitrack.R;
-import com.fh.anitrack.data.MediaDetailMockData;
+import com.fh.anitrack.mockData.MediaDetailMockData;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;

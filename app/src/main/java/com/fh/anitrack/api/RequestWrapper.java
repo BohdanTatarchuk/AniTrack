@@ -10,7 +10,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RequestWrapper {
-
     public static <T> void sendRequest(Call<T> call, OnSuccessCallback<T> onSuccess, Context context) {
         sendRequest(call, onSuccess, t -> {
             Log.e("AniTrack", "Request Failed: " + t.getMessage());

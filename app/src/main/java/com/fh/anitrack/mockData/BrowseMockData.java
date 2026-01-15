@@ -1,7 +1,7 @@
-package com.fh.anitrack.data;
+package com.fh.anitrack.mockData;
 
-import com.fh.anitrack.data.model.AnimeItem;
-import com.fh.anitrack.data.model.FilterOption;
+import com.fh.anitrack.mockData.model.AnimeItem;
+import com.fh.anitrack.mockData.model.FilterOption;
 
 import java.util.ArrayList;
 import java.util.List;

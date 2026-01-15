@@ -90,4 +90,5 @@
     <dimen name="strokeWidthHeatmap">3dp</dimen>
     <dimen name="heatmapHeight">120dp</dimen>
     <dimen name="fontSizeSubtitle">20sp</dimen>
+    <dimen name="bigTitle">32sp</dimen>
 </resources>

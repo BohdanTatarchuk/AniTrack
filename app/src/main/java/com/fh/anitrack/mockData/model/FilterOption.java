@@ -1,4 +1,4 @@
-package com.fh.anitrack.data.model;
+package com.fh.anitrack.mockData.model;
 
 /**
  * Data model representing a filter option in dropdowns.

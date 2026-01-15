@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.fh.anitrack.R;
-import com.fh.anitrack.data.model.AnimeItem;
+import com.fh.anitrack.mockData.model.AnimeItem;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -28,7 +28,7 @@ import com.fh.anitrack.api.GraphQLRequest;
 import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.MediaDetailResponse;
 import com.fh.anitrack.api.response.SaveMediaListResponse;
-import com.fh.anitrack.data.MediaDetailMockData;
+import com.fh.anitrack.mockData.MediaDetailMockData;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
