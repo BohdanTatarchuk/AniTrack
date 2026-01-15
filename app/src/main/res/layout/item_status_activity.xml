@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/paddingTiny"
+    app:cardBackgroundColor="@color/darkBlue10op"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="@dimen/cardElevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingNormal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="@dimen/iconSizeBig"
+            android:layout_height="@dimen/iconSizeBig"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            android:src="@drawable/profile_picture" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/userAvatar"
+            app:layout_constraintTop_toTopOf="@id/userAvatar" />
+
+        <TextView
+            android:id="@+id/timeAgo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:fontFamily="@font/comfortaa"
+            android:textSize="@dimen/labelFontSize"
+            app:layout_constraintStart_toStartOf="@id/userName"
+            app:layout_constraintTop_toBottomOf="@id/userName" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userAvatar" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusText">
+
+            <TextView
+                android:id="@+id/likeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkBlue" />
+
+            <ImageView
+                android:id="@+id/ivHeart"
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:layout_marginStart="@dimen/marginTiny"
+                android:contentDescription="@string/heart_icon"
+                android:src="@drawable/ic_heart_outline" />
+
+            <TextView
+                android:id="@+id/commentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginNormal"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkBlue" />
+
+            <ImageView
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:layout_marginStart="@dimen/marginTiny"
+                android:contentDescription="@string/comment_icon"
+                android:src="@drawable/ic_comment"
+                app:tint="@color/darkBlue" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

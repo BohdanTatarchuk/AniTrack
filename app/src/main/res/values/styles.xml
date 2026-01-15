@@ -5,4 +5,54 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="buttonTint">@null</item>
     </style>
+
+    <!-- Tab Chip Style for Media Detail -->
+    <style name="TabChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textColor">@color/tab_chip_text_color</item>
+        <item name="chipBackgroundColor">@color/tab_chip_background_color</item>
+        <item name="chipCornerRadius">@dimen/chipCornerRadius</item>
+        <item name="chipMinHeight">@dimen/chipMinHeight</item>
+        <item name="chipStrokeColor">@color/darkBlue</item>
+        <item name="chipStrokeWidth">@dimen/dividerHeight</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+
+    <!-- Tag Chip Style -->
+    <style name="TagChipStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="chipBackgroundColor">@color/tagChipBackground</item>
+        <item name="chipCornerRadius">@dimen/chipCornerRadiusSmall</item>
+        <item name="chipMinHeight">@dimen/chipMinHeightSmall</item>
+        <item name="chipStrokeColor">@color/darkBlue</item>
+        <item name="chipStrokeWidth">@dimen/dividerHeight</item>
+        <item name="chipSpacingHorizontal">@dimen/chipSpacingSmall</item>
+        <item name="chipSpacingVertical">@dimen/chipSpacingSmall</item>
+    </style>
+
+    <!-- Navigation right sidebar text style -->
+    <style name="NavMenuItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/titleFontSize</item>
+        <item name="android:padding">@dimen/textFieldHorizontalPadding</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textColor">@color/darkGrey</item>
+    </style>
+
+    <!-- Style to make ShapableImageView circular -->
+    <style name="CircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="FormattingButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
 </resources>

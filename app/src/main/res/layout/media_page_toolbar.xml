@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Media Page Toolbar - Contains Add to List button and favorite button -->
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:layout_collapseMode="pin"
+    app:navigationIcon="@drawable/ic_back"
+    app:titleTextColor="@color/pearl">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addToListButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/toolbarButtonHeight"
+            android:layout_marginStart="@dimen/marginSmall"
+            android:backgroundTint="@color/accentBlue"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:minHeight="@dimen/zero"
+            android:paddingHorizontal="@dimen/marginSmall"
+            android:text="@string/add_to_list"
+            android:textColor="@color/white"
+            android:textSize="@dimen/captionTextSize"
+            app:cornerRadius="@dimen/chipCornerRadius"
+            app:icon="@drawable/ic_dropdown"
+            app:iconGravity="end"
+            app:iconSize="@dimen/iconSizeSmall"
+            app:iconTint="@color/white" />
+
+        <View
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/favoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/marginTiny"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/favorite"
+            android:padding="@dimen/marginTiny"
+            android:src="@drawable/selector_heart"
+            android:tint="@color/selector_heart_tint" />
+
+        <TextView
+            android:id="@+id/favoriteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="@color/pearl"
+            android:textSize="@dimen/captionTextSize"
+            tools:text="18.1k" />
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>

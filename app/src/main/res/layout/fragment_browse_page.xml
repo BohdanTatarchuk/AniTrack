@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pearl"
+    tools:context=".ui.browse.BrowsePage">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Search Header Section -->
+            <include
+                android:id="@+id/searchHeader"
+                layout="@layout/browse_layout_search_header" />
+
+            <!-- Active Filter Chips (Always Visible) -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/activeFiltersChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:visibility="gone"
+                app:chipSpacingHorizontal="@dimen/marginTiny"
+                app:chipSpacingVertical="@dimen/paddingTiny"
+                app:singleLine="false" />
+
+            <!-- Results List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/animeRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/browse_item_anime_card" />
+
+            <!-- Load More Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLoadMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:layout_marginBottom="@dimen/marginBig"
+                android:backgroundTint="@color/darkBlue"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/load_more"
+                android:visibility="gone" />
+
+            <!-- Empty State -->
+            <LinearLayout
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/marginBig"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/no_results_found"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="@dimen/sectionTitleFontSize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginSmall"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:text="@string/try_adjusting_filters"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="@dimen/bodyTextSize" />
+
+            </LinearLayout>
+
+            <!-- Loading State -->
+            <ProgressBar
+                android:id="@+id/loadingIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:indeterminateTint="@color/darkBlue"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

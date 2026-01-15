@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/marginBig"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/layoutHorizontalPadding" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/layoutHorizontalPadding" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.03" />
+
+        <TextView
+            android:id="@+id/tvActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/activity"
+            android:textSize="@dimen/fontSizeHeader"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/guideTop" />
+
+        <LinearLayout
+            android:id="@+id/formattingOptions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:background="@drawable/bg_rounded_input"
+            android:orientation="vertical"
+            android:padding="@dimen/paddingTiny"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/tvActivity">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <ImageButton
+                    android:id="@+id/btnBold"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/bold"
+                    android:src="@drawable/ic_formatting_bold" />
+
+                <ImageButton
+                    android:id="@+id/btnItalic"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/italic"
+                    android:src="@drawable/ic_formatting_italic" />
+
+                <ImageButton
+                    android:id="@+id/btnStrikethrough"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/strikethrough"
+                    android:src="@drawable/ic_formatting_crossed" />
+
+                <ImageButton
+                    android:id="@+id/btnSpoiler"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/spoiler"
+                    android:src="@drawable/ic_formatting_visibility" />
+
+                <ImageButton
+                    android:id="@+id/btnLink"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/link"
+                    android:src="@drawable/ic_formatting_link" />
+
+                <ImageButton
+                    android:id="@+id/btnImage"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_formatting_image" />
+
+                <ImageButton
+                    android:id="@+id/btnYoutube"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/youtube"
+                    android:src="@drawable/ic_formatting_youtube" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <ImageButton
+                    android:id="@+id/btnVideo"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/video"
+                    android:src="@drawable/ic_formatting_video" />
+
+                <ImageButton
+                    android:id="@+id/btnOrderedList"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/ordered_list"
+                    android:src="@drawable/ic_formatting_nlist" />
+
+                <ImageButton
+                    android:id="@+id/btnUnorderedList"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/unordered_list"
+                    android:src="@drawable/ic_formatting_unlist" />
+
+                <ImageButton
+                    android:id="@+id/btnHeading"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/heading"
+                    android:src="@drawable/ic_formatting_h" />
+
+                <ImageButton
+                    android:id="@+id/btnCenter"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/center"
+                    android:src="@drawable/ic_formatting_center" />
+
+                <ImageButton
+                    android:id="@+id/btnQuote"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/quote"
+                    android:src="@drawable/ic_formatting_quote" />
+
+                <ImageButton
+                    android:id="@+id/btnHtml"
+                    style="@style/FormattingButton"
+                    android:contentDescription="@string/html"
+                    android:src="@drawable/ic_formatting_html" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etStatus"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/homeEditTextHeight"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/bg_rounded_input"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="top"
+            android:hint="@string/write_a_status"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:paddingHorizontal="@dimen/textFieldHorizontalPadding"
+            android:paddingVertical="@dimen/textFieldVerticalPadding"
+            android:textColorHint="@color/darkBlue35op"
+            android:textSize="@dimen/labelFontSize"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/formattingOptions" />
+
+        <TextView
+            android:id="@+id/tvPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/preview"
+            android:textSize="@dimen/fontSizeHeader"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/etStatus" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/previewContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/bg_rounded_input"
+            android:padding="@dimen/textFieldHorizontalPadding"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/tvPreview">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/previewAvatarCard"
+                android:layout_width="@dimen/iconSizeBig"
+                android:layout_height="@dimen/iconSizeBig"
+                app:cardCornerRadius="@dimen/homeBorderRadius"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/userAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/user_avatar"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_picture" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvPreviewUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginSmall"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/username"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/labelFontSize"
+                app:layout_constraintBottom_toBottomOf="@id/previewAvatarCard"
+                app:layout_constraintStart_toEndOf="@id/previewAvatarCard"
+                app:layout_constraintTop_toTopOf="@id/previewAvatarCard" />
+
+            <TextView
+                android:id="@+id/tvPreviewStatusContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/your_status_will_appear_here"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/labelFontSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previewAvatarCard" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textViewGuidelines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/please_read_the_guidelines_before_posting"
+            android:textColor="@color/darkBlue"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toBottomOf="@+id/previewContainer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPublish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:backgroundTint="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/publish"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGuidelines" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/marginTiny"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="@id/btnPublish"
+            app:layout_constraintEnd_toStartOf="@id/btnPublish"
+            app:layout_constraintTop_toTopOf="@id/btnPublish" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFeed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/btnPublish" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadMoreFeed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:backgroundTint="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/load_more"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/rvFeed" />
+
+        <TextView
+            android:id="@+id/tvTrending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/trending_anime_anp_manga"
+            android:textSize="@dimen/fontSizeHeader"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoadMoreFeed" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTrending"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/tvTrending"
+            app:spanCount="2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoadMoreTitles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:backgroundTint="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/load_more"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/rvTrending" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

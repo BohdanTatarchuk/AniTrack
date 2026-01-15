@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dialogPadding">
+
+        <!-- Drag Handle -->
+        <View
+            android:layout_width="@dimen/dragIndicatorWidth"
+            android:layout_height="@dimen/dragIndicatorHeight"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/marginNormal"
+            android:background="@drawable/drag_indicator" />
+
+        <!-- Status -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/status"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/statusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/spinner_background"
+            android:fontFamily="@font/comfortaa"
+            android:padding="@dimen/inputFieldPadding"
+            android:popupBackground="@color/pearl"
+            android:spinnerMode="dropdown" />
+
+        <!-- Score -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/score"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/input_field_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/inputFieldPadding">
+
+            <TextView
+                android:id="@+id/scoreValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/inputTextSize"
+                tools:text="0" />
+
+            <ImageView
+                android:id="@+id/scoreUpDown"
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:contentDescription="@string/adjust_score"
+                android:src="@drawable/ic_up_down" />
+
+        </LinearLayout>
+
+        <!-- Episode Progress -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/episode_progress"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/input_field_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/inputFieldPadding">
+
+            <TextView
+                android:id="@+id/episodeProgressValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/inputTextSize"
+                tools:text="23" />
+
+            <ImageView
+                android:id="@+id/episodeUpDown"
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:contentDescription="@string/adjust_episode"
+                android:src="@drawable/ic_up_down" />
+
+        </LinearLayout>
+
+        <!-- Start Date / Finish Date Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/marginSmall"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/start_date"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="@dimen/labelFontSize"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/startDateValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTiny"
+                    android:background="@drawable/input_field_background"
+                    android:fontFamily="@font/comfortaa"
+                    android:padding="@dimen/inputFieldPadding"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="@dimen/inputTextSize"
+                    tools:text="" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginSmall"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/finish_date"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="@dimen/labelFontSize"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/finishDateValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTiny"
+                    android:background="@drawable/input_field_background"
+                    android:fontFamily="@font/comfortaa"
+                    android:padding="@dimen/inputFieldPadding"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="@dimen/inputTextSize"
+                    tools:text="" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Total Rewatches -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/total_rewatches"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:background="@drawable/input_field_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/inputFieldPadding">
+
+            <TextView
+                android:id="@+id/rewatchesValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/inputTextSize"
+                tools:text="23" />
+
+            <ImageView
+                android:id="@+id/rewatchesUpDown"
+                android:layout_width="@dimen/iconSizeMedium"
+                android:layout_height="@dimen/iconSizeMedium"
+                android:contentDescription="@string/adjust_rewatches"
+                android:src="@drawable/ic_up_down" />
+
+        </LinearLayout>
+
+        <!-- Notes -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/notes"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/notesEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:autofillHints="no"
+            android:background="@drawable/input_field_background"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:minHeight="@dimen/notesMinHeight"
+            android:padding="@dimen/inputFieldPadding"
+            android:textColor="@color/darkGrey"
+            android:textSize="@dimen/inputTextSize" />
+
+        <!-- Private Checkbox -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/privateCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_dialog"
+                android:buttonTint="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginTiny"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/private_entry"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/bodyTextSize" />
+
+        </LinearLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:backgroundTint="@color/darkBlue"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/save"
+            android:textColor="@color/pearl"
+            app:cornerRadius="@dimen/buttonCornerRadius" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

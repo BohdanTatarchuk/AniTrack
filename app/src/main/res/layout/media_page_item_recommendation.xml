@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/recommendationCardWidth"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/marginSmall"
+    app:cardBackgroundColor="@color/pearl"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="@dimen/cardElevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/recommendationImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/recommendationCardImageHeight"
+            android:contentDescription="@string/recommendation_image"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/recommendationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:maxLines="2"
+            android:minLines="2"
+            android:padding="@dimen/marginTiny"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/captionTextSize"
+            tools:text="Chainsaw Man - The Movie: Reze Arc" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

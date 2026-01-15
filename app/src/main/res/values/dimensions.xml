@@ -3,18 +3,86 @@
     <!-- Common -->
     <dimen name="zero">0dp</dimen>
     <dimen name="checkbox_dimen">16dp</dimen>
+    <dimen name="dividerHeight">1dp</dimen>
+    <dimen name="progressBarHeight">3dp</dimen>
+    <dimen name="dragIndicatorWidth">40dp</dimen>
+    <dimen name="dragIndicatorHeight">4dp</dimen>
 
     <!-- Font sizes -->
     <dimen name="AppNameFontSize">32sp</dimen>
     <dimen name="buttonTextFontSize">14sp</dimen>
+    <dimen name="titleFontSize">24sp</dimen>
+    <dimen name="sectionTitleFontSize">18sp</dimen>
+    <dimen name="bodyTextSize">14sp</dimen>
+    <dimen name="captionTextSize">12sp</dimen>
+    <dimen name="smallCaptionTextSize">10sp</dimen>
+    <dimen name="tinyTextSize">8sp</dimen>
+    <dimen name="labelFontSize">16sp</dimen>
+    <dimen name="characterNameTextSize">12sp</dimen>
+    <dimen name="characterRoleTextSize">8sp</dimen>
+    <dimen name="inputTextSize">14sp</dimen>
+    <dimen name="badgeTextSize">11sp</dimen>
 
     <!-- paddings -->
+    <dimen name="chipSpacingSmall">2dp</dimen>
+    <dimen name="chipRowSpacing">2dp</dimen>
     <dimen name="textFieldVerticalPadding">7dp</dimen>
     <dimen name="textFieldHorizontalPadding">15dp</dimen>
+    <dimen name="inputFieldPadding">14dp</dimen>
+    <dimen name="dialogPadding">24dp</dimen>
+    <dimen name="paddingTiny">4dp</dimen>
+    <dimen name="paddingMicro">2dp</dimen>
+    <dimen name="paddingSmall">6dp</dimen>
 
     <!-- margins -->
     <dimen name="marginNormal">20dp</dimen>
     <dimen name="marginBig">70sp</dimen>
     <dimen name="layoutHorizontalPadding">30dp</dimen>
+    <dimen name="marginMicro">4dp</dimen>
     <dimen name="marginTiny">8dp</dimen>
+    <dimen name="marginSmall">12dp</dimen>
+    <dimen name="badgeMarginTop">120dp</dimen>
+
+    <!-- corners -->
+    <dimen name="cardCornerRadius">12dp</dimen>
+    <dimen name="buttonCornerRadius">20dp</dimen>
+    <dimen name="chipCornerRadius">18dp</dimen>
+    <dimen name="chipCornerRadiusSmall">15dp</dimen>
+
+    <!-- sizes -->
+    <dimen name="thumbnailExpandedHeight">600dp</dimen>
+    <dimen name="iconSizeSmall">16dp</dimen>
+    <dimen name="iconSizeMedium">24dp</dimen>
+    <dimen name="iconSizeBig">40dp</dimen>
+    <dimen name="iconSizeLarge">60dp</dimen>
+    <dimen name="toolbarButtonHeight">36dp</dimen>
+    <dimen name="chipMinHeight">36dp</dimen>
+    <dimen name="chipMinHeightSmall">28dp</dimen>
+    <dimen name="avatarSizeSmall">50dp</dimen>
+    <dimen name="avatarCornerRadius">25dp</dimen>
+    <dimen name="progressIndicatorWidth">60dp</dimen>
+    <dimen name="scoreBarWidth">30dp</dimen>
+    <dimen name="scoreChartHeight">120dp</dimen>
+    <dimen name="trailerHeight">200dp</dimen>
+    <dimen name="notesMinHeight">80dp</dimen>
+
+    <!-- Card sizes -->
+    <dimen name="relationCardWidth">120dp</dimen>
+    <dimen name="relationCardImageHeight">150dp</dimen>
+    <dimen name="recommendationCardWidth">130dp</dimen>
+    <dimen name="recommendationCardImageHeight">170dp</dimen>
+    <dimen name="characterColumnWidth">280dp</dimen>
+    <dimen name="characterCardHeight">50dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="cardElevation">2dp</dimen>
+    <dimen name="header_heíght">70dp</dimen>
+    <dimen name="fontSizeHeader">22sp</dimen>
+    <dimen name="homeEditTextHeight">80dp</dimen>
+    <dimen name="homeBorderRadius">20dp</dimen>
+    <dimen name="homeActivityImageWidth">140dp</dimen>
+    <dimen name="activityCardCornerRadius">16dp</dimen>
+    <dimen name="activityCardHeight">200dp</dimen>
+    <dimen name="trendingCardHeight">300dp</dimen>
+    <dimen name="paddingNormal">15dp</dimen>
 </resources>

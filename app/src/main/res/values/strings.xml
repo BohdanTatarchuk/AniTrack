@@ -6,6 +6,7 @@
     <string name="forgot_password"><u>Forgot password?</u></string>
     <string name="do_not_have_an_account_yet"><u>Do not have an account yet?</u></string>
     <string name="username">username</string>
+    <string name="logout">logout</string>
     <string name="confirm_password">confirm password</string>
     <string name="resend_verification_email"><u>Resend verification email</u></string>
     <string name="sing_up">Sing up</string>
@@ -13,4 +14,167 @@
     <string name="terms_of_service">You agree to our <a href="https://anilist.co/terms">terms of service</a></string>
     <string name="reset_password">Reset password</string>
     <string name="back_to_login"><u>Back to login</u></string>
+
+    <!-- Media Detail Screen -->
+    <string name="add_to_list">Add to List</string>
+    <string name="favorite">Favorite</string>
+    <string name="media_thumbnail">Media thumbnail</string>
+
+    <!-- Tab labels -->
+    <string name="tab_overview">Overview</string>
+    <string name="tab_watch">Watch</string>
+    <string name="tab_characters">Characters</string>
+    <string name="tab_staff">Staff</string>
+    <string name="tab_reviews">Reviews</string>
+    <string name="tab_stats">Stats</string>
+
+    <!-- Section titles -->
+    <string name="description">Description</string>
+    <string name="relations">Relations</string>
+    <string name="characters">Characters</string>
+    <string name="trailer">Trailer</string>
+    <string name="score_distribution">Score Distribution</string>
+    <string name="recommendations">Recommendations</string>
+
+    <!-- Stats labels -->
+    <string name="average_score">Average Score</string>
+    <string name="mean_score">Mean Score</string>
+    <string name="popularity">Popularity</string>
+    <string name="favorites">Favorites</string>
+    <string name="studios">Studios</string>
+
+    <!-- Score labels -->
+    <string name="score_25">25</string>
+    <string name="score_50">50</string>
+    <string name="score_75">75</string>
+    <string name="score_100">100</string>
+
+    <!-- Content descriptions -->
+    <string name="toggle_spoiler_tags">Toggle spoiler tags</string>
+    <string name="toggle_tags_expansion">Toggle tags expansion</string>
+    <string name="genres_tags">Genres &amp; Tags</string>
+    <string name="relation_image">Related media image</string>
+    <string name="character_image">Character image</string>
+    <string name="voice_actor_image">Voice actor image</string>
+    <string name="recommendation_image">Recommended media image</string>
+    <string name="trailer_thumbnail">Trailer thumbnail</string>
+    <string name="play_trailer">Play trailer</string>
+
+    <!-- Add to List Dialog -->
+    <string name="status">Status</string>
+    <string name="score">Score</string>
+    <string name="episode_progress">Episode Progress</string>
+    <string name="start_date">Start Date</string>
+    <string name="finish_date">Finish Date</string>
+    <string name="total_rewatches">Total rewatches</string>
+    <string name="notes">Notes</string>
+    <string name="private_entry">Private</string>
+    <string name="save">Save</string>
+    <string name="adjust_score">Adjust score</string>
+    <string name="adjust_episode">Adjust episode</string>
+    <string name="adjust_rewatches">Adjust rewatches</string>
+
+    <!-- Status options -->
+    <string name="status_watching">Watching</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_on_hold">On Hold</string>
+    <string name="status_dropped">Dropped</string>
+    <string name="status_plan_to_watch">Plan to Watch</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="load_more">Load more</string>
+    <string name="trending_anime_anp_manga"><![CDATA[Trending Anime & Manga]]></string>
+    <string name="publish">Publish</string>
+    <string name="write_a_status">write a status…</string>
+    <string name="activity">Activity</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="anime_list">Anime List</string>
+    <string name="manga_list">Manga List</string>
+    <string name="browse">Browse</string>
+    <string name="user_avatar">user avatar</string>
+    <string name="close_button">close button</string>
+    <string name="test_title">Completed Chainsaw Man – The Movie</string>
+    <string name="profile_picture">profile picture</string>
+    <string name="search_icon">search icon</string>
+    <string name="menu_button">menu button</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_read_the_guidelines_before_posting">Please read the guidelines before posting</string>
+    <string name="video">Video</string>
+    <string name="ordered_list">ordered list</string>
+    <string name="unordered_list">unordered List</string>
+    <string name="heading">Heading</string>
+    <string name="center">Center</string>
+    <string name="quote">Quote</string>
+    <string name="html">HTML</string>
+    <string name="youtube">Youtube</string>
+    <string name="image">Image</string>
+    <string name="link">Link</string>
+    <string name="spoiler">Spoiler</string>
+    <string name="strikethrough">Strikethrough</string>
+    <string name="italic">Italic</string>
+    <string name="bold">Bold</string>
+    <string name="preview">Preview</string>
+    <string name="your_status_will_appear_here">Your status will appear here...</string>
+
+    <!-- Filter Types -->
+    <string name="trending_image">trending image</string>
+    <string name="_20">20</string>
+    <string name="_350">350</string>
+    <string name="comment_icon">comment icon</string>
+    <string name="heart_icon">heart icon</string>
+    <string name="activity_card_image">activity card image</string>
+
+    <!-- Logic & Dialog Messages -->
+    <string name="cancel_post">Discard Status?</string>
+    <string name="discard_changes_confirm">Are you sure you want to discard your status? All typed text will be lost.</string>
+    <string name="publish_status">Publish Status</string>
+    <string name="publish_confirm_msg">Are you sure you want to post this status update to the community?</string>
+    <string name="status_cannot_be_empty">Please write something before publishing.</string>
+    <string name="published_successfully">Status published successfully!</string>
+    <string name="network_failure">Network error. Please check your connection.</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="error_updating_like">Error updating like</string>
+    <string name="anilist_error_updating_like">AniList: Error updating like</string>
+
+    <!-- Browse Page -->
+    <string name="search_hint">Search</string>
+    <string name="filters">Filters</string>
+    <string name="clear_filters">Clear filters</string>
+    <string name="media_type">Media type</string>
+    <string name="filter_type">Filter type</string>
+    <string name="type_option">Type option</string>
+    <string name="more_filter_options">More filter options</string>
+    <string name="dropdown_icon">Dropdown</string>
+    <string name="year_range">Year Range</string>
+    <string name="episodes">Episodes</string>
+    <string name="duration">Duration</string>
+    <string name="hide_my_anime">Hide My Anime</string>
+    <string name="only_show_my_anime">Only Show My Anime</string>
+    <string name="anime_poster">Anime poster</string>
+    <string name="score_icon">Score icon</string>
+    <string name="no_results_found">No results found</string>
+    <string name="try_adjusting_filters">Try adjusting your search or filters</string>
+
+    <!-- Media Types -->
+    <string name="media_type_users">Users</string>
+    <string name="media_type_anime">Anime</string>
+    <string name="media_type_manga">Manga</string>
+    <string name="media_type_characters">Characters</string>
+    <string name="media_type_staff">Staff</string>
+    <string name="media_type_studios">Studios</string>
+
+    <!-- Filter Types -->
+    <string name="filter_genres">Genres</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_season">Season</string>
+    <string name="filter_format">Format</string>
+    <string name="filter_airing_status">Airing Status</string>
+    <string name="filter_streaming_on">Streaming On</string>
+    <string name="filter_country_of_origin">Country of Origin</string>
+    <string name="filter_source_material">Source Material</string>
 </resources>
