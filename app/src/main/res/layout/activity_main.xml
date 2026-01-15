@@ -26,6 +26,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabScrollTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:contentDescription="@string/scroll_button"
+            android:visibility="gone"
+            app:backgroundTint="@color/darkBlue"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_scroll_top"
+            app:tint="@color/pearl"
+            app:elevation="6dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- navigation -->

@@ -17,6 +17,8 @@
         android:textColor="@color/darkBlue"/>
 
     <TextView
+        android:id="@+id/tvHeaderAnimePlanning"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"
@@ -36,12 +38,15 @@
         android:id="@+id/btnLoadMoreAnimePlanning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/marginTiny"
         android:backgroundTint="@color/darkBlue"
         android:fontFamily="@font/comfortaa"
         android:text="@string/load_more" />
 
     <TextView
+        android:id="@+id/tvHeaderAnimeWatching"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"
@@ -61,12 +66,15 @@
         android:id="@+id/btnLoadMoreAnimeWatching"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/marginTiny"
         android:backgroundTint="@color/darkBlue"
         android:fontFamily="@font/comfortaa"
         android:text="@string/load_more" />
 
     <TextView
+        android:id="@+id/tvHeaderAnimeCompleted"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"
@@ -86,12 +94,15 @@
         android:id="@+id/btnLoadMoreAnimeCompleted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/marginTiny"
         android:backgroundTint="@color/darkBlue"
         android:fontFamily="@font/comfortaa"
         android:text="@string/load_more" />
 
     <TextView
+        android:id="@+id/tvHeaderAnimePaused"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"
@@ -111,6 +122,7 @@
         android:id="@+id/btnLoadMoreAnimePaused"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/marginTiny"
         android:backgroundTint="@color/darkBlue"
         android:fontFamily="@font/comfortaa"

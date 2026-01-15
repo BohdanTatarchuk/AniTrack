@@ -3,6 +3,7 @@ package com.fh.anitrack.api;
 import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaDetailResponse;
+import com.fh.anitrack.api.response.MediaListResponse;
 import com.fh.anitrack.api.response.MediaSearchResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.fh.anitrack.api.response.SaveMediaListResponse;
@@ -42,5 +43,8 @@ public interface AniListService {
 
     @POST("/")
     Call<SaveMediaListResponse> saveMediaListEntry(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<MediaListResponse> getUserMediaList(@Body GraphQLRequest body);
 
 }

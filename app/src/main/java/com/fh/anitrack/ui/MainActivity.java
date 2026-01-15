@@ -2,14 +2,18 @@ package com.fh.anitrack.ui;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.fh.anitrack.R;
 import com.fh.anitrack.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public com.google.android.material.floatingactionbutton.FloatingActionButton fabScrollTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +34,21 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, new HomeFragment())
                     .commit();
         }
+    }
+
+    public void setupScrollToTop(androidx.core.widget.NestedScrollView scrollView) {
+        if (fabScrollTop == null) return;
+
+        scrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > 1000) {
+                fabScrollTop.show();
+            } else {
+                fabScrollTop.hide();
+            }
+        });
+
+        fabScrollTop.setOnClickListener(v -> {
+            scrollView.smoothScrollTo(0, 0);
+        });
     }
 }

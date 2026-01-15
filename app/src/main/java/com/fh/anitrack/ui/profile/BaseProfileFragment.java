@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.AuthRepository;
+import com.fh.anitrack.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 
 public abstract class BaseProfileFragment extends Fragment {
@@ -61,6 +62,11 @@ public abstract class BaseProfileFragment extends Fragment {
         setupNavigation();
         loadUserProfile();
         loadContent(view);
+
+        androidx.core.widget.NestedScrollView scrollView = view.findViewById(R.id.nestedScrollView);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setupScrollToTop(scrollView);
+        }
 
         return view;
     }

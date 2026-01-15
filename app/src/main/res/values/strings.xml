@@ -202,4 +202,8 @@
     <string name="completed">Completed</string>
     <string name="paused">Paused</string>
     <string name="reading">Reading</string>
+    <string name="score_10">Score 10</string>
+    <string name="progress_0_12">Progress 0/12</string>
+    <string name="tv">TV</string>
+    <string name="scroll_button">scroll button</string>
 </resources>

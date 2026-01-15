@@ -402,4 +402,19 @@ public class AniListQueries {
                     "    }" +
                     "  }" +
                     "}";
+
+    // Profile anime and manga lists query
+    public static final String GET_USER_MEDIA_LIST =
+            "query ($userId: Int, $type: MediaType, $status: MediaListStatus, $page: Int) {" +
+                    "  Page(page: $page, perPage: 10) {" +
+                    "    pageInfo { hasNextPage currentPage }" +
+                    "    mediaList(userId: $userId, type: $type, status: $status, sort: UPDATED_TIME_DESC) {" +
+                    "      id score(format: POINT_10) progress progressVolumes" +
+                    "      media {" +
+                    "        id title { userPreferred } format episodes chapters" +
+                    "        coverImage { large }" +
+                    "      }" +
+                    "    }" +
+                    "  }" +
+                    "}";
 }
