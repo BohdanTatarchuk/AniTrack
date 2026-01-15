@@ -7,9 +7,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.AniListQueries;
 import com.fh.anitrack.api.AniListService;
@@ -17,12 +14,6 @@ import com.fh.anitrack.api.GraphQLRequest;
 import com.fh.anitrack.api.RequestWrapper;
 import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.UserStatsResponse;
-import com.fh.anitrack.ui.profile.adapter.ActivityHistoryAdapter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 
@@ -107,11 +98,6 @@ public class ProfileOverview extends BaseProfileFragment {
         // calc milestones relative to chapters read
         int[] mangaMilestones = calculateDynamicMilestones(stats.manga.chaptersRead);
         setupProgressBar(view.findViewById(R.id.progressManga), stats.manga.chaptersRead, mangaMilestones);
-
-        // activity heatmap
-        if (stats.anime != null && stats.anime.activityHistory != null) {
-            setupActivityHistory(stats.anime.activityHistory);
-        }
     }
 
     private void setupStatItem(View root, String value, String label) {
@@ -163,41 +149,6 @@ public class ProfileOverview extends BaseProfileFragment {
         int m3 = (int) (m2 + step);
 
         return new int[]{m1, m2, m3};
-    }
-
-    private void setupActivityHistory(List<UserStatsResponse.HistoryItem> apiHistory) {
-        List<UserStatsResponse.HistoryItem> fullHistory = new ArrayList<>();
-        Map<Long, Integer> historyMap = new HashMap<>();
-
-        // map existing data
-        for (UserStatsResponse.HistoryItem item : apiHistory) {
-            historyMap.put((item.date / 86400) * 86400, item.amount);
-        }
-
-        // gen last 154 days (22 weeks x 7 days)
-        long nowSeconds = System.currentTimeMillis() / 1000;
-        long startDaySeconds = (nowSeconds / 86400) * 86400;
-
-        for (int i = 153; i >= 0; i--) {
-
-            long dayTimestamp = startDaySeconds - (i * 86400L);
-            UserStatsResponse.HistoryItem day = new UserStatsResponse.HistoryItem();
-            day.date = dayTimestamp;
-            day.amount = historyMap.getOrDefault(dayTimestamp, 0);
-            fullHistory.add(day);
-        }
-
-        RecyclerView rv = view.findViewById(R.id.rvActivityHistory);
-        if (rv != null) {
-            // setup grid with 7 rows
-            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 7,
-                    GridLayoutManager.HORIZONTAL, false);
-            rv.setLayoutManager(layoutManager);
-            rv.setAdapter(new ActivityHistoryAdapter(fullHistory));
-
-            // scroll to end to show the most recent activity
-            rv.scrollToPosition(fullHistory.size() - 1);
-        }
     }
 
     @Override

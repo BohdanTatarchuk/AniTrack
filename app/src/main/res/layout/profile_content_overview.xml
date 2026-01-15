@@ -9,33 +9,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_heatmap"
-        android:fontFamily="@font/comfortaa"
-        android:textSize="@dimen/titleFontSize"
-        android:layout_marginTop="@dimen/marginNormal"
-        android:textColor="@color/darkBlue"/>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginNormal"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:strokeColor="@color/darkBlue10op"
-        app:strokeWidth="@dimen/strokeWidthHeatmap"
-        app:cardCornerRadius="@dimen/cardCornerRadius">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvActivityHistory"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/heatmapHeight"
-            android:padding="@dimen/paddingNormal"
-            android:clipToPadding="false"/>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:fontFamily="@font/comfortaa"
         android:textSize="@dimen/titleFontSize"
         android:text="@string/user_statistics"
