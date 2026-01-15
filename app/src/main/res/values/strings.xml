@@ -6,7 +6,6 @@
     <string name="forgot_password"><u>Forgot password?</u></string>
     <string name="do_not_have_an_account_yet"><u>Do not have an account yet?</u></string>
     <string name="username">username</string>
-    <string name="logout">logout</string>
     <string name="confirm_password">confirm password</string>
     <string name="resend_verification_email"><u>Resend verification email</u></string>
     <string name="sing_up">Sing up</string>
@@ -118,42 +117,7 @@
     <string name="preview">Preview</string>
     <string name="your_status_will_appear_here">Your status will appear here...</string>
 
-    <!-- Browse Page -->
-    <string name="search_hint">Search</string>
-    <string name="filters">Filters</string>
-    <string name="clear_filters">Clear filters</string>
-    <string name="media_type">Media type</string>
-    <string name="filter_type">Filter type</string>
-    <string name="type_option">Type option</string>
-    <string name="more_filter_options">More filter options</string>
-    <string name="dropdown_icon">Dropdown</string>
-    <string name="year_range">Year Range</string>
-    <string name="episodes">Episodes</string>
-    <string name="duration">Duration</string>
-    <string name="hide_my_anime">Hide My Anime</string>
-    <string name="only_show_my_anime">Only Show My Anime</string>
-    <string name="anime_poster">Anime poster</string>
-    <string name="score_icon">Score icon</string>
-    <string name="no_results_found">No results found</string>
-    <string name="try_adjusting_filters">Try adjusting your search or filters</string>
-
-    <!-- Media Types -->
-    <string name="media_type_users">Users</string>
-    <string name="media_type_anime">Anime</string>
-    <string name="media_type_manga">Manga</string>
-    <string name="media_type_characters">Characters</string>
-    <string name="media_type_staff">Staff</string>
-    <string name="media_type_studios">Studios</string>
-
     <!-- Filter Types -->
-    <string name="filter_genres">Genres</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_season">Season</string>
-    <string name="filter_format">Format</string>
-    <string name="filter_airing_status">Airing Status</string>
-    <string name="filter_streaming_on">Streaming On</string>
-    <string name="filter_country_of_origin">Country of Origin</string>
-    <string name="filter_source_material">Source Material</string>
     <string name="trending_image">trending image</string>
     <string name="_20">20</string>
     <string name="_350">350</string>

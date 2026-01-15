@@ -17,7 +17,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.fh.anitrack.R;
 import com.fh.anitrack.api.AuthRepository;
 import com.fh.anitrack.api.AniListQueries;
@@ -35,7 +34,6 @@ import com.fh.anitrack.api.GraphQLRequest;
 import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.UserResponse;
 import com.fh.anitrack.ui.browse.BrowsePage;
-import com.fh.anitrack.ui.login.LoginActivity;
 import com.fh.anitrack.ui.notifications.NotificationsPage;
 import com.fh.anitrack.ui.profile.ProfileAnimeList;
 import com.fh.anitrack.ui.profile.ProfileMangaList;
@@ -54,9 +52,6 @@ public class NavOverlay extends Fragment {
     private AuthRepository authRepository;
     private ImageView userAvatar;
     private TextView navUsername;
-    private ImageView userAvatar;
-    private TextView navUsername;
-    private AuthRepository authRepository;
 
     @Nullable
     @Override
@@ -75,7 +70,7 @@ public class NavOverlay extends Fragment {
         view.findViewById(R.id.navProfile).setOnClickListener(v -> replaceFragment(new ProfileOverview()));
         view.findViewById(R.id.navAnimeList).setOnClickListener(v -> replaceFragment(new ProfileAnimeList()));
         view.findViewById(R.id.navMangaList).setOnClickListener(v -> replaceFragment(new ProfileMangaList()));
-        view.findViewById(R.id.navBrowse).setOnClickListener(v -> replaceFragment(BrowsePage.newInstance()));
+        view.findViewById(R.id.navBrowse).setOnClickListener(v -> replaceFragment(new MediaPage()));
         view.findViewById(R.id.navSettings).setOnClickListener(v -> replaceFragment(new SettingsProfile()));
         view.findViewById(R.id.navNotifications).setOnClickListener(v -> replaceFragment(new NotificationsPage()));
 
