@@ -31,95 +31,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:background="@color/pearl">
+        android:paddingVertical="8dp"
+        android:fillViewport="true">
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/filterChipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp">
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="16dp"
+            app:selectionRequired="true"
+            app:singleSelection="true"
+            app:singleLine="true">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAll"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="All"
-                android:textColor="@color/pearl"
-                android:textSize="14sp"
-                android:fontFamily="@font/comfortaa"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:backgroundTint="@color/darkBlue35op"
-                app:cornerRadius="20dp"
-                android:layout_marginEnd="8dp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAll"
+            style="@style/TabChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="All" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAiring"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Airing"
-                android:textColor="@color/darkBlue"
-                android:textSize="14sp"
-                android:fontFamily="@font/comfortaa"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:backgroundTint="@color/darkBlue10op"
-                app:cornerRadius="20dp"
-                android:layout_marginEnd="8dp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAiring"
+            style="@style/TabChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Airing" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Activity"
-                android:textColor="@color/darkBlue"
-                android:textSize="14sp"
-                android:fontFamily="@font/comfortaa"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:backgroundTint="@color/darkBlue10op"
-                app:cornerRadius="20dp"
-                android:layout_marginEnd="8dp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipActivity"
+            style="@style/TabChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activity" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFollows"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Follows"
-                android:textColor="@color/darkBlue"
-                android:textSize="14sp"
-                android:fontFamily="@font/comfortaa"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:backgroundTint="@color/darkBlue10op"
-                app:cornerRadius="20dp"
-                android:layout_marginEnd="8dp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFollows"
+            style="@style/TabChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Follows" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnMedia"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Media"
-                android:textColor="@color/darkBlue"
-                android:textSize="14sp"
-                android:fontFamily="@font/comfortaa"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:backgroundTint="@color/darkBlue10op"
-                app:cornerRadius="20dp"
-                android:layout_marginEnd="8dp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipMedia"
+            style="@style/TabChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Media" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
 
@@ -136,7 +97,10 @@
         android:textAllCaps="false"
         android:backgroundTint="@color/darkBlue"
         app:cornerRadius="8dp"
-        android:layout_margin="16dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp" />
 
     <!-- Notifications List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -146,6 +110,7 @@
         android:layout_weight="1"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
