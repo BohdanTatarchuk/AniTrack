@@ -27,7 +27,8 @@
             android:id="@+id/userAvatar"
             android:layout_width="@dimen/iconSizeBig"
             android:layout_height="@dimen/iconSizeBig"
-            android:layout_margin="@dimen/marginSmall"
+            android:layout_marginStart="@dimen/marginNormal"
+            android:layout_marginTop="@dimen/marginTiny"
             app:layout_constraintStart_toEndOf="@id/mediaCoverImage"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/CircleImage" />
@@ -39,7 +40,7 @@
             android:layout_marginHorizontal="@dimen/marginNormal"
             android:textColor="@color/darkBlue"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/timeAgo"
+            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/userAvatar"
             app:layout_constraintTop_toTopOf="@id/userAvatar" />
@@ -50,19 +51,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/marginSmall"
             android:alpha="0.6"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/trending_image"
             android:textSize="@dimen/labelFontSize"
-            app:layout_constraintBottom_toBottomOf="@id/userAvatar"
-            app:layout_constraintStart_toStartOf="@id/userName" />
+            app:layout_constraintStart_toStartOf="@+id/activityStatus"
+            app:layout_constraintTop_toBottomOf="@+id/activityStatus" />
 
         <!-- Status Text -->
         <TextView
             android:id="@+id/activityStatus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginNormal"
-            android:layout_marginEnd="@dimen/marginNormal"
+            android:layout_marginTop="@dimen/marginTiny"
+            android:layout_marginHorizontal="@dimen/marginNormal"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/test_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/userAvatar"
+            app:layout_constraintStart_toEndOf="@+id/mediaCoverImage"
             app:layout_constraintTop_toBottomOf="@id/userAvatar" />
 
         <!-- Bottom Stats -->
@@ -78,6 +83,7 @@
                 android:id="@+id/likeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
                 android:textSize="@dimen/labelFontSize"
                 android:layout_marginEnd="@dimen/marginTiny"
                 android:text="@string/_20" />
@@ -93,6 +99,7 @@
             <TextView
                 android:id="@+id/commentCount"
                 android:textSize="@dimen/labelFontSize"
+                android:fontFamily="@font/comfortaa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/marginTiny"

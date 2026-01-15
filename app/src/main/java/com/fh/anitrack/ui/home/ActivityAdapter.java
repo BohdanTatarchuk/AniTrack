@@ -34,8 +34,15 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final List<ActivityResponse.Activity> activities = new ArrayList<>();
     private Markwon markwon;
 
+    // Flag to hide header (avatar/username) when on profile page
+    private boolean isPersonalProfile = false;
+
     public void setMarkwon(Markwon markwon) {
         this.markwon = markwon;
+    }
+
+    public void setPersonalProfile(boolean isPersonalProfile) {
+        this.isPersonalProfile = isPersonalProfile;
     }
 
     // used for pagination to add new items to the bottom of the list
@@ -79,8 +86,16 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void bindStatusActivity(StatusViewHolder holder, ActivityResponse.Activity activity) {
         Context context = holder.itemView.getContext();
 
-        holder.tvUsername.setText(activity.user.name);
-        Glide.with(context).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
+        // Toggle visibility based on page type
+        if (isPersonalProfile) {
+            holder.userAvatar.setVisibility(View.GONE);
+            holder.tvUsername.setVisibility(View.GONE);
+        } else {
+            holder.userAvatar.setVisibility(View.VISIBLE);
+            holder.tvUsername.setVisibility(View.VISIBLE);
+            holder.tvUsername.setText(activity.user.name);
+            Glide.with(context).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
+        }
 
         setTime(holder.tvTimeAgo, activity.createdAt);
 
@@ -99,9 +114,17 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Glide.with(context).load(activity.media.coverImage.large).centerCrop().into(holder.mediaCoverImage);
         }
 
-        if (activity.user != null && activity.user.avatar != null) {
-            Glide.with(context).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
-            holder.tvUsername.setText(activity.user.name);
+        // Toggle visibility based on page type
+        if (isPersonalProfile) {
+            holder.userAvatar.setVisibility(View.GONE);
+            holder.tvUsername.setVisibility(View.GONE);
+        } else {
+            holder.userAvatar.setVisibility(View.VISIBLE);
+            holder.tvUsername.setVisibility(View.VISIBLE);
+            if (activity.user != null && activity.user.avatar != null) {
+                Glide.with(context).load(activity.user.avatar.large).circleCrop().into(holder.userAvatar);
+                holder.tvUsername.setText(activity.user.name);
+            }
         }
 
         setTime(holder.tvTimeAgo, activity.createdAt);
@@ -130,16 +153,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         updateLikeUI(ivHeart, tvCount, activity.isLiked, activity.likeCount);
 
         ivHeart.setOnClickListener(v -> {
-            //Save state
             final boolean wasLiked = activity.isLiked;
             final int originalCount = activity.likeCount;
 
-            //Update
             activity.isLiked = !wasLiked;
             activity.likeCount = activity.isLiked ? originalCount + 1 : originalCount - 1;
             updateLikeUI(ivHeart, tvCount, activity.isLiked, activity.likeCount);
 
-            //Prep Request
             Map<String, Object> vars = new HashMap<>();
             vars.put("id", activity.id);
             vars.put("type", "ACTIVITY");
@@ -148,16 +168,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Call<ToggleLikeResponse> call = service.toggleLike(new GraphQLRequest(AniListQueries.TOGGLE_LIKE, vars));
 
             RequestWrapper.sendRequest(call, response -> {
-                // Check if successful && the specific data field is !null
                 if (response.isSuccessful() && response.body() != null && response.body().data.ToggleLikeV2 != null) {
                     ToggleLikeResponse.ToggleLikeV2 res = response.body().data.ToggleLikeV2;
-
-                    //sync server values
                     activity.isLiked = res.isLiked;
                     activity.likeCount = res.likeCount;
                     updateLikeUI(ivHeart, tvCount, activity.isLiked, activity.likeCount);
                 } else {
-                    //revert happens if the response fails
                     revertLike(activity, wasLiked, originalCount, ivHeart, tvCount);
                     Toast.makeText(context, R.string.anilist_error_updating_like, Toast.LENGTH_SHORT).show();
                 }
@@ -203,6 +219,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return activities.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void clearItems() {
+        this.activities.clear();
+        notifyDataSetChanged();
+    }
+
     public static class StatusViewHolder extends RecyclerView.ViewHolder {
         ImageView userAvatar, ivHeart;
         TextView tvUsername, tvTimeAgo, tvStatusText, tvLikeCount, tvCommentCount;
@@ -217,12 +239,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvLikeCount = itemView.findViewById(R.id.likeCount);
             tvCommentCount = itemView.findViewById(R.id.commentCount);
         }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void clearItems() {
-        this.activities.clear();
-        notifyDataSetChanged();
     }
 
     public static class MediaViewHolder extends RecyclerView.ViewHolder {

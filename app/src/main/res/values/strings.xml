@@ -196,4 +196,10 @@
     <string name="user_statistics">User statistics</string>
     <string name="activity_history">Activity history</string>
     <string name="activity_heatmap">Activity heatmap</string>
+    <string name="lists">Lists</string>
+    <string name="planing">Planning</string>
+    <string name="watching">Watching</string>
+    <string name="completed">Completed</string>
+    <string name="paused">Paused</string>
+    <string name="reading">Reading</string>
 </resources>

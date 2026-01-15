@@ -62,6 +62,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("io.noties.markwon:core:4.6.2")
     implementation("io.noties.markwon:ext-strikethrough:4.6.2")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation(libs.security.crypto)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
