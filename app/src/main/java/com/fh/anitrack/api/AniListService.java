@@ -3,11 +3,13 @@ package com.fh.anitrack.api;
 import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaDetailResponse;
+import com.fh.anitrack.api.response.MediaListResponse;
 import com.fh.anitrack.api.response.MediaSearchResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.fh.anitrack.api.response.SaveMediaListResponse;
 import com.fh.anitrack.api.response.ToggleLikeResponse;
 import com.fh.anitrack.api.response.UserResponse;
+import com.fh.anitrack.api.response.UserStatsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,6 +30,9 @@ public interface AniListService {
     Call<ToggleLikeResponse> toggleLike(@Body GraphQLRequest body);
 
     @POST("/")
+    Call<UserStatsResponse> getUserStats(@Body GraphQLRequest body);
+
+    @POST("/")
     Call<FilterOptionsResponse> getFilterOptions(@Body GraphQLRequest body);
 
     @POST("/")
@@ -38,5 +43,8 @@ public interface AniListService {
 
     @POST("/")
     Call<SaveMediaListResponse> saveMediaListEntry(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<MediaListResponse> getUserMediaList(@Body GraphQLRequest body);
 
 }

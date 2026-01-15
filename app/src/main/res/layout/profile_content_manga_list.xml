@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+    android:layout_marginBottom="@dimen/marginBig">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/titleFontSize"
+        android:text="@string/lists"
+        android:layout_marginVertical="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <TextView
+        android:id="@+id/tvHeaderMangaPlanning"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/planing"
+        android:layout_marginVertical="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMangaPlanning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btnLoadMoreMangaPlanning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+
+    <TextView
+        android:id="@+id/tvHeaderMangaReading"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/reading"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMangaReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btnLoadMoreMangaReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+
+    <TextView
+        android:id="@+id/tvHeaderMangaCompleted"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/completed"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMangaCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btnLoadMoreMangaCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+
+    <TextView
+        android:id="@+id/tvHeaderMangaPaused"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/paused"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMangaPaused"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btnLoadMoreMangaPaused"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+</LinearLayout>

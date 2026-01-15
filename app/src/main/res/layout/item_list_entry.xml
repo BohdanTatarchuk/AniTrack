@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/activityCardHeight"
+    app:cardCornerRadius="@dimen/activityCardCornerRadius"
+    android:layout_marginVertical="@dimen/paddingTiny"
+    app:cardElevation="@dimen/cardElevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivMediaCover"
+            android:layout_width="@dimen/homeActivityImageWidth"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMediaTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/marginSmall"
+            android:ellipsize="end"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/test_title"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivMediaCover"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginSmall"
+            android:layout_marginTop="@dimen/marginSmall"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/score_10"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            app:layout_constraintStart_toEndOf="@id/ivMediaCover"
+            app:layout_constraintTop_toBottomOf="@id/tvMediaTitle" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginSmall"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/progress_0_12"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/labelFontSize"
+                app:layout_constraintTop_toBottomOf="@id/tvScore"
+                app:layout_constraintStart_toEndOf="@id/ivMediaCover"
+                />
+
+        <TextView
+            android:id="@+id/tvFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginSmall"
+            android:layout_marginTop="@dimen/marginSmall"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/tv"
+            android:textColor="@color/darkBlue"
+            android:textSize="@dimen/labelFontSize"
+            app:layout_constraintStart_toEndOf="@+id/tvScore"
+            app:layout_constraintTop_toBottomOf="@+id/tvMediaTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

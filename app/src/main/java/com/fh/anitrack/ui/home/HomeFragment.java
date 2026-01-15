@@ -27,6 +27,7 @@ import com.fh.anitrack.api.RequestWrapper;
 import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
+import com.fh.anitrack.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -128,6 +129,11 @@ public class HomeFragment extends Fragment {
         //initial data loading
         fetchFeed(1);
         fetchTrending(1);
+
+        androidx.core.widget.NestedScrollView scrollView = view.findViewById(R.id.homeScrollView);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setupScrollToTop(scrollView);
+        }
 
         return view;
     }

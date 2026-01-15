@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+    android:layout_marginBottom="@dimen/marginBig">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/titleFontSize"
+        android:text="@string/lists"
+        android:layout_marginVertical="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <TextView
+        android:id="@+id/tvHeaderAnimePlanning"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/planing"
+        android:layout_marginVertical="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAnimePlanning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoadMoreAnimePlanning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+
+    <TextView
+        android:id="@+id/tvHeaderAnimeWatching"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/watching"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAnimeWatching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoadMoreAnimeWatching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+
+    <TextView
+        android:id="@+id/tvHeaderAnimeCompleted"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/completed"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAnimeCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoadMoreAnimeCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+
+    <TextView
+        android:id="@+id/tvHeaderAnimePaused"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaa"
+        android:textSize="@dimen/fontSizeSubtitle"
+        android:text="@string/paused"
+        android:layout_marginTop="@dimen/marginNormal"
+        android:textColor="@color/darkBlue"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAnimePaused"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoadMoreAnimePaused"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/marginTiny"
+        android:backgroundTint="@color/darkBlue"
+        android:fontFamily="@font/comfortaa"
+        android:text="@string/load_more" />
+</LinearLayout>

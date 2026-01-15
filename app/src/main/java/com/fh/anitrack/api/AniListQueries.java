@@ -373,4 +373,48 @@ public class AniListQueries {
                     "  } " +
                     "}";
 
+    // Stats for profile overview page
+    public static final String GET_USER_STATS =
+            "query { " +
+                    "  Viewer { " +
+                    "    id " +
+                    "    statistics { " +
+                    "      anime { count minutesWatched meanScore } " +
+                    "      manga { count chaptersRead meanScore } " +
+                    "    } " +
+                    "  } " +
+                    "}";
+
+    // Profile overview user activities
+    public static final String GET_USER_ACTIVITIES =
+            "query ($userId: Int, $page: Int, $perPage: Int) {" +
+                    "  Page (page: $page, perPage: $perPage) {" +
+                    "    pageInfo { hasNextPage currentPage }" +
+                    "    activities (userId: $userId, sort: ID_DESC) {" +
+                    "      __typename" +
+                    "      ... on ListActivity {" +
+                    "        id type status progress createdAt likeCount replyCount isLiked" +
+                    "        media { title { userPreferred } coverImage { large } }" +
+                    "      }" +
+                    "      ... on TextActivity {" +
+                    "        id type text createdAt likeCount replyCount isLiked" +
+                    "      }" +
+                    "    }" +
+                    "  }" +
+                    "}";
+
+    // Profile anime and manga lists query
+    public static final String GET_USER_MEDIA_LIST =
+            "query ($userId: Int, $type: MediaType, $status: MediaListStatus, $page: Int) {" +
+                    "  Page(page: $page, perPage: 10) {" +
+                    "    pageInfo { hasNextPage currentPage }" +
+                    "    mediaList(userId: $userId, type: $type, status: $status, sort: UPDATED_TIME_DESC) {" +
+                    "      id score(format: POINT_10) progress progressVolumes" +
+                    "      media {" +
+                    "        id title { userPreferred } format episodes chapters" +
+                    "        coverImage { large }" +
+                    "      }" +
+                    "    }" +
+                    "  }" +
+                    "}";
 }

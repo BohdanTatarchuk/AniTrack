@@ -177,4 +177,33 @@
     <string name="filter_streaming_on">Streaming On</string>
     <string name="filter_country_of_origin">Country of Origin</string>
     <string name="filter_source_material">Source Material</string>
+
+    <!-- Profile Page -->
+    <string name="profile_banner">Profile banner</string>
+    <string name="profile_avatar">Profile avatar</string>
+    <string name="overview">Overview</string>
+    <string name="stats">Stats</string>
+    <string name="social">Social</string>
+    <string name="_0">0</string>
+    <string name="label">Label</string>
+    <string name="_200">200</string>
+    <string name="_150">150</string>
+    <string name="_100">100</string>
+    <string name="total_anime">Total Anime</string>
+    <string name="days_watched">Days Watched</string>
+    <string name="total_manga">Total Manga</string>
+    <string name="chapters_read">Chapters Read</string>
+    <string name="user_statistics">User statistics</string>
+    <string name="activity_history">Activity history</string>
+    <string name="activity_heatmap">Activity heatmap</string>
+    <string name="lists">Lists</string>
+    <string name="planing">Planning</string>
+    <string name="watching">Watching</string>
+    <string name="completed">Completed</string>
+    <string name="paused">Paused</string>
+    <string name="reading">Reading</string>
+    <string name="score_10">Score 10</string>
+    <string name="progress_0_12">Progress 0/12</string>
+    <string name="tv">TV</string>
+    <string name="scroll_button">scroll button</string>
 </resources>
