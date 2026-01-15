@@ -51,6 +51,8 @@
 
     <!-- Content descriptions -->
     <string name="toggle_spoiler_tags">Toggle spoiler tags</string>
+    <string name="toggle_tags_expansion">Toggle tags expansion</string>
+    <string name="genres_tags">Genres &amp; Tags</string>
     <string name="relation_image">Related media image</string>
     <string name="character_image">Character image</string>
     <string name="voice_actor_image">Voice actor image</string>
@@ -118,6 +120,27 @@
     <string name="preview">Preview</string>
     <string name="your_status_will_appear_here">Your status will appear here...</string>
 
+    <!-- Filter Types -->
+    <string name="trending_image">trending image</string>
+    <string name="_20">20</string>
+    <string name="_350">350</string>
+    <string name="comment_icon">comment icon</string>
+    <string name="heart_icon">heart icon</string>
+    <string name="activity_card_image">activity card image</string>
+
+    <!-- Logic & Dialog Messages -->
+    <string name="cancel_post">Discard Status?</string>
+    <string name="discard_changes_confirm">Are you sure you want to discard your status? All typed text will be lost.</string>
+    <string name="publish_status">Publish Status</string>
+    <string name="publish_confirm_msg">Are you sure you want to post this status update to the community?</string>
+    <string name="status_cannot_be_empty">Please write something before publishing.</string>
+    <string name="published_successfully">Status published successfully!</string>
+    <string name="network_failure">Network error. Please check your connection.</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="error_updating_like">Error updating like</string>
+    <string name="anilist_error_updating_like">AniList: Error updating like</string>
+
     <!-- Browse Page -->
     <string name="search_hint">Search</string>
     <string name="filters">Filters</string>
@@ -154,25 +177,6 @@
     <string name="filter_streaming_on">Streaming On</string>
     <string name="filter_country_of_origin">Country of Origin</string>
     <string name="filter_source_material">Source Material</string>
-    <string name="trending_image">trending image</string>
-    <string name="_20">20</string>
-    <string name="_350">350</string>
-    <string name="comment_icon">comment icon</string>
-    <string name="heart_icon">heart icon</string>
-    <string name="activity_card_image">activity card image</string>
-
-    <!-- Logic & Dialog Messages -->
-    <string name="cancel_post">Discard Status?</string>
-    <string name="discard_changes_confirm">Are you sure you want to discard your status? All typed text will be lost.</string>
-    <string name="publish_status">Publish Status</string>
-    <string name="publish_confirm_msg">Are you sure you want to post this status update to the community?</string>
-    <string name="status_cannot_be_empty">Please write something before publishing.</string>
-    <string name="published_successfully">Status published successfully!</string>
-    <string name="network_failure">Network error. Please check your connection.</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
-    <string name="error_updating_like">Error updating like</string>
-    <string name="anilist_error_updating_like">AniList: Error updating like</string>
 
     <!-- Profile Page -->
     <string name="profile_banner">Profile banner</string>

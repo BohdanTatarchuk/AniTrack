@@ -68,61 +68,6 @@
                 android:textSize="@dimen/titleFontSize"
                 android:textStyle="bold" />
 
-            <!-- Tab Navigation -->
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/tabChipGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/layoutHorizontalPadding"
-                app:selectionRequired="true"
-                app:singleSelection="true"
-                app:singleLine="false">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipOverview"
-                    style="@style/TabChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/tab_overview" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipWatch"
-                    style="@style/TabChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_watch" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCharacters"
-                    style="@style/TabChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_characters" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipStaff"
-                    style="@style/TabChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_staff" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipReviews"
-                    style="@style/TabChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_reviews" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipStats"
-                    style="@style/TabChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_stats" />
-
-            </com.google.android.material.chip.ChipGroup>
-
             <!-- Stats Row -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -194,7 +139,7 @@
 
             </HorizontalScrollView>
 
-            <!-- Tags Row -->
+            <!-- Tags Section Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -203,27 +148,40 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/layoutHorizontalPadding">
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/tagsChipGroup"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:singleLine="false"
-                    app:chipSpacingVertical="@dimen/chipRowSpacing">
-
-                    <!-- Tags will be added dynamically -->
-
-                </com.google.android.material.chip.ChipGroup>
+                    android:layout_weight="1"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="@string/genres_tags"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="@dimen/sectionTitleFontSize"
+                    android:textStyle="bold" />
 
                 <ImageButton
-                    android:id="@+id/toggleSpoilerTags"
+                    android:id="@+id/toggleTagsExpansion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/toggle_spoiler_tags"
+                    android:contentDescription="@string/toggle_tags_expansion"
                     android:padding="@dimen/marginTiny"
-                    android:src="@drawable/ic_visibility_off" />
+                    android:src="@drawable/ic_expand_more" />
 
             </LinearLayout>
+
+            <!-- Tags Row -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagsChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTiny"
+                android:paddingHorizontal="@dimen/layoutHorizontalPadding"
+                app:singleLine="false"
+                app:chipSpacingVertical="@dimen/chipRowSpacing">
+
+                <!-- Tags will be added dynamically -->
+
+            </com.google.android.material.chip.ChipGroup>
 
             <!-- Divider -->
             <View

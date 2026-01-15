@@ -24,51 +24,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_thumbnail_overlay" />
 
-    <!-- Badges overlay -->
-    <LinearLayout
-        android:id="@+id/badgesContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/layoutHorizontalPadding"
-        android:layout_marginTop="@dimen/badgeMarginTop"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/badgeHighestRated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/badge_background"
-            android:drawablePadding="@dimen/marginTiny"
-            android:fontFamily="@font/comfortaa"
-            android:paddingHorizontal="@dimen/marginSmall"
-            android:paddingVertical="@dimen/paddingTiny"
-            android:textColor="@color/pearl"
-            android:textSize="@dimen/badgeTextSize"
-            android:visibility="gone"
-            app:drawableStartCompat="@drawable/ic_trophy"
-            tools:text="#34 Highest of All Time"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/badgeMostPopular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginTiny"
-            android:background="@drawable/badge_background"
-            android:drawablePadding="@dimen/marginTiny"
-            android:fontFamily="@font/comfortaa"
-            android:paddingHorizontal="@dimen/marginSmall"
-            android:paddingVertical="@dimen/paddingTiny"
-            android:textColor="@color/pearl"
-            android:textSize="@dimen/badgeTextSize"
-            android:visibility="gone"
-            app:drawableStartCompat="@drawable/ic_heart_small"
-            tools:text="#64 Most Popular of All Time"
-            tools:visibility="visible" />
-
-    </LinearLayout>
-
     <!-- Drag indicator at bottom -->
     <View
         android:layout_width="@dimen/dragIndicatorWidth"
