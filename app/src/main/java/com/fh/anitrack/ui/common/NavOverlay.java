@@ -54,9 +54,6 @@ public class NavOverlay extends Fragment {
     private AuthRepository authRepository;
     private ImageView userAvatar;
     private TextView navUsername;
-    private ImageView userAvatar;
-    private TextView navUsername;
-    private AuthRepository authRepository;
 
     @Nullable
     @Override
