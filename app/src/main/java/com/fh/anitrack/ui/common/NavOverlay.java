@@ -72,7 +72,7 @@ public class NavOverlay extends Fragment {
         view.findViewById(R.id.navProfile).setOnClickListener(v -> replaceFragment(new ProfileOverview()));
         view.findViewById(R.id.navAnimeList).setOnClickListener(v -> replaceFragment(new ProfileAnimeList()));
         view.findViewById(R.id.navMangaList).setOnClickListener(v -> replaceFragment(new ProfileMangaList()));
-        view.findViewById(R.id.navBrowse).setOnClickListener(v -> replaceFragment(new MediaPage()));
+        view.findViewById(R.id.navBrowse).setOnClickListener(v -> replaceFragment(new BrowsePage()));
         view.findViewById(R.id.navSettings).setOnClickListener(v -> replaceFragment(new SettingsProfile()));
         view.findViewById(R.id.navNotifications).setOnClickListener(v -> replaceFragment(new NotificationsPage()));
 

@@ -184,18 +184,34 @@ public class BrowsePage extends Fragment {
     }
 
     private void setupListeners() {
-        // Search text listener
-        searchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                performSearch(s.toString());
+        // Search button click listener
+        View searchButton = getView().findViewById(R.id.searchButton);
+        if (searchButton != null) {
+            searchButton.setOnClickListener(v -> {
+                performSearch(searchEditText.getText().toString());
+                // Hide keyboard after search
+                android.view.inputmethod.InputMethodManager imm = 
+                    (android.view.inputmethod.InputMethodManager) requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
+                }
+            });
+        }
+        
+        // Search submit listener (triggers on keyboard search button or enter)
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH ||
+                (event != null && event.getKeyCode() == android.view.KeyEvent.KEYCODE_ENTER)) {
+                performSearch(searchEditText.getText().toString());
+                // Hide keyboard after search
+                android.view.inputmethod.InputMethodManager imm = 
+                    (android.view.inputmethod.InputMethodManager) requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+                return true;
             }
+            return false;
         });
 
         // Media type dropdown

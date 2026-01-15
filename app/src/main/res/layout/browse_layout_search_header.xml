@@ -8,19 +8,38 @@
     android:paddingTop="@dimen/marginSmall">
 
     <!-- Search Bar -->
-    <EditText
-        android:id="@+id/searchEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_dropdown"
-        android:drawablePadding="@dimen/marginSmall"
-        android:fontFamily="@font/comfortaa"
-        android:hint="@string/search_hint"
-        android:inputType="text"
-        android:padding="@dimen/inputFieldPadding"
-        android:textColor="@color/darkBlue"
-        android:textColorHint="@color/darkGrey"
-        android:textSize="@dimen/bodyTextSize" />
+        android:orientation="horizontal"
+        android:background="@drawable/bg_search_bar"
+        android:gravity="center_vertical"
+        android:padding="@dimen/inputFieldPadding">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/comfortaa"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:textColor="@color/pearl"
+            android:textColorHint="@color/lightGrey"
+            android:textSize="@dimen/bodyTextSize" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="@dimen/iconSizeMedium"
+            android:layout_height="@dimen/iconSizeMedium"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/search_icon"
+            android:src="@drawable/ic_search"
+            app:tint="@color/pearl" />
+
+    </LinearLayout>
 
     <!-- Media Type Selection -->
     <LinearLayout

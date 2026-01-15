@@ -19,8 +19,6 @@ public class BrowseMockData {
         types.add(new FilterOption("ANIME", "Anime"));
         types.add(new FilterOption("MANGA", "Manga"));
         types.add(new FilterOption("CHARACTERS", "Characters"));
-        types.add(new FilterOption("STAFF", "Staff"));
-        types.add(new FilterOption("STUDIOS", "Studios"));
         return types;
     }
 
