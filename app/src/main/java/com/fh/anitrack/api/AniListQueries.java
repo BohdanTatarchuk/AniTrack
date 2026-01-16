@@ -516,4 +516,29 @@ public class AniListQueries {
                     "    }" +
                     "  }" +
                     "}";
+
+    // Profile favourites - get all favourites
+    public static final String GET_USER_FAVORITES =
+            "query ($userId: Int, $page: Int) {" +
+                    "  User (id: $userId) {" +
+                    "    favourites {" +
+                    "      anime (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id title { userPreferred } format }" +
+                    "      }" +
+                    "      manga (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id title { userPreferred } format }" +
+                    "      }" +
+                    "      characters (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id name { full } }" +
+                    "      }" +
+                    "      staff (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id name { full } }" +
+                    "      }" +
+                    "    }" +
+                    "  }" +
+                    "}";
 }
