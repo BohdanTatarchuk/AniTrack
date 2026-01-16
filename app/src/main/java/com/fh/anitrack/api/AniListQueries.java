@@ -4,7 +4,7 @@ package com.fh.anitrack.api;
 public class AniListQueries {
     // Get current user data for navigation sidebar
     public static final String GET_CURRENT_USER =
-            "query { Viewer { name avatar { large } } }";
+            "query { Viewer { name bannerImage  avatar { large } } }";
 
 
     // Activity Feed Query (home page)

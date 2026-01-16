@@ -72,6 +72,7 @@ public abstract class BaseProfileFragment extends Fragment {
     private void loadUserProfile() {
         String username = authRepository.getUsername();
         String avatarUrl = authRepository.getAvatarUrl();
+        String bannerUrl = authRepository.getBannerUrl();
 
         if (username != null && !username.isEmpty()) {
             profileUsername.setText(username);
@@ -83,6 +84,13 @@ public abstract class BaseProfileFragment extends Fragment {
                     .circleCrop()
                     .placeholder(R.drawable.profile_picture)
                     .into(profileAvatar);
+        }
+
+        if (bannerUrl != null && !bannerUrl.isEmpty() && isAdded()) {
+            Glide.with(this)
+                    .load(bannerUrl)
+                    .centerCrop()
+                    .into(profileBanner);
         }
 
         if (!swipeRefresh.isRefreshing()) stopRefreshing();
