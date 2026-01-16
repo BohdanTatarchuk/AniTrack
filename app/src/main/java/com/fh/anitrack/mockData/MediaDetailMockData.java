@@ -1,4 +1,4 @@
-package com.fh.anitrack.data;
+package com.fh.anitrack.mockData;
 
 /**
  * Mock data for testing the media detail screen.

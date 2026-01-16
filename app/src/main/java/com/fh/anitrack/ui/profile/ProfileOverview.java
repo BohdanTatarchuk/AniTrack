@@ -207,7 +207,6 @@ public class ProfileOverview extends BaseProfileFragment {
         setTabState(getBtnOverview(), true);
         setTabState(getBtnAnimeList(), false);
         setTabState(getBtnMangaList(), false);
-        setTabState(getBtnStats(), false);
         setTabState(getBtnFavorites(), false);
         setTabState(getBtnSocial(), false);
     }

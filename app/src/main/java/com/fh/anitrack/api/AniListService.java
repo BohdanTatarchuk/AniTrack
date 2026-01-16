@@ -1,6 +1,7 @@
 package com.fh.anitrack.api;
 
 import com.fh.anitrack.api.response.ActivityResponse;
+import com.fh.anitrack.api.response.FavoritesResponse;
 import com.fh.anitrack.api.response.FollowersResponse;
 import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaDetailResponse;
@@ -63,6 +64,8 @@ public interface AniListService {
     @POST("/")
     Call<MediaListResponse> getUserMediaList(@Body GraphQLRequest body);
 
+    @POST("/")
+    Call<FavoritesResponse> getFavorites(@Body GraphQLRequest body);
     @POST("/")
     Call<ToggleFavouriteResponse> toggleFavourite(@Body GraphQLRequest body);
 

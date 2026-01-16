@@ -1,4 +1,4 @@
-package com.fh.anitrack.data.model;
+package com.fh.anitrack.mockData.model;
 
 /**
  * Represents an active filter applied by the user.

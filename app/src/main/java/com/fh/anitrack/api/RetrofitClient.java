@@ -18,7 +18,6 @@ public class RetrofitClient {
 
     public static Retrofit getInstance(Context context) {
         if (retrofit == null) {
-            // Add HTTP logging interceptor for debugging
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> 
                 Log.d(TAG, message)
             );

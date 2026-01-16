@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fh.anitrack.R;
-import com.fh.anitrack.data.model.FilterOption;
+import com.fh.anitrack.mockData.model.FilterOption;
 
 import java.util.ArrayList;
 import java.util.List;

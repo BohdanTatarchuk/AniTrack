@@ -182,7 +182,6 @@ public class ProfileMangaList extends BaseProfileFragment {
         setTabState(getBtnOverview(), false);
         setTabState(getBtnAnimeList(), false);
         setTabState(getBtnMangaList(), true);
-        setTabState(getBtnStats(), false);
         setTabState(getBtnFavorites(), false);
         setTabState(getBtnSocial(), false);
     }

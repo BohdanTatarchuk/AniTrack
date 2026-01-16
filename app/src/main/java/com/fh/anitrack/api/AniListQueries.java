@@ -4,7 +4,7 @@ package com.fh.anitrack.api;
 public class AniListQueries {
     // Get current user data for navigation sidebar
     public static final String GET_CURRENT_USER =
-            "query { Viewer { id name avatar { large } } }";
+            "query { Viewer { id name bannerImage avatar { large } } }";
 
 
     // Activity Feed Query (home page)
@@ -549,13 +549,38 @@ public class AniListQueries {
                     "    }" +
                     "  }" +
                     "}";
-    
+
     // Toggle favourite mutation for media
     public static final String TOGGLE_FAVOURITE =
             "mutation ($animeId: Int, $mangaId: Int) {" +
                     "  ToggleFavourite (animeId: $animeId, mangaId: $mangaId) {" +
                     "    anime { nodes { id } }" +
                     "    manga { nodes { id } }" +
+                    "  }" +
+                    "}";
+
+    // Profile favourites - get all favourites
+    public static final String GET_USER_FAVORITES =
+            "query ($userId: Int, $page: Int) {" +
+                    "  User (id: $userId) {" +
+                    "    favourites {" +
+                    "      anime (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id title { userPreferred } format }" +
+                    "      }" +
+                    "      manga (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id title { userPreferred } format }" +
+                    "      }" +
+                    "      characters (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id name { full } }" +
+                    "      }" +
+                    "      staff (page: $page, perPage: 10) {" +
+                    "        pageInfo { hasNextPage currentPage }" +
+                    "        nodes { id name { full } }" +
+                    "      }" +
+                    "    }" +
                     "  }" +
                     "}";
 }

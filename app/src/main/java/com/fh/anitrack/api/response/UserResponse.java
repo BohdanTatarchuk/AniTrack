@@ -14,6 +14,8 @@ public class UserResponse {
     public static class Viewer {
         public int id;
         public String name;
+        @SerializedName("bannerImage")
+        public String bannerImage;
         public Avatar avatar;
     }
 

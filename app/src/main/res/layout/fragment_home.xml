@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/marginBig"
+    android:layout_marginTop="@dimen/marginNormal"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,22 +26,26 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/layoutHorizontalPadding" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideTop"
+        <TextView
+            android:id="@+id/tvWelcomeBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.03" />
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/welcome_back"
+            android:textSize="@dimen/bigTitle"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/comfortaa"
+            android:layout_marginTop="@dimen/marginSmall"
             android:text="@string/activity"
             android:textSize="@dimen/fontSizeHeader"
             app:layout_constraintStart_toStartOf="@id/guideStart"
-            app:layout_constraintTop_toBottomOf="@id/guideTop" />
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
 
         <LinearLayout
             android:id="@+id/formattingOptions"

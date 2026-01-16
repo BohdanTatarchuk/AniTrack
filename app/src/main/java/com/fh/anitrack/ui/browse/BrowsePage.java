@@ -26,11 +26,11 @@ import com.fh.anitrack.api.GraphQLRequest;
 import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaSearchResponse;
+import com.fh.anitrack.mockData.BrowseMockData;
+import com.fh.anitrack.mockData.model.ActiveFilter;
+import com.fh.anitrack.mockData.model.AnimeItem;
+import com.fh.anitrack.mockData.model.FilterOption;
 import com.fh.anitrack.api.response.UserSearchResponse;
-import com.fh.anitrack.data.BrowseMockData;
-import com.fh.anitrack.data.model.ActiveFilter;
-import com.fh.anitrack.data.model.AnimeItem;
-import com.fh.anitrack.data.model.FilterOption;
 import com.fh.anitrack.ui.browse.adapter.AnimeAdapter;
 import com.fh.anitrack.ui.browse.adapter.DropdownAdapter;
 import com.fh.anitrack.ui.browse.adapter.UserAdapter;
@@ -106,7 +106,7 @@ public class BrowsePage extends Fragment {
     // Debouncing for range sliders
     private final android.os.Handler searchHandler = new android.os.Handler(android.os.Looper.getMainLooper());
     private Runnable pendingSearchRunnable = null;
-    
+
     // Initial search query from header
     private static final String ARG_SEARCH_QUERY = "search_query";
     private String initialSearchQuery = null;
@@ -118,7 +118,7 @@ public class BrowsePage extends Fragment {
     public static BrowsePage newInstance() {
         return new BrowsePage();
     }
-    
+
     public static BrowsePage newInstance(String searchQuery) {
         BrowsePage fragment = new BrowsePage();
         Bundle args = new Bundle();
@@ -126,7 +126,7 @@ public class BrowsePage extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,12 +205,12 @@ public class BrowsePage extends Fragment {
             // Navigate to media detail page
             navigateToMediaDetail(item);
         });
-        
+
         // Users adapter (3 columns grid)
         userAdapter = new UserAdapter();
         usersRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
         usersRecyclerView.setAdapter(userAdapter);
-        
+
         userAdapter.setOnUserClickListener((user, position) -> {
             // Navigate to user profile page
             navigateToUserProfile(user);
@@ -410,21 +410,21 @@ public class BrowsePage extends Fragment {
                     selectedMediaType = option;
                     textMediaType.setText(option.getDisplayName());
                     textMediaType.setTextColor(requireContext().getColor(R.color.darkBlue));
-                    
+
                     // Toggle visibility based on media type
                     boolean isUserSearch = "USERS".equals(option.getId());
                     updateViewsForMediaType(isUserSearch);
-                    
+
                     performSearch(searchEditText.getText().toString());
                 }
         );
     }
-    
+
     private void updateViewsForMediaType(boolean isUserSearch) {
         // Show/hide appropriate RecyclerView
         animeRecyclerView.setVisibility(isUserSearch ? View.GONE : View.VISIBLE);
         usersRecyclerView.setVisibility(isUserSearch ? View.VISIBLE : View.GONE);
-        
+
         // Hide filters section for user search (not applicable)
         if (filtersHeader != null) {
             filtersHeader.setVisibility(isUserSearch ? View.GONE : View.VISIBLE);
@@ -435,7 +435,7 @@ public class BrowsePage extends Fragment {
         if (activeFiltersChipGroup != null) {
             activeFiltersChipGroup.setVisibility(isUserSearch ? View.GONE : View.VISIBLE);
         }
-        
+
         // Clear adapters when switching
         if (isUserSearch) {
             animeAdapter.setItems(new ArrayList<>());
@@ -728,7 +728,7 @@ public class BrowsePage extends Fragment {
             performUserSearch(query);
             return;
         }
-        
+
         // Reset pagination for new search
         currentPage = 1;
         lastSearchQuery = query;
@@ -837,13 +837,13 @@ public class BrowsePage extends Fragment {
             Toast.makeText(requireContext(), "No more results available", Toast.LENGTH_SHORT).show();
             return;
         }
-        
+
         // Check if searching for users
         if (selectedMediaType != null && "USERS".equals(selectedMediaType.getId())) {
             loadMoreUsers();
             return;
         }
-        
+
         Log.d(TAG, "Load more clicked - loading page " + (currentPage + 1));
         currentPage++;
         
@@ -1290,7 +1290,7 @@ public class BrowsePage extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-    
+
     /**
      * Search for users by username.
      */
@@ -1299,44 +1299,44 @@ public class BrowsePage extends Fragment {
         currentPage = 1;
         lastSearchQuery = query;
         isAutoLoadingMore = false;
-        
+
         // Cancel any pending auto-loads
         searchHandler.removeCallbacksAndMessages(null);
-        
+
         // Show loading
         loadingIndicator.setVisibility(View.VISIBLE);
         btnLoadMore.setVisibility(View.GONE);
-        
+
         // Build search parameters
         Map<String, Object> variables = new HashMap<>();
         variables.put("page", currentPage);
         if (query != null && !query.trim().isEmpty()) {
             variables.put("search", query.trim());
         }
-        
+
         AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
         GraphQLRequest request = new GraphQLRequest(AniListQueries.SEARCH_USERS, variables);
-        
+
         service.searchUsers(request).enqueue(new Callback<UserSearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserSearchResponse> call,
                                    @NonNull Response<UserSearchResponse> response) {
                 if (!isAdded()) return;
-                
+
                 loadingIndicator.setVisibility(View.GONE);
-                
+
                 if (response.isSuccessful() && response.body() != null
                         && response.body().data != null
                         && response.body().data.page != null) {
-                    
+
                     UserSearchResponse.Page page = response.body().data.page;
                     List<UserSearchResponse.User> users = page.users;
-                    
+
                     Log.d(TAG, "User search returned " + (users != null ? users.size() : 0) + " results");
-                    
+
                     userAdapter.setUsers(users != null ? users : new ArrayList<>());
                     updateUserEmptyState(users == null || users.isEmpty());
-                    
+
                     // Update pagination state
                     hasNextPage = page.pageInfo != null && page.pageInfo.hasNextPage;
                     btnLoadMore.setVisibility(hasNextPage ? View.VISIBLE : View.GONE);
@@ -1348,11 +1348,11 @@ public class BrowsePage extends Fragment {
                     btnLoadMore.setVisibility(View.GONE);
                 }
             }
-            
+
             @Override
             public void onFailure(@NonNull Call<UserSearchResponse> call, @NonNull Throwable t) {
                 if (!isAdded()) return;
-                
+
                 loadingIndicator.setVisibility(View.GONE);
                 Log.e(TAG, "User search error", t);
                 Toast.makeText(requireContext(), "User search failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -1363,49 +1363,49 @@ public class BrowsePage extends Fragment {
             }
         });
     }
-    
+
     /**
      * Load more users for pagination.
      */
     private void loadMoreUsers() {
         Log.d(TAG, "Load more users - loading page " + (currentPage + 1));
         currentPage++;
-        
+
         // Show loading
         loadingIndicator.setVisibility(View.VISIBLE);
         btnLoadMore.setEnabled(false);
-        
+
         // Build search parameters
         Map<String, Object> variables = new HashMap<>();
         variables.put("page", currentPage);
         if (lastSearchQuery != null && !lastSearchQuery.trim().isEmpty()) {
             variables.put("search", lastSearchQuery.trim());
         }
-        
+
         AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
         GraphQLRequest request = new GraphQLRequest(AniListQueries.SEARCH_USERS, variables);
-        
+
         service.searchUsers(request).enqueue(new Callback<UserSearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserSearchResponse> call,
                                    @NonNull Response<UserSearchResponse> response) {
                 if (!isAdded()) return;
-                
+
                 loadingIndicator.setVisibility(View.GONE);
                 btnLoadMore.setEnabled(true);
-                
+
                 if (response.isSuccessful() && response.body() != null
                         && response.body().data != null
                         && response.body().data.page != null) {
-                    
+
                     UserSearchResponse.Page page = response.body().data.page;
                     List<UserSearchResponse.User> users = page.users;
-                    
+
                     Log.d(TAG, "Load more users returned " + (users != null ? users.size() : 0) + " results");
-                    
+
                     // Append to existing users
                     userAdapter.addUsers(users != null ? users : new ArrayList<>());
-                    
+
                     // Update pagination state
                     hasNextPage = page.pageInfo != null && page.pageInfo.hasNextPage;
                     btnLoadMore.setVisibility(hasNextPage ? View.VISIBLE : View.GONE);
@@ -1415,11 +1415,11 @@ public class BrowsePage extends Fragment {
                     currentPage--; // Revert page increment
                 }
             }
-            
+
             @Override
             public void onFailure(@NonNull Call<UserSearchResponse> call, @NonNull Throwable t) {
                 if (!isAdded()) return;
-                
+
                 loadingIndicator.setVisibility(View.GONE);
                 btnLoadMore.setEnabled(true);
                 Log.e(TAG, "Load more users error", t);
@@ -1428,12 +1428,12 @@ public class BrowsePage extends Fragment {
             }
         });
     }
-    
+
     private void updateUserEmptyState(boolean isEmpty) {
         emptyState.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         usersRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
-    
+
     private void navigateToUserProfile(UserSearchResponse.User user) {
         // TODO: Navigate to user profile page when implemented
         Toast.makeText(requireContext(), "User: " + user.name, Toast.LENGTH_SHORT).show();

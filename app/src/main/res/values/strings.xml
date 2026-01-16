@@ -206,4 +206,10 @@
     <string name="progress_0_12">Progress 0/12</string>
     <string name="tv">TV</string>
     <string name="scroll_button">scroll button</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="favorite_studios">Favorite Studios</string>
+    <string name="favorite_staff">Favorite Staff</string>
+    <string name="favorite_manga">Favorite Manga</string>
+    <string name="favorite_anime">Favorite Anime</string>
+    <string name="favorite_characters">Favorite Characters</string>
 </resources>
