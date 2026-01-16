@@ -84,24 +84,6 @@
 
     </HorizontalScrollView>
 
-    <!-- Mark all as read button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMarkAllRead"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mark all as read"
-        android:textColor="@color/pearl"
-        android:textSize="16sp"
-        android:fontFamily="@font/comfortaa"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/darkBlue"
-        app:cornerRadius="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="16dp" />
-
     <!-- Notifications List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationsRecyclerView"
