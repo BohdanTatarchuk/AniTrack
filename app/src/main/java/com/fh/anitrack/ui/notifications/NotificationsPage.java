@@ -42,7 +42,6 @@ public class NotificationsPage extends Fragment {
 
     private ChipGroup filterChipGroup;
     private Chip chipAll, chipAiring, chipActivity, chipFollows, chipMedia;
-    private MaterialButton btnMarkAllRead;
 
     private String currentFilter = "ALL";
     private int currentPage = 1;
@@ -73,7 +72,6 @@ public class NotificationsPage extends Fragment {
         chipActivity = view.findViewById(R.id.chipActivity);
         chipFollows = view.findViewById(R.id.chipFollows);
         chipMedia = view.findViewById(R.id.chipMedia);
-        btnMarkAllRead = view.findViewById(R.id.btnMarkAllRead);
 
         // Setup RecyclerView
         adapter = new NotificationsAdapter();
@@ -82,9 +80,6 @@ public class NotificationsPage extends Fragment {
 
         // Setup filter chips
         setupFilterChips();
-
-        // Setup mark all as read button
-        btnMarkAllRead.setOnClickListener(v -> loadNotifications(true));
 
         // Load initial notifications
         loadNotifications(false);

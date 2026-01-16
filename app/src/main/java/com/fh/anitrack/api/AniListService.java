@@ -2,6 +2,7 @@ package com.fh.anitrack.api;
 
 import com.fh.anitrack.api.response.ActivityResponse;
 import com.fh.anitrack.api.response.FavoritesResponse;
+import com.fh.anitrack.api.response.FollowersResponse;
 import com.fh.anitrack.api.response.FilterOptionsResponse;
 import com.fh.anitrack.api.response.MediaDetailResponse;
 import com.fh.anitrack.api.response.MediaListResponse;
@@ -9,8 +10,10 @@ import com.fh.anitrack.api.response.MediaSearchResponse;
 import com.fh.anitrack.api.response.NotificationsResponse;
 import com.fh.anitrack.api.response.SaveActivityResponse;
 import com.fh.anitrack.api.response.SaveMediaListResponse;
+import com.fh.anitrack.api.response.ToggleFavouriteResponse;
 import com.fh.anitrack.api.response.ToggleLikeResponse;
 import com.fh.anitrack.api.response.UserResponse;
+import com.fh.anitrack.api.response.UserSearchResponse;
 import com.fh.anitrack.api.response.UserStatsResponse;
 
 import retrofit2.Call;
@@ -35,10 +38,19 @@ public interface AniListService {
     Call<UserStatsResponse> getUserStats(@Body GraphQLRequest body);
 
     @POST("/")
+    Call<FollowersResponse> getFollowers(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<FollowersResponse> getFollowing(@Body GraphQLRequest body);
+
+    @POST("/")
     Call<FilterOptionsResponse> getFilterOptions(@Body GraphQLRequest body);
 
     @POST("/")
     Call<MediaSearchResponse> searchMedia(@Body GraphQLRequest body);
+
+    @POST("/")
+    Call<UserSearchResponse> searchUsers(@Body GraphQLRequest body);
 
     @POST("/")
     Call<MediaDetailResponse> getMediaDetails(@Body GraphQLRequest body);
@@ -54,4 +66,7 @@ public interface AniListService {
 
     @POST("/")
     Call<FavoritesResponse> getFavorites(@Body GraphQLRequest body);
+    @POST("/")
+    Call<ToggleFavouriteResponse> toggleFavourite(@Body GraphQLRequest body);
+
 }

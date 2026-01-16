@@ -4,7 +4,7 @@ package com.fh.anitrack.api;
 public class AniListQueries {
     // Get current user data for navigation sidebar
     public static final String GET_CURRENT_USER =
-            "query { Viewer { name bannerImage  avatar { large } } }";
+            "query { Viewer { id name bannerImage avatar { large } } }";
 
 
     // Activity Feed Query (home page)
@@ -59,6 +59,17 @@ public class AniListQueries {
             "query {" +
                     "  genres: GenreCollection" +
                     "  tags: MediaTagCollection { name description category isAdult }" +
+                    "}";
+
+    // User search query for browse page
+    public static final String SEARCH_USERS =
+            "query ($page: Int, $search: String) {" +
+                    "  Page(page: $page, perPage: 20) {" +
+                    "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
+                    "    users(search: $search) {" +
+                    "      id name avatar { large medium } about bannerImage" +
+                    "    }" +
+                    "  }" +
                     "}";
 
     // Media search query for browse page
@@ -484,6 +495,28 @@ public class AniListQueries {
                     "  } " +
                     "}";
 
+    // Get user followers
+    public static final String GET_FOLLOWERS =
+            "query ($id: Int!, $page: Int) {" +
+                    "  Page(page: $page) {" +
+                    "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
+                    "    followers(userId: $id, sort: USERNAME) {" +
+                    "      id name avatar { large }" +
+                    "    }" +
+                    "  }" +
+                    "}";
+
+    // Get user following
+    public static final String GET_FOLLOWING =
+            "query ($id: Int!, $page: Int) {" +
+                    "  Page(page: $page) {" +
+                    "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
+                    "    following(userId: $id, sort: USERNAME) {" +
+                    "      id name avatar { large }" +
+                    "    }" +
+                    "  }" +
+                    "}";
+
     // Profile overview user activities
     public static final String GET_USER_ACTIVITIES =
             "query ($userId: Int, $page: Int, $perPage: Int) {" +
@@ -514,6 +547,15 @@ public class AniListQueries {
                     "        coverImage { large }" +
                     "      }" +
                     "    }" +
+                    "  }" +
+                    "}";
+
+    // Toggle favourite mutation for media
+    public static final String TOGGLE_FAVOURITE =
+            "mutation ($animeId: Int, $mangaId: Int) {" +
+                    "  ToggleFavourite (animeId: $animeId, mangaId: $mangaId) {" +
+                    "    anime { nodes { id } }" +
+                    "    manga { nodes { id } }" +
                     "  }" +
                     "}";
 

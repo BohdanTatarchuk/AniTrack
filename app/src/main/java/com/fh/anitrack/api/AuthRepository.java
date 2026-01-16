@@ -9,6 +9,7 @@ import androidx.security.crypto.MasterKeys;
 //class, which stores access token, username, pfp and is used to define if the user is logged in
 public class AuthRepository {
 
+    private static final String KEY_USER_ID = "user_id";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_AVATAR = "avatar_url";
 
@@ -63,6 +64,13 @@ public class AuthRepository {
     public String getAvatarUrl() {
         return prefs.getString(KEY_AVATAR, null);
     }
+    public void saveUserId(int userId) {
+        prefs.edit()
+                .putInt(KEY_USER_ID, userId)
+                .apply();
+    }
+
+    public int getUserId() { return prefs.getInt(KEY_USER_ID, 0); }
 
     public String getAccessToken() {
         return prefs.getString(KEY_ACCESS_TOKEN, null);

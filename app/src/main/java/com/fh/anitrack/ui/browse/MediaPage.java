@@ -29,6 +29,7 @@ import com.fh.anitrack.api.RetrofitClient;
 import com.fh.anitrack.api.response.MediaDetailResponse;
 import com.fh.anitrack.api.response.SaveMediaListResponse;
 import com.fh.anitrack.mockData.MediaDetailMockData;
+import com.fh.anitrack.api.response.ToggleFavouriteResponse;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
@@ -63,6 +64,9 @@ public class MediaPage extends Fragment {
     private RecyclerView charactersRecyclerView;
     private RecyclerView recommendationsRecyclerView;
     private View loadingIndicator;
+    private MaterialButton addToListButton;
+    private ImageButton favoriteButton;
+    private TextView favoriteCount;
 
     // Data arrays - empty by default, populated from backend or mock data
     private List<RelationData> relations = new ArrayList<>();
@@ -139,20 +143,16 @@ public class MediaPage extends Fragment {
         });
 
         // Add to List button
-        MaterialButton addToListButton = view.findViewById(R.id.addToListButton);
+        addToListButton = view.findViewById(R.id.addToListButton);
         if (addToListButton != null) {
             addToListButton.setOnClickListener(v -> showAddToListDialog());
         }
 
         // Favorite button
-        ImageButton favoriteButton = view.findViewById(R.id.favoriteButton);
+        favoriteButton = view.findViewById(R.id.favoriteButton);
+        favoriteCount = view.findViewById(R.id.favoriteCount);
         if (favoriteButton != null) {
-            favoriteButton.setOnClickListener(v -> {
-                // Toggle favorite state - the selector drawable will handle icon switching
-                v.setSelected(!v.isSelected());
-                // Optionally add haptic feedback
-                v.performHapticFeedback(android.view.HapticFeedbackConstants.CONTEXT_CLICK);
-            });
+            favoriteButton.setOnClickListener(v -> toggleFavourite());
         }
     }
 
@@ -346,12 +346,19 @@ public class MediaPage extends Fragment {
             mediaTitle.setText(mediaData.title.userPreferred);
         }
         
-        // Set favorite count
-        TextView favoriteCount = view.findViewById(R.id.favoriteCount);
+        // Set favorite count and state
         if (favoriteCount != null) {
             favoriteCount.setText(formatNumber(mediaData.favourites));
         }
         
+        // Set favorite button selected state based on isFavourite
+        if (favoriteButton != null) {
+            favoriteButton.setSelected(mediaData.isFavourite);
+        }
+
+        // Update Add to List button text based on media list entry
+        updateAddToListButtonText();
+
         // Set stats
         setupStatColumn(view, R.id.statAverageScore, "Average Score", 
             mediaData.averageScore != null ? mediaData.averageScore + "%" : "N/A");
@@ -855,6 +862,8 @@ public class MediaPage extends Fragment {
                     if (entry != null) {
                         Log.d(TAG, "Media list entry saved successfully. Entry ID: " + entry.id);
                         Toast.makeText(requireContext(), "Added to list successfully!", Toast.LENGTH_SHORT).show();
+                        // Refresh media page to get updated data
+                        refreshMediaDetails();
                     } else {
                         Log.e(TAG, "Response data is null");
                         Toast.makeText(requireContext(), "Failed to add to list", Toast.LENGTH_SHORT).show();
@@ -878,6 +887,143 @@ public class MediaPage extends Fragment {
                 Toast.makeText(requireContext(), "Network error. Please check your connection.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Refresh media details from server to get updated data
+     */
+    private void refreshMediaDetails() {
+        if (!isAdded()) return;
+
+        // Clear existing data
+        relations.clear();
+        characters.clear();
+        recommendations.clear();
+
+        // Reload from server
+        loadMediaDetailsFromServer();
+    }
+
+    /**
+     * Update the Add to List button text based on whether media is in user's list
+     */
+    private void updateAddToListButtonText() {
+        if (addToListButton == null || mediaData == null) return;
+
+        if (mediaData.mediaListEntry != null && mediaData.mediaListEntry.status != null) {
+            // Media is in user's list - show current status
+            String displayStatus = mapApiStatusToDisplay(mediaData.mediaListEntry.status);
+            addToListButton.setText(displayStatus);
+        } else {
+            // Media not in list
+            addToListButton.setText(R.string.add_to_list);
+        }
+    }
+
+    /**
+     * Map AniList API status to display text
+     */
+    private String mapApiStatusToDisplay(String apiStatus) {
+        switch (apiStatus) {
+            case "CURRENT":
+                return "ANIME".equals(mediaType) ? "Watching" : "Reading";
+            case "PLANNING":
+                return "Planning";
+            case "COMPLETED":
+                return "Completed";
+            case "PAUSED":
+                return "Paused";
+            case "DROPPED":
+                return "Dropped";
+            case "REPEATING":
+                return "Repeating";
+            default:
+                return apiStatus;
+        }
+    }
+
+    /**
+     * Toggle the favourite state of this media
+     */
+    private void toggleFavourite() {
+        if (mediaData == null || mediaId == null) {
+            Toast.makeText(requireContext(), "Cannot favorite: media data not loaded", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Optimistically update UI
+        boolean newFavoriteState = !mediaData.isFavourite;
+        if (favoriteButton != null) {
+            favoriteButton.setSelected(newFavoriteState);
+            favoriteButton.performHapticFeedback(android.view.HapticFeedbackConstants.CONTEXT_CLICK);
+        }
+
+        // Update local data optimistically
+        int newFavouritesCount = mediaData.favourites + (newFavoriteState ? 1 : -1);
+        if (newFavouritesCount < 0) newFavouritesCount = 0;
+
+        if (favoriteCount != null) {
+            favoriteCount.setText(formatNumber(newFavouritesCount));
+        }
+
+        // Build variables based on media type
+        Map<String, Object> variables = new HashMap<>();
+        try {
+            int id = Integer.parseInt(mediaId);
+            if ("ANIME".equals(mediaType)) {
+                variables.put("animeId", id);
+            } else {
+                variables.put("mangaId", id);
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Invalid media ID", e);
+            return;
+        }
+
+        GraphQLRequest request = new GraphQLRequest(AniListQueries.TOGGLE_FAVOURITE, variables);
+        AniListService service = RetrofitClient.getInstance(requireContext()).create(AniListService.class);
+
+        final int finalNewCount = newFavouritesCount;
+        service.toggleFavourite(request).enqueue(new Callback<ToggleFavouriteResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ToggleFavouriteResponse> call,
+                                   @NonNull Response<ToggleFavouriteResponse> response) {
+                if (!isAdded()) return;
+
+                if (response.isSuccessful() && response.body() != null) {
+                    // Update local data
+                    mediaData.isFavourite = newFavoriteState;
+                    mediaData.favourites = finalNewCount;
+                    Log.d(TAG, "Toggled favourite: " + newFavoriteState);
+                } else {
+                    // Revert UI on failure
+                    Log.e(TAG, "Failed to toggle favourite. Code: " + response.code());
+                    revertFavouriteState();
+                    Toast.makeText(requireContext(), "Failed to update favourite", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ToggleFavouriteResponse> call, @NonNull Throwable t) {
+                if (!isAdded()) return;
+
+                Log.e(TAG, "Network error toggling favourite", t);
+                revertFavouriteState();
+                Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * Revert favourite button state on API failure
+     */
+    private void revertFavouriteState() {
+        if (favoriteButton != null && mediaData != null) {
+            favoriteButton.setSelected(mediaData.isFavourite);
+            if (favoriteCount != null) {
+                favoriteCount.setText(formatNumber(mediaData.favourites));
+            }
+        }
     }
 
     private void showScorePicker(TextView scoreView) {

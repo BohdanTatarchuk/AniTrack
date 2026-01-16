@@ -35,7 +35,7 @@
                 app:chipSpacingVertical="@dimen/paddingTiny"
                 app:singleLine="false" />
 
-            <!-- Results List -->
+            <!-- Results List (Anime/Manga) -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/animeRecyclerView"
                 android:layout_width="match_parent"
@@ -46,6 +46,19 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
                 tools:listitem="@layout/browse_item_anime_card" />
+
+            <!-- Results Grid (Users) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/usersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginSmall"
+                android:layout_marginHorizontal="@dimen/layoutHorizontalPadding"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                tools:itemCount="6"
+                tools:listitem="@layout/browse_item_user_card" />
 
             <!-- Load More Button -->
             <com.google.android.material.button.MaterialButton

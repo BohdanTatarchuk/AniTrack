@@ -81,8 +81,6 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder> 
         private final TextView scoreText;
         private final LinearLayout scoreBadge;
         private final TextView nextEpisodeInfo;
-        private final TextView tagline;
-        private final TextView description;
         private final TextView footer;
 
         ViewHolder(View itemView) {
@@ -94,8 +92,6 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder> 
             scoreText = itemView.findViewById(R.id.scoreText);
             scoreBadge = itemView.findViewById(R.id.scoreBadge);
             nextEpisodeInfo = itemView.findViewById(R.id.nextEpisodeInfo);
-            tagline = itemView.findViewById(R.id.tagline);
-            description = itemView.findViewById(R.id.description);
             footer = itemView.findViewById(R.id.footer);
 
             itemView.setOnClickListener(v -> {
@@ -152,24 +148,6 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder> 
                 nextEpisodeInfo.setVisibility(View.VISIBLE);
             } else {
                 nextEpisodeInfo.setVisibility(View.GONE);
-            }
-
-            // Set tagline (first line of description or custom tagline)
-            String desc = item.getDescription();
-            if (desc != null && !desc.isEmpty()) {
-                // Extract first sentence as tagline
-                int firstPeriod = desc.indexOf('.');
-                if (firstPeriod > 0 && firstPeriod < 100) {
-                    tagline.setText(desc.substring(0, firstPeriod + 1));
-                    description.setText(desc.substring(firstPeriod + 1).trim());
-                } else {
-                    tagline.setVisibility(View.GONE);
-                    description.setText(desc);
-                }
-                description.setVisibility(View.VISIBLE);
-            } else {
-                tagline.setVisibility(View.GONE);
-                description.setVisibility(View.GONE);
             }
 
             // Set footer (studio info, etc.)

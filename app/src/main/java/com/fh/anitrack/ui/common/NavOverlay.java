@@ -137,6 +137,7 @@ public class NavOverlay extends Fragment {
                 if (response.isSuccessful() && response.body() != null && response.body().data.viewer != null) {
                     UserResponse.Viewer viewer = response.body().data.viewer;
                     displayUser(viewer.name, viewer.avatar.large);
+                    authRepository.saveUserId(viewer.id);
                     authRepository.saveUserInfo(viewer.name, viewer.avatar.large, viewer.bannerImage);
                 }
             }
