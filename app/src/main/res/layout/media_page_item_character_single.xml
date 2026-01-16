@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
                     android:textColor="@color/darkGrey"
-                    android:textSize="@dimen/characterRoleTextSize"
+                    android:textSize="@dimen/badgeTextSize"
                     tools:text="Main" />
 
             </LinearLayout>
@@ -109,7 +109,7 @@
                     android:layout_gravity="end"
                     android:fontFamily="@font/comfortaa"
                     android:textColor="@color/darkGrey"
-                    android:textSize="@dimen/characterRoleTextSize"
+                    android:textSize="@dimen/badgeTextSize"
                     tools:text="Japanese" />
 
             </LinearLayout>

@@ -61,6 +61,17 @@ public class AniListQueries {
                     "  tags: MediaTagCollection { name description category isAdult }" +
                     "}";
 
+    // User search query for browse page
+    public static final String SEARCH_USERS =
+            "query ($page: Int, $search: String) {" +
+                    "  Page(page: $page, perPage: 20) {" +
+                    "    pageInfo { total perPage currentPage lastPage hasNextPage }" +
+                    "    users(search: $search) {" +
+                    "      id name avatar { large medium } about bannerImage" +
+                    "    }" +
+                    "  }" +
+                    "}";
+
     // Media search query for browse page
     public static final String SEARCH_MEDIA =
             "query(" +
@@ -536,6 +547,15 @@ public class AniListQueries {
                     "        coverImage { large }" +
                     "      }" +
                     "    }" +
+                    "  }" +
+                    "}";
+    
+    // Toggle favourite mutation for media
+    public static final String TOGGLE_FAVOURITE =
+            "mutation ($animeId: Int, $mangaId: Int) {" +
+                    "  ToggleFavourite (animeId: $animeId, mangaId: $mangaId) {" +
+                    "    anime { nodes { id } }" +
+                    "    manga { nodes { id } }" +
                     "  }" +
                     "}";
 }

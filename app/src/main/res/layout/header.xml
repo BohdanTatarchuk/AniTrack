@@ -42,6 +42,60 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/pearl" />
 
+    <!-- Search container - expands when search is active -->
+    <FrameLayout
+        android:id="@+id/searchContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/marginSmall"
+        android:layout_marginEnd="@dimen/marginSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnMenu"
+        app:layout_constraintStart_toEndOf="@+id/headerLogo"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Expanded search field (hidden by default) -->
+        <LinearLayout
+            android:id="@+id/expandedSearchContainer"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_search_header"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/marginNormal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/headerSearchEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/comfortaa"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/darkBlue"
+                android:textColorHint="@color/darkGrey"
+                android:textSize="@dimen/buttonTextFontSize" />
+
+            <ImageView
+                android:id="@+id/btnSearchSubmit"
+                android:layout_width="@dimen/iconSizeBig"
+                android:layout_height="@dimen/iconSizeBig"
+                android:layout_marginStart="@dimen/marginTiny"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/search_icon"
+                android:src="@drawable/ic_search"
+                app:tint="@color/darkBlue" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Search icon button (visible by default) -->
     <ImageView
         android:id="@+id/btnSearch"
         android:layout_width="@dimen/iconSizeBig"
