@@ -185,22 +185,6 @@
                         android:textStyle="bold"
                         app:backgroundTint="@android:color/transparent"
                         app:cornerRadius="@dimen/buttonCornerRadius" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnStats"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:fontFamily="@font/comfortaa"
-                        android:text="@string/stats"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkBlue"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:backgroundTint="@android:color/transparent"
-                        app:cornerRadius="@dimen/buttonCornerRadius" />
-
                 </GridLayout>
 
             </com.google.android.material.card.MaterialCardView>

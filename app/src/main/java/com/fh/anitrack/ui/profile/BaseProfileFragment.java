@@ -26,7 +26,6 @@ public abstract class BaseProfileFragment extends Fragment {
     private MaterialButton btnOverview;
     private MaterialButton btnAnimeList;
     private MaterialButton btnMangaList;
-    private MaterialButton btnStats;
     private MaterialButton btnFavorites;
     private MaterialButton btnSocial;
 
@@ -48,7 +47,6 @@ public abstract class BaseProfileFragment extends Fragment {
         btnOverview = view.findViewById(R.id.btnOverview);
         btnAnimeList = view.findViewById(R.id.btnAnimeList);
         btnMangaList = view.findViewById(R.id.btnMangaList);
-        btnStats = view.findViewById(R.id.btnStats);
         btnFavorites = view.findViewById(R.id.btnFavorites);
         btnSocial = view.findViewById(R.id.btnSocial);
 
@@ -110,7 +108,6 @@ public abstract class BaseProfileFragment extends Fragment {
         btnOverview.setOnClickListener(v -> navigateToProfile(new ProfileOverview()));
         btnAnimeList.setOnClickListener(v -> navigateToProfile(new ProfileAnimeList()));
         btnMangaList.setOnClickListener(v -> navigateToProfile(new ProfileMangaList()));
-        btnStats.setOnClickListener(v -> navigateToProfile(new ProfileStats()));
         btnFavorites.setOnClickListener(v -> navigateToProfile(new ProfileFavorites()));
         btnSocial.setOnClickListener(v -> navigateToProfile(new ProfileSocial()));
         highlightCurrentTab();
@@ -150,10 +147,6 @@ public abstract class BaseProfileFragment extends Fragment {
 
     protected MaterialButton getBtnMangaList() {
         return btnMangaList;
-    }
-
-    protected MaterialButton getBtnStats() {
-        return btnStats;
     }
 
     protected MaterialButton getBtnFavorites() {

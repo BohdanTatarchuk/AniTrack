@@ -40,7 +40,6 @@ public class ProfileSocial extends BaseProfileFragment {
         setTabState(getBtnOverview(), false);
         setTabState(getBtnAnimeList(), false);
         setTabState(getBtnMangaList(), false);
-        setTabState(getBtnStats(), false);
         setTabState(getBtnFavorites(), false);
         setTabState(getBtnSocial(), true);
     }
